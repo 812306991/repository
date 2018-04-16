@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lyt.mapper.BlogTypeMapper">
+	<!-- 返回结果映射 type使用mybatis-conf中的别名 可以省略包名-->
+	<resultMap type="BlogType" id="BlogTypeResult">
+		<id property="blog_id" column="blog_id"/>
+		<result property="typeName" column="typename"/>
+		<result property="orderNum" column="ordernum"/>
+	</resultMap>
+	
+	<insert id="addBlogType" parameterType="BlogType" keyProperty="blog_id" useGeneratedKeys="true">
+		insert into blog.BlogType
+		<!-- 动态sql拼接 prefix前缀 suffix后缀 suffixOverrides除去最后多余的,-->
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeName!=null and typeName!=''">
+                typename,
+            </if>
+            <if test="orderNum!=null and orderNum!=''">
+                ordernum,
+            </if>
+        </trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="typeName!=null and typeName!=''">
+                #{typeName},
+            </if>
+            <if test="orderNum!=null and orderNum!=''">
+                #{orderNum},
+            </if>
+        </trim>
+	</insert>
+	
+	<update id="updateBlogType" parameterType="BlogType">
+		update blog.blogtype
+		<set>
+			<if test="typeNume!=null and typeNum!=''">
+				typename=#{typeName},
+			</if>
+			<if test="orderNum!=null and orderNum!=''">
+				ordernum=#{orderNum},
+			</if>
+		</set>
+		where id=#{blog_id}
+	</update>
+	
+	<update id="deleteBlogType" parameterType="BlogType">
+		update blog.blogType set deleteStatus=1
+		where blog_id=#{id} and deleteStatus=0
+	</update>
+	
+	<select id="getById" parameterType="java.lang.Integer" resultMap="BlogTypeResult">
+		select blog_id,typename,ordernum from blog.blogtype 
+		where blog_id=#{blog_id} 
+		and deleteStatus=0
+	</select>
+	<select id="listByPage" resultMap="BlogTypeResult">
+        SELECT blog_id,typename,ordernum from blog.blogtype
+<!--            limit #{start} ,#{end} -->
+		where deleteStatus=0
+    </select>
+    <select id="getTotal" resultType="java.lang.Long">
+        SELECT COUNT(blog_id) from  blog.blogtype
+        where deleteStatus=0
+    </select>
+</mapper>
