@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jgkj.liao.mapper.PhotoMapper">
+	<resultMap type="com.jgkj.liao.mapper.pojo.Photo" id="BaseResultMap">
+		<id column="f_id" property="fileName" jdbcType="VARCHAR"/>
+		<result column="f_photo" property="photo" jdbcType="BLOB"/>
+	</resultMap>
+	
+	<select id="getImage" resultMap="BaseResultMap" parameterType="java.lang.String">
+		<if test="_parameter != null">
+			${_parameter}
+		</if>
+<!-- 		select * from ( -->
+<!-- 			select tt.*,rownum as nu from ( -->
+<!-- 				select t.f_id,t.f_photo from t_house_rentalinfo_photo t -->
+<!-- 				order by t.f_input_date asc -->
+<!-- 			) tt where rownum <![CDATA[ <= ]]> 1*100  -->
+<!-- 		) ttt where rownum <![CDATA[ >= ]]> (1-1)*100+1 -->
+	</select>
+	
+	<select id="executeQuery" parameterType="java.lang.String">
+		<if test="_parameter != null">
+			${_parameter}
+		</if>
+	</select>
+	
+</mapper>
