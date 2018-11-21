@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yufei.ssm.system.mapper.SysOppermissionMapper" >
+  <resultMap id="BaseResultMap" type="cn.yufei.ssm.system.po.SysOppermission" >
+    <id column="SID" property="sid" jdbcType="VARCHAR" />
+    <result column="SPERMISSIONROLEID" property="spermissionroleid" jdbcType="VARCHAR" />
+    <result column="SPROCESS" property="sprocess" jdbcType="VARCHAR" />
+    <result column="SACTIVITYFNAME" property="sactivityfname" jdbcType="VARCHAR" />
+    <result column="SACTIVITY" property="sactivity" jdbcType="VARCHAR" />
+    <result column="SACTIONSNAMES" property="sactionsnames" jdbcType="VARCHAR" />
+    <result column="SACTIONS" property="sactions" jdbcType="VARCHAR" />
+    <result column="SSEMANTICDP" property="ssemanticdp" jdbcType="VARCHAR" />
+    <result column="SPERMISSIONKIND" property="spermissionkind" jdbcType="DECIMAL" />
+    <result column="SDESCRIPTION" property="sdescription" jdbcType="VARCHAR" />
+    <result column="SSEQUENCE" property="ssequence" jdbcType="DECIMAL" />
+    <result column="SVALIDSTATE" property="svalidstate" jdbcType="DECIMAL" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+    <result column="SURL" property="surl" jdbcType="VARCHAR" />
+    <result column="SNAME" property="sname" jdbcType="VARCHAR" />
+    <result column="SPATH" property="spath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SID, SPERMISSIONROLEID, SPROCESS, SACTIVITYFNAME, SACTIVITY, SACTIONSNAMES, SACTIONS, 
+    SSEMANTICDP, SPERMISSIONKIND, SDESCRIPTION, SSEQUENCE, SVALIDSTATE, VERSION, SURL, 
+    SNAME, SPATH
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.yufei.ssm.system.po.SysOppermissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_OPPERMISSION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_OPPERMISSION
+    where SID = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_OPPERMISSION
+    where SID = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.yufei.ssm.system.po.SysOppermissionExample" >
+    delete from SYS_OPPERMISSION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.yufei.ssm.system.po.SysOppermission" >
+    insert into SYS_OPPERMISSION (SID, SPERMISSIONROLEID, SPROCESS, 
+      SACTIVITYFNAME, SACTIVITY, SACTIONSNAMES, 
+      SACTIONS, SSEMANTICDP, SPERMISSIONKIND, 
+      SDESCRIPTION, SSEQUENCE, SVALIDSTATE, 
+      VERSION, SURL, SNAME, 
+      SPATH)
+    values (#{sid,jdbcType=VARCHAR}, #{spermissionroleid,jdbcType=VARCHAR}, #{sprocess,jdbcType=VARCHAR}, 
+      #{sactivityfname,jdbcType=VARCHAR}, #{sactivity,jdbcType=VARCHAR}, #{sactionsnames,jdbcType=VARCHAR}, 
+      #{sactions,jdbcType=VARCHAR}, #{ssemanticdp,jdbcType=VARCHAR}, #{spermissionkind,jdbcType=DECIMAL}, 
+      #{sdescription,jdbcType=VARCHAR}, #{ssequence,jdbcType=DECIMAL}, #{svalidstate,jdbcType=DECIMAL}, 
+      #{version,jdbcType=DECIMAL}, #{surl,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, 
+      #{spath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yufei.ssm.system.po.SysOppermission" >
+    insert into SYS_OPPERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="spermissionroleid != null" >
+        SPERMISSIONROLEID,
+      </if>
+      <if test="sprocess != null" >
+        SPROCESS,
+      </if>
+      <if test="sactivityfname != null" >
+        SACTIVITYFNAME,
+      </if>
+      <if test="sactivity != null" >
+        SACTIVITY,
+      </if>
+      <if test="sactionsnames != null" >
+        SACTIONSNAMES,
+      </if>
+      <if test="sactions != null" >
+        SACTIONS,
+      </if>
+      <if test="ssemanticdp != null" >
+        SSEMANTICDP,
+      </if>
+      <if test="spermissionkind != null" >
+        SPERMISSIONKIND,
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION,
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE,
+      </if>
+      <if test="svalidstate != null" >
+        SVALIDSTATE,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="surl != null" >
+        SURL,
+      </if>
+      <if test="sname != null" >
+        SNAME,
+      </if>
+      <if test="spath != null" >
+        SPATH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="spermissionroleid != null" >
+        #{spermissionroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="sprocess != null" >
+        #{sprocess,jdbcType=VARCHAR},
+      </if>
+      <if test="sactivityfname != null" >
+        #{sactivityfname,jdbcType=VARCHAR},
+      </if>
+      <if test="sactivity != null" >
+        #{sactivity,jdbcType=VARCHAR},
+      </if>
+      <if test="sactionsnames != null" >
+        #{sactionsnames,jdbcType=VARCHAR},
+      </if>
+      <if test="sactions != null" >
+        #{sactions,jdbcType=VARCHAR},
+      </if>
+      <if test="ssemanticdp != null" >
+        #{ssemanticdp,jdbcType=VARCHAR},
+      </if>
+      <if test="spermissionkind != null" >
+        #{spermissionkind,jdbcType=DECIMAL},
+      </if>
+      <if test="sdescription != null" >
+        #{sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        #{ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="svalidstate != null" >
+        #{svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="surl != null" >
+        #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spath != null" >
+        #{spath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.yufei.ssm.system.po.SysOppermissionExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_OPPERMISSION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_OPPERMISSION
+    <set >
+      <if test="record.sid != null" >
+        SID = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spermissionroleid != null" >
+        SPERMISSIONROLEID = #{record.spermissionroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sprocess != null" >
+        SPROCESS = #{record.sprocess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sactivityfname != null" >
+        SACTIVITYFNAME = #{record.sactivityfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sactivity != null" >
+        SACTIVITY = #{record.sactivity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sactionsnames != null" >
+        SACTIONSNAMES = #{record.sactionsnames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sactions != null" >
+        SACTIONS = #{record.sactions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssemanticdp != null" >
+        SSEMANTICDP = #{record.ssemanticdp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spermissionkind != null" >
+        SPERMISSIONKIND = #{record.spermissionkind,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sdescription != null" >
+        SDESCRIPTION = #{record.sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssequence != null" >
+        SSEQUENCE = #{record.ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="record.svalidstate != null" >
+        SVALIDSTATE = #{record.svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=DECIMAL},
+      </if>
+      <if test="record.surl != null" >
+        SURL = #{record.surl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sname != null" >
+        SNAME = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spath != null" >
+        SPATH = #{record.spath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_OPPERMISSION
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SPERMISSIONROLEID = #{record.spermissionroleid,jdbcType=VARCHAR},
+      SPROCESS = #{record.sprocess,jdbcType=VARCHAR},
+      SACTIVITYFNAME = #{record.sactivityfname,jdbcType=VARCHAR},
+      SACTIVITY = #{record.sactivity,jdbcType=VARCHAR},
+      SACTIONSNAMES = #{record.sactionsnames,jdbcType=VARCHAR},
+      SACTIONS = #{record.sactions,jdbcType=VARCHAR},
+      SSEMANTICDP = #{record.ssemanticdp,jdbcType=VARCHAR},
+      SPERMISSIONKIND = #{record.spermissionkind,jdbcType=DECIMAL},
+      SDESCRIPTION = #{record.sdescription,jdbcType=VARCHAR},
+      SSEQUENCE = #{record.ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{record.svalidstate,jdbcType=DECIMAL},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SURL = #{record.surl,jdbcType=VARCHAR},
+      SNAME = #{record.sname,jdbcType=VARCHAR},
+      SPATH = #{record.spath,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yufei.ssm.system.po.SysOppermission" >
+    update SYS_OPPERMISSION
+    <set >
+      <if test="spermissionroleid != null" >
+        SPERMISSIONROLEID = #{spermissionroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="sprocess != null" >
+        SPROCESS = #{sprocess,jdbcType=VARCHAR},
+      </if>
+      <if test="sactivityfname != null" >
+        SACTIVITYFNAME = #{sactivityfname,jdbcType=VARCHAR},
+      </if>
+      <if test="sactivity != null" >
+        SACTIVITY = #{sactivity,jdbcType=VARCHAR},
+      </if>
+      <if test="sactionsnames != null" >
+        SACTIONSNAMES = #{sactionsnames,jdbcType=VARCHAR},
+      </if>
+      <if test="sactions != null" >
+        SACTIONS = #{sactions,jdbcType=VARCHAR},
+      </if>
+      <if test="ssemanticdp != null" >
+        SSEMANTICDP = #{ssemanticdp,jdbcType=VARCHAR},
+      </if>
+      <if test="spermissionkind != null" >
+        SPERMISSIONKIND = #{spermissionkind,jdbcType=DECIMAL},
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION = #{sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE = #{ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="svalidstate != null" >
+        SVALIDSTATE = #{svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="surl != null" >
+        SURL = #{surl,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        SNAME = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spath != null" >
+        SPATH = #{spath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yufei.ssm.system.po.SysOppermission" >
+    update SYS_OPPERMISSION
+    set SPERMISSIONROLEID = #{spermissionroleid,jdbcType=VARCHAR},
+      SPROCESS = #{sprocess,jdbcType=VARCHAR},
+      SACTIVITYFNAME = #{sactivityfname,jdbcType=VARCHAR},
+      SACTIVITY = #{sactivity,jdbcType=VARCHAR},
+      SACTIONSNAMES = #{sactionsnames,jdbcType=VARCHAR},
+      SACTIONS = #{sactions,jdbcType=VARCHAR},
+      SSEMANTICDP = #{ssemanticdp,jdbcType=VARCHAR},
+      SPERMISSIONKIND = #{spermissionkind,jdbcType=DECIMAL},
+      SDESCRIPTION = #{sdescription,jdbcType=VARCHAR},
+      SSEQUENCE = #{ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{svalidstate,jdbcType=DECIMAL},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SURL = #{surl,jdbcType=VARCHAR},
+      SNAME = #{sname,jdbcType=VARCHAR},
+      SPATH = #{spath,jdbcType=VARCHAR}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  
+  
+</mapper>

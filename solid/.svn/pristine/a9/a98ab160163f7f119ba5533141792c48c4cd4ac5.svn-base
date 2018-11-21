@@ -1,0 +1,59 @@
+package cn.yufei.ssm.system.interceptor;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.yufei.ssm.system.po.UserContext;
+import cn.yufei.ssm.system.utils.ResourcesUtil;
+
+public class LoginInterceptor implements HandlerInterceptor {
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception {
+		// 得到请求的url
+		String url=request.getRequestURI();
+		//判断是否是公开地址
+		List<String> list_urls=ResourcesUtil.gekeyList("anonymousURL");
+		//遍历公开地址
+		for(String open_url:list_urls){
+			if(url.indexOf(open_url)>=0){
+				//如果是公开地址，放行
+				return true;
+			}
+		}
+		//判断用户身份是否在session中
+		HttpSession session=request.getSession();
+		String context=(String) session.getAttribute("userID");
+		if(context!=null){
+			return true;
+		}
+		//执行拦截跳转到登录页面，用户进行身份认证
+		request.getRequestDispatcher("/WEB-INF/UI/login.jsp").forward(request, response);
+		return false;
+	}
+	
+	@Override
+	public void afterCompletion(HttpServletRequest request,
+			HttpServletResponse response, Object handler, Exception e)
+			throws Exception {
+		
+		
+
+	}
+
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler, ModelAndView modeAndView) throws Exception {
+		// TODO Auto-generated method stub
+
+	}
+
+
+}

@@ -1,0 +1,47 @@
+var mainActivity = {};
+//页面初始化
+$(document).ready(function() {
+	mainActivity.gridLoad();
+});
+
+mainActivity.gridLoad=function(){
+	var text=$("#gridInputText").val();
+	$('#mianGrid').datagrid({  
+		width: '100%',  
+        toolbar:"#toobar",
+        height:$(window).height()-5,  
+            striped: true,  
+            singleSelect : true,  
+            url:yufei.portal.contextRoot + "/baseCode/findBaseCodeListData.action",  
+            queryParams:{inputText:text},  
+            loadMsg:'数据加载中请稍后……',  
+            rownumbers: true,  //是否显示列数     
+            pageSize: 20,      
+            pageList: [20,30,40],      
+            pagination: true, //是否启用分页
+            columns:[[  
+                {field:'scode',title: '编码',align: 'center',width:100},  
+                {field:'sname',title: '名称',align: 'center',width:150},  
+                {field:'sisvalid',title: '状态',align: 'center',width:70,formatter:function(value,row){
+                	var text;
+                	if(value=="1"){
+                		text="<font color='green'>启用<font>";
+                	}else if(value=="0"){
+                		text="<font color='red'>禁用<font>";
+                	}
+                	return text;
+                }},
+                {field:'stype',title: '类型',align: 'left',width:100}
+            ]],
+            onLoadSuccess:function(data){
+            	$(this).datagrid("selectRow", 0);  
+            }
+        });
+};
+//刷新
+mainActivity.refreshData=function(){
+	$('#mianGrid').datagrid('load',{inputText: $("#gridInputText").val()});  
+};
+mainActivity.queryGridListData=function(value,name){
+	$('#mianGrid').datagrid('load',{inputText:value});  
+};

@@ -1,0 +1,151 @@
+package cn.yufei.ssm.system.service.impl;
+
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.CollectingData;
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysBasecodeMapper;
+import cn.yufei.ssm.system.po.SysBasecode;
+import cn.yufei.ssm.system.po.SysBasecodeExample;
+import cn.yufei.ssm.system.po.SysOporg;
+import cn.yufei.ssm.system.po.SysOporgExample;
+import cn.yufei.ssm.system.po.SysBasecodeExample.Criteria;
+import cn.yufei.ssm.system.po.Vo.SysBasecodeVo;
+import cn.yufei.ssm.system.service.SysBaseCodeService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysBaseCodeServiceImpl implements SysBaseCodeService {
+
+	@Autowired
+	private SysBasecodeMapper sysBasecodeMapper;
+	
+	@Override
+	public SysBasecode findSysBaseCodeByID(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("findSysBaseCodeByID()---id不能为空");
+		}
+		SysBasecode baseCode=sysBasecodeMapper.selectByPrimaryKey(id);
+		return baseCode;
+	}
+
+	@Override
+	public int save(String baseCodeJson) throws Exception {
+		if(StringUtils.isEmpty(baseCodeJson)){
+			throw new CustomException("SysBasecode  save()---内容为空");
+		}
+		int count=0;
+		CollectingData collecting = CollectingData.getInstance();
+		SysBasecodeVo vo = collecting.readValue(baseCodeJson, SysBasecodeVo.class);
+		String flag=vo.getDataFlag();
+		//新增数据
+		SysBasecode baseCode=new SysBasecode();
+		baseCode.setSid(vo.getSid());
+		baseCode.setVersion(vo.getVersion());
+		baseCode.setScode(vo.getScode());
+		baseCode.setSname(vo.getSname());
+		baseCode.setScreatorcode(vo.getScreatorcode());
+		baseCode.setScreatorname(vo.getScreatorname());
+		baseCode.setSisvalid(vo.getSisvalid());
+		baseCode.setStimecreated(new Date());
+		baseCode.setStype(vo.getStype());
+		baseCode.setStypecode(vo.getStypecode());
+		if("new".equals(flag)){
+			count=sysBasecodeMapper.insertSelective(baseCode);
+		}
+		//更新数据
+		if("edit".equals(flag)){
+			count=sysBasecodeMapper.updateByPrimaryKeySelective(baseCode);
+		}
+		return count;
+	}
+
+	@Override
+	public GridData findBaseCodeListData(String inputText, int page, int rows)
+			throws Exception {
+		SysBasecodeExample baseCodeExample=new SysBasecodeExample();
+		if(!StringUtils.isEmpty(inputText)){
+			Criteria criteria=baseCodeExample.or();
+			criteria.andSnameLike("%" +inputText+"%");
+			Criteria criteria1=baseCodeExample.or();
+			criteria1.andScodeLike("%"+inputText+"%");
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("stimecreated desc");
+		PageInfo<SysBasecode> pageInfo = new PageInfo<SysBasecode>(sysBasecodeMapper.selectByExample(baseCodeExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+	@Override
+	public int delete(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("delete BaseCode()---id不能为空");
+		}
+		return sysBasecodeMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public SysBasecode findSysBaseCodeByCode(String code) throws Exception {
+		if(StringUtils.isEmpty(code)){
+			throw new CustomException("findSysBaseCodeByCode---code不能为空");
+		}
+		List<SysBasecode> list=null;
+		SysBasecodeExample baseExample=new SysBasecodeExample();
+		SysBasecodeExample.Criteria criteria=baseExample.createCriteria();
+		criteria.andScodeEqualTo(code);
+		list=sysBasecodeMapper.selectByExample(baseExample);
+		if(list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public List<SysBasecode> findSysBaseCodeByType(String type)
+			throws Exception {
+		if(StringUtils.isEmpty(type)){
+			throw new CustomException("findSysBaseCodeByType---type不能为空");
+		}
+		SysBasecodeExample baseExample=new SysBasecodeExample();
+		SysBasecodeExample.Criteria criteria=baseExample.createCriteria();
+		criteria.andStypecodeEqualTo(type);
+		criteria.andSisvalidEqualTo(new BigDecimal(1));
+		List<SysBasecode> list=sysBasecodeMapper.selectByExample(baseExample);
+		return list;
+	}
+
+	@Override
+	public GridData findSysBaseCodeByTpey(String type, String inputText,int page, int rows) throws Exception {
+		if(StringUtils.isEmpty(type)){
+			throw new CustomException("findSysBaseCodeByType---type不能为空");
+		}
+		SysBasecodeExample baseExample=new SysBasecodeExample();
+		SysBasecodeExample.Criteria criteria=baseExample.createCriteria();
+		criteria.andStypecodeEqualTo(type);
+		if(!StringUtils.isEmpty(inputText)){
+			criteria.andScodeLike("%"+inputText+"%");
+			baseExample.or(criteria);
+			criteria.andSnameLike("%"+inputText+"%");
+			
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("stimecreated desc");
+		PageInfo<SysBasecode> pageInfo = new PageInfo<SysBasecode>(sysBasecodeMapper.selectByExample(baseExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+}

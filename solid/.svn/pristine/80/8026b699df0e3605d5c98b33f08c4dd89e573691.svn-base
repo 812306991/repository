@@ -1,0 +1,31 @@
+package cn.yufei.ssm.system.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOpauthorizeMapper;
+import cn.yufei.ssm.system.po.SysOpauthorizeExample;
+import cn.yufei.ssm.system.service.SysOpauthorizeService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysOpauthorizeServiceImpl implements SysOpauthorizeService {
+	
+	@Autowired
+	private SysOpauthorizeMapper sysOpauthorizeMapper;
+
+	@Override
+	public int delteRoleByID(String roleId) throws Exception {
+		if(StringUtils.isEmpty(roleId)){
+			throw new CustomException("delteRoleByID()---roleId不能为空");
+		}
+		SysOpauthorizeExample authorizeExample=new SysOpauthorizeExample();
+		SysOpauthorizeExample.Criteria criteria=authorizeExample.createCriteria();
+		criteria.andSauthorizeroleidEqualTo(roleId);
+		return sysOpauthorizeMapper.deleteByExample(authorizeExample);
+	}
+
+}

@@ -1,0 +1,10 @@
+package cn.yufei.ssm.system.service;
+
+import cn.yufei.ssm.system.core.data.GridData;
+
+public interface SysOppermissionService {
+	
+	//根据输入内容查询功能信息
+	public GridData findByTextOppermissionData(String roleID,String inputText,int page,int rows) throws Exception;
+
+}

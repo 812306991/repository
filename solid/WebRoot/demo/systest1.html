@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>123</title>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/way/js/way.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript">
+function getDateTime(){
+	var dateTime=yufei.getCurrentDateTime();
+	alert(dateTime)
+}
+
+function getDate(){
+	var date=yufei.getCurrentDate();
+	alert(date)
+	
+}
+function getuuid(){
+	var date=yufei.getUuid();
+	alert(date)
+	
+}
+function getRandomNumber(){
+	var re=yufei.getRandomNumber();
+	alert(re);
+}
+</script>
+</head>
+
+<body>
+<button onclick="getDateTime()">获取系统时间</button>
+<button onclick="getDate()">获取系统日期</button>
+<button onclick="getuuid()">获取系统uuid</button>
+<button onclick="getRandomNumber()">获取系统随机数</button>
+</body>
+</html>

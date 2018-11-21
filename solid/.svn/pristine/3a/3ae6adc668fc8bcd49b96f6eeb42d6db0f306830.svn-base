@@ -1,0 +1,66 @@
+package cn.yufei.ssm.system.core.data;
+
+import cn.yufei.ssm.system.dal.object.Entity;
+
+public class ZtreeData implements Entity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String id;
+	private String name;
+	private String parent;
+	private boolean open;
+	private boolean isParent;
+	
+	public ZtreeData(String id,String name,String parent,boolean open,boolean isParent){
+		this.id=id;
+		this.name=name;
+		this.parent=parent;
+		this.open=open;
+		this.isParent=isParent;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public boolean isParent() {
+		return isParent;
+	}
+
+	public void setParent(boolean isParent) {
+		this.isParent = isParent;
+	}
+	
+
+}

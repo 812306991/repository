@@ -1,0 +1,52 @@
+package cn.yufei.ssm.system.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.FunctionTreeMapper;
+import cn.yufei.ssm.system.po.Role;
+import cn.yufei.ssm.system.service.SysroleService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysroleServiceImpl implements SysroleService{
+	
+	@Autowired
+	private FunctionTreeMapper functionTreeMapper;
+
+	@Override
+	public boolean getManagerRoleByUserID(String userID) throws Exception {
+		boolean roleManager=false;
+		if(StringUtils.isEmpty(userID)){
+			throw new CustomException("getManagerRoleByUserID()---用户id不能为空");
+		}
+		List<Role> list=findRoleListByUserId(userID);
+		Role role=null;
+		for(int i=0;i<list.size();i++){
+			role=list.get(i);
+			String roleCode=role.getRoleCode();
+			String roleName=role.getRoleName();
+			if(roleCode.equals("Administrator") || roleName.equals("Administrator")){
+				roleManager=true;	
+			}
+		}
+		return roleManager;
+	}
+
+	@Override
+	public List<Role> findRoleListByUserId(String userID) throws Exception {
+		if(StringUtils.isEmpty(userID)){
+			throw new CustomException("findRoleListByUserId()---用户id不能为空");
+		}
+		List<Role> list=functionTreeMapper.findRoleListByUserId(userID);
+		return list;
+	}
+	
+	
+
+}

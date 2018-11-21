@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yufei.ssm.system.mapper.FunctionTreeMapper" >
+  <!-- 根据用户id查询功能地址 -->
+  <select id="findMenuListByUserId" parameterType="string"
+	resultType="cn.yufei.ssm.system.po.FunctionTree">
+	select
+	m.sURL as url,
+	m.SACTIVITY as activity,
+	m.sname as name,
+	m.sprocess as process,
+	m.spermissionroleid as roleID
+	from SYS_OPPERMISSION m
+	where m.spermissionroleid in(
+	select sauthorizeroleid from sys_opauthorize t
+	where t.sorgfid =#{userOrgID}
+	or t.sorgfid like '%${userOrgID}%'
+	)
+</select>
+
+	<!-- 根据用户id查询角色信息 -->
+
+	<select id="findRoleListByUserId" parameterType="string"
+		resultType="cn.yufei.ssm.system.po.Role">
+		select sid as roleId,sname as roleCode,scode as roleName from sys_oprole m where sid in(
+		select sauthorizeroleid from sys_opauthorize t where t.sorgfid
+		=#{userOrgID}
+		or t.sorgfid like
+		'%${userOrgID}%')
+	</select>
+
+</mapper>

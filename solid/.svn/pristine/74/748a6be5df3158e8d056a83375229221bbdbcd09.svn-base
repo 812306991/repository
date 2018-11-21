@@ -1,0 +1,122 @@
+package cn.yufei.ssm.system.service.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOpauthorizeMapper;
+import cn.yufei.ssm.system.po.SysOpauthorizeExample;
+import cn.yufei.ssm.system.po.SysOpauthorize;
+import cn.yufei.ssm.system.po.SysOprole;
+import cn.yufei.ssm.system.po.UserContext;
+import cn.yufei.ssm.system.service.SysOpauthorizeService;
+import cn.yufei.ssm.system.utils.StringUtils;
+import cn.yufei.ssm.system.utils.Tools;
+
+@Service
+@Scope("singleton")
+public class SysOpauthorizeServiceImpl implements SysOpauthorizeService {
+	
+	@Autowired
+	private SysOpauthorizeMapper sysOpauthorizeMapper;
+
+	@Override
+	public int delteRoleByID(String roleId) throws Exception {
+		if(StringUtils.isEmpty(roleId)){
+			throw new CustomException("delteRoleByID()---roleId不能为空");
+		}
+		SysOpauthorizeExample authorizeExample=new SysOpauthorizeExample();
+		SysOpauthorizeExample.Criteria criteria=authorizeExample.createCriteria();
+		criteria.andSauthorizeroleidEqualTo(roleId);
+		return sysOpauthorizeMapper.deleteByExample(authorizeExample);
+	}
+
+	@Override
+	public GridData findAuthorizeDataListByInput(String orgid,String orgSfid,
+			String inputText, int page, int rows) throws Exception {
+		if(StringUtils.isEmpty(orgSfid)){
+			throw new CustomException("findAuthorizeDataListByInput()---orgSfid不能为空");
+		}
+		SysOpauthorizeExample authorizeExample=new SysOpauthorizeExample();
+		SysOpauthorizeExample.Criteria criteria=authorizeExample.createCriteria();
+		criteria.andSorgfidEqualTo(orgSfid);
+		SysOpauthorizeExample.Criteria criteria1=authorizeExample.or();
+		criteria1.andSorgfidEqualTo(orgid);
+		if(!StringUtils.isEmpty(inputText)){
+			criteria.andSdescriptionLike("%"+inputText+"%");
+			SysOpauthorizeExample.Criteria criteria3=authorizeExample.or();	
+			criteria3.andSorgfnameLike("%"+inputText+"%");
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("sorgname asc");
+		PageInfo<SysOpauthorize> pageInfo = new PageInfo<SysOpauthorize>(sysOpauthorizeMapper.selectByExample(authorizeExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+	@Override
+	public int save(HttpServletRequest request,String orgJson,String dataJson) throws Exception {
+		if (StringUtils.isEmpty(dataJson)) {
+			throw new CustomException("authorize  save()---内容为空");
+		}
+		if (StringUtils.isEmpty(orgJson)) {
+			throw new CustomException("authorize  save()---组织信息为空");
+		}
+		int count=0;
+		HttpSession session=request.getSession();
+		//获取用户信息
+		UserContext context=(UserContext) session.getAttribute("userContext");
+		ObjectMapper mapper=new ObjectMapper();
+		JavaType javaType=mapper.getTypeFactory().constructParametricType(ArrayList.class, SysOprole.class);
+		List<SysOprole> list= mapper.readValue(dataJson,javaType);
+		SysOpauthorize authorize=new SysOpauthorize();
+		//获取组织信息转换为json
+		JSONObject org=new JSONObject(orgJson);
+		for(int i=0;i<list.size();i++){
+			SysOprole role=list.get(i);
+			authorize.setSid(Tools.getID());
+			authorize.setVersion(new BigDecimal(0));
+			authorize.setSauthorizeroleid(role.getSid());
+			authorize.setScreatetime(Calendar.getInstance().getTime());
+			authorize.setScreatorfid(context.getUserFullId());
+			authorize.setScreatorfname(context.getUserFullName());
+			authorize.setSdescription(role.getSname());
+			authorize.setSorgid(org.getString("orgId"));
+			authorize.setSorgfid(org.getString("orgFid"));
+			authorize.setSorgfname(org.getString("orgFname"));
+			authorize.setSorgname(org.getString("orgName"));
+			count=sysOpauthorizeMapper.insertSelective(authorize);
+		}
+		return count;
+	}
+
+	@Override
+	public int deleteById(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("authorize deleteById()---id不能为空");
+		}
+		String[] ids=id.split(",");
+		int count=0;
+		for(int i=0;i<ids.length;i++){
+			count=sysOpauthorizeMapper.deleteByPrimaryKey(ids[i]);
+		}
+		return count;
+	}
+
+}

@@ -1,0 +1,137 @@
+package cn.yufei.ssm.system.service.impl;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOppermissionMapper;
+import cn.yufei.ssm.system.po.SysOppermission;
+import cn.yufei.ssm.system.po.SysOppermissionExample;
+import cn.yufei.ssm.system.service.SysOppermissionService;
+import cn.yufei.ssm.system.utils.StringUtils;
+import cn.yufei.ssm.system.utils.Tools;
+
+@Service
+@Scope("singleton")
+public class SysOppermissionServiceImpl implements SysOppermissionService {
+	
+
+	@Autowired
+	private SysOppermissionMapper sysOppermissionMapper;
+
+	@Override
+	public GridData findByTextOppermissionData(String roleID,String inputText, int page,
+			int rows) throws Exception {
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		if(StringUtils.isEmpty(roleID)){
+			throw new CustomException("findByTextOppermissionData()---roleID不能为空");
+		}else{
+			SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+			criteria.andSpermissionroleidEqualTo(roleID);
+			if(!StringUtils.isEmpty(inputText)){
+				criteria.andSnameLike("%"+inputText+"%");
+			}
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("ssequence asc");
+		PageInfo<SysOppermission> pageInfo = new PageInfo<SysOppermission>(sysOppermissionMapper.selectByExample(ppermisExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+	@Override
+	public int deleteByRoleID(String roleId) throws Exception {
+		if(StringUtils.isEmpty(roleId)){
+			throw new CustomException("permission deleteByRoleID()---roleID不能为空");
+		}
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+		criteria.andSpermissionroleidEqualTo(roleId);
+		return sysOppermissionMapper.deleteByExample(ppermisExample);
+	}
+	@Override
+	public int addPermission(String roleID, String json) throws Exception {
+		if(StringUtils.isEmpty(roleID)){
+			throw new CustomException("permission addPermission()---roleID不能为空");
+		}
+		JSONArray jsonArray=new JSONArray(json);
+		String activity=null,process=null;
+		int count=0;
+		for (int i=0;i<jsonArray.length();i++) {
+			JSONObject jobect=jsonArray.getJSONObject(i);
+			activity=jobect.getString("activity");
+			if(StringUtils.isEmpty(activity))activity=null;
+			process=jobect.getString("process");
+			if(StringUtils.isEmpty(process))process=null;
+			if(!isExist(roleID,jobect.getString("url")) && !jobect.getString("url").equals("undefined")){
+				SysOppermission oppermission=new SysOppermission();
+				oppermission.setSid(Tools.getID());
+				oppermission.setVersion(new BigDecimal(0));
+				oppermission.setSpermissionroleid(roleID);
+				oppermission.setSname(jobect.getString("name"));
+				oppermission.setSurl(jobect.getString("url"));
+				oppermission.setSprocess(process);
+				oppermission.setSactivity(activity);
+				oppermission.setSpath(jobect.getString("path"));
+				oppermission.setSactivityfname(jobect.getString("name"));
+				count=sysOppermissionMapper.insertSelective(oppermission);
+			}
+		}
+		return count;
+	}
+	
+	private Boolean isExist(String roleID,String url) throws Exception{
+		return getByUrl(roleID,url)!=null;
+	}
+	
+	private SysOppermission getByUrl(String roleID,String url) throws Exception{
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+		if(!StringUtils.isEmpty(roleID))
+		criteria.andSpermissionroleidEqualTo(roleID);
+		if(!StringUtils.isEmpty(url))
+		criteria.andSurlEqualTo(url);
+		List<SysOppermission> list=sysOppermissionMapper.selectByExample(ppermisExample);
+		if(list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public int deletePermissionByID(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("permission deletePermissionByID()---id不能为空");
+		}
+		String[] ids=id.split(",");
+		int count=0;
+		for(int i=0;i<ids.length;i++){
+			count=sysOppermissionMapper.deleteByPrimaryKey(ids[i]);
+		}
+		return count;
+	}
+
+	@Override
+	public List<SysOppermission> findPermissionByRoleID(String roleID) throws Exception {
+		if(StringUtils.isEmpty(roleID)){
+			throw new CustomException("permission findPermissionByRoleID()---roleID不能为空");
+		}
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+		criteria.andSpermissionroleidEqualTo(roleID);
+		List<SysOppermission> list=sysOppermissionMapper.selectByExample(ppermisExample);
+		if(list!=null)return list;
+		return null;
+	}
+
+}

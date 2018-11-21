@@ -1,0 +1,10 @@
+package cn.yufei.ssm.system.service;
+
+import cn.yufei.ssm.system.po.SysLog;
+
+public interface SysLogService {
+	
+	//添加日志
+	public int addLog(SysLog log) throws Exception;
+
+}

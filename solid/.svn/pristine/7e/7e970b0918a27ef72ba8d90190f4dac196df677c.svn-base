@@ -1,0 +1,438 @@
+package cn.yufei.ssm.system.po;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import cn.yufei.ssm.system.dal.object.Entity;
+
+public class SysOpperson implements Entity{
+    private String sid;
+
+    private String sname;
+
+    private String scode;
+
+    private String sidcard;
+
+    private BigDecimal snumb;
+
+    private String sloginname;
+
+    private String spassword;
+
+    private BigDecimal spasswordtimelimit;
+
+    private Date spasswordmodifytime;
+
+    private String smainorgid;
+
+    private String ssafelevelid;
+
+    private BigDecimal ssequence;
+
+    private BigDecimal svalidstate;
+
+    private String sdescription;
+
+    private String ssex;
+
+    private Date sbirthday;
+
+    private Date sjoindate;
+
+    private String shomeplace;
+
+    private String sdegree;
+
+    private String sgraduateschool;
+
+    private String sspeciality;
+
+    private String sschoollength;
+
+    private String stitle;
+
+    private String smarriage;
+
+    private String scardno;
+
+    private String scardkind;
+
+    private String sfamilyaddress;
+
+    private String szip;
+
+    private String smsn;
+
+    private String sqq;
+
+    private String smail;
+
+    private String smobilephone;
+
+    private String sfamilyphone;
+
+    private String sofficephone;
+
+    private BigDecimal version;
+
+    private String scountry;
+
+    private String sprovince;
+
+    private String scity;
+
+    private String spositions;
+
+    private String sschool;
+
+    private String sstudy;
+
+    private String senglishname;
+
+    private byte[] sphoto;
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid == null ? null : sid.trim();
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname == null ? null : sname.trim();
+    }
+
+    public String getScode() {
+        return scode;
+    }
+
+    public void setScode(String scode) {
+        this.scode = scode == null ? null : scode.trim();
+    }
+
+    public String getSidcard() {
+        return sidcard;
+    }
+
+    public void setSidcard(String sidcard) {
+        this.sidcard = sidcard == null ? null : sidcard.trim();
+    }
+
+    public BigDecimal getSnumb() {
+        return snumb;
+    }
+
+    public void setSnumb(BigDecimal snumb) {
+        this.snumb = snumb;
+    }
+
+    public String getSloginname() {
+        return sloginname;
+    }
+
+    public void setSloginname(String sloginname) {
+        this.sloginname = sloginname == null ? null : sloginname.trim();
+    }
+
+    public String getSpassword() {
+        return spassword;
+    }
+
+    public void setSpassword(String spassword) {
+        this.spassword = spassword == null ? null : spassword.trim();
+    }
+
+    public BigDecimal getSpasswordtimelimit() {
+        return spasswordtimelimit;
+    }
+
+    public void setSpasswordtimelimit(BigDecimal spasswordtimelimit) {
+        this.spasswordtimelimit = spasswordtimelimit;
+    }
+
+    public Date getSpasswordmodifytime() {
+        return spasswordmodifytime;
+    }
+
+    public void setSpasswordmodifytime(Date spasswordmodifytime) {
+        this.spasswordmodifytime = spasswordmodifytime;
+    }
+
+    public String getSmainorgid() {
+        return smainorgid;
+    }
+
+    public void setSmainorgid(String smainorgid) {
+        this.smainorgid = smainorgid == null ? null : smainorgid.trim();
+    }
+
+    public String getSsafelevelid() {
+        return ssafelevelid;
+    }
+
+    public void setSsafelevelid(String ssafelevelid) {
+        this.ssafelevelid = ssafelevelid == null ? null : ssafelevelid.trim();
+    }
+
+    public BigDecimal getSsequence() {
+        return ssequence;
+    }
+
+    public void setSsequence(BigDecimal ssequence) {
+        this.ssequence = ssequence;
+    }
+
+    public BigDecimal getSvalidstate() {
+        return svalidstate;
+    }
+
+    public void setSvalidstate(BigDecimal svalidstate) {
+        this.svalidstate = svalidstate;
+    }
+
+    public String getSdescription() {
+        return sdescription;
+    }
+
+    public void setSdescription(String sdescription) {
+        this.sdescription = sdescription == null ? null : sdescription.trim();
+    }
+
+    public String getSsex() {
+        return ssex;
+    }
+
+    public void setSsex(String ssex) {
+        this.ssex = ssex == null ? null : ssex.trim();
+    }
+
+    public Date getSbirthday() {
+        return sbirthday;
+    }
+
+    public void setSbirthday(Date sbirthday) {
+        this.sbirthday = sbirthday;
+    }
+
+    public Date getSjoindate() {
+        return sjoindate;
+    }
+
+    public void setSjoindate(Date sjoindate) {
+        this.sjoindate = sjoindate;
+    }
+
+    public String getShomeplace() {
+        return shomeplace;
+    }
+
+    public void setShomeplace(String shomeplace) {
+        this.shomeplace = shomeplace == null ? null : shomeplace.trim();
+    }
+
+    public String getSdegree() {
+        return sdegree;
+    }
+
+    public void setSdegree(String sdegree) {
+        this.sdegree = sdegree == null ? null : sdegree.trim();
+    }
+
+    public String getSgraduateschool() {
+        return sgraduateschool;
+    }
+
+    public void setSgraduateschool(String sgraduateschool) {
+        this.sgraduateschool = sgraduateschool == null ? null : sgraduateschool.trim();
+    }
+
+    public String getSspeciality() {
+        return sspeciality;
+    }
+
+    public void setSspeciality(String sspeciality) {
+        this.sspeciality = sspeciality == null ? null : sspeciality.trim();
+    }
+
+    public String getSschoollength() {
+        return sschoollength;
+    }
+
+    public void setSschoollength(String sschoollength) {
+        this.sschoollength = sschoollength == null ? null : sschoollength.trim();
+    }
+
+    public String getStitle() {
+        return stitle;
+    }
+
+    public void setStitle(String stitle) {
+        this.stitle = stitle == null ? null : stitle.trim();
+    }
+
+    public String getSmarriage() {
+        return smarriage;
+    }
+
+    public void setSmarriage(String smarriage) {
+        this.smarriage = smarriage == null ? null : smarriage.trim();
+    }
+
+    public String getScardno() {
+        return scardno;
+    }
+
+    public void setScardno(String scardno) {
+        this.scardno = scardno == null ? null : scardno.trim();
+    }
+
+    public String getScardkind() {
+        return scardkind;
+    }
+
+    public void setScardkind(String scardkind) {
+        this.scardkind = scardkind == null ? null : scardkind.trim();
+    }
+
+    public String getSfamilyaddress() {
+        return sfamilyaddress;
+    }
+
+    public void setSfamilyaddress(String sfamilyaddress) {
+        this.sfamilyaddress = sfamilyaddress == null ? null : sfamilyaddress.trim();
+    }
+
+    public String getSzip() {
+        return szip;
+    }
+
+    public void setSzip(String szip) {
+        this.szip = szip == null ? null : szip.trim();
+    }
+
+    public String getSmsn() {
+        return smsn;
+    }
+
+    public void setSmsn(String smsn) {
+        this.smsn = smsn == null ? null : smsn.trim();
+    }
+
+    public String getSqq() {
+        return sqq;
+    }
+
+    public void setSqq(String sqq) {
+        this.sqq = sqq == null ? null : sqq.trim();
+    }
+
+    public String getSmail() {
+        return smail;
+    }
+
+    public void setSmail(String smail) {
+        this.smail = smail == null ? null : smail.trim();
+    }
+
+    public String getSmobilephone() {
+        return smobilephone;
+    }
+
+    public void setSmobilephone(String smobilephone) {
+        this.smobilephone = smobilephone == null ? null : smobilephone.trim();
+    }
+
+    public String getSfamilyphone() {
+        return sfamilyphone;
+    }
+
+    public void setSfamilyphone(String sfamilyphone) {
+        this.sfamilyphone = sfamilyphone == null ? null : sfamilyphone.trim();
+    }
+
+    public String getSofficephone() {
+        return sofficephone;
+    }
+
+    public void setSofficephone(String sofficephone) {
+        this.sofficephone = sofficephone == null ? null : sofficephone.trim();
+    }
+
+    public BigDecimal getVersion() {
+        return version;
+    }
+
+    public void setVersion(BigDecimal version) {
+        this.version = version;
+    }
+
+    public String getScountry() {
+        return scountry;
+    }
+
+    public void setScountry(String scountry) {
+        this.scountry = scountry == null ? null : scountry.trim();
+    }
+
+    public String getSprovince() {
+        return sprovince;
+    }
+
+    public void setSprovince(String sprovince) {
+        this.sprovince = sprovince == null ? null : sprovince.trim();
+    }
+
+    public String getScity() {
+        return scity;
+    }
+
+    public void setScity(String scity) {
+        this.scity = scity == null ? null : scity.trim();
+    }
+
+    public String getSpositions() {
+        return spositions;
+    }
+
+    public void setSpositions(String spositions) {
+        this.spositions = spositions == null ? null : spositions.trim();
+    }
+
+    public String getSschool() {
+        return sschool;
+    }
+
+    public void setSschool(String sschool) {
+        this.sschool = sschool == null ? null : sschool.trim();
+    }
+
+    public String getSstudy() {
+        return sstudy;
+    }
+
+    public void setSstudy(String sstudy) {
+        this.sstudy = sstudy == null ? null : sstudy.trim();
+    }
+
+    public String getSenglishname() {
+        return senglishname;
+    }
+
+    public void setSenglishname(String senglishname) {
+        this.senglishname = senglishname == null ? null : senglishname.trim();
+    }
+
+    public byte[] getSphoto() {
+        return sphoto;
+    }
+
+    public void setSphoto(byte[] sphoto) {
+        this.sphoto = sphoto;
+    }
+}

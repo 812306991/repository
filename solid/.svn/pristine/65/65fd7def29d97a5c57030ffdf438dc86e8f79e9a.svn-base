@@ -1,0 +1,67 @@
+package cn.yufei.ssm.system.utils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+
+public class ContextUtils implements ApplicationContextAware {
+
+	private static Logger log = Logger.getLogger(ContextUtils.class);
+	private static ApplicationContext application;
+	private static Properties properties;
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		application = applicationContext;
+		properties = new Properties();
+		try {
+			properties.load(ContextUtils.class.getClassLoader()
+					.getResourceAsStream("context.properties"));
+		} catch (IOException e) {
+			log.fatal("加载context错误", e);
+			System.exit(-1);
+		}
+		String docRoot = getProperty("fileDataDir");
+		createFileDir(docRoot);
+		String fileData=getProperty("fileData");
+		createFileDir(fileData);
+		String fileIndex=getProperty("fileIndex");
+		createFileDir(fileIndex);
+	}
+	
+	private static void createFileDir(String path){
+		File file = new File(path);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+	}
+
+	public static String getProperty(String key) {
+		return (String) properties.getProperty(key);
+	}
+
+	public static String getUserId(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		return (String) session.getAttribute("userID");
+	}
+
+	public static Object getBean(String beanName) {
+		return application.getBean(beanName);
+	}
+	
+	
+	public static <T> T getBean(Class<T> clazz){
+		return application.getBean(clazz);
+	}
+
+}

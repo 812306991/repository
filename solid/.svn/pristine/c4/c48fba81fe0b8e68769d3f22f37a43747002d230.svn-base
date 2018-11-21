@@ -1,0 +1,103 @@
+package cn.yufei.ssm.system.po;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import cn.yufei.ssm.system.dal.object.Entity;
+
+public class SysBasecode implements Entity{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Object sid;
+
+    private Object stype;
+
+    private Object scode;
+
+    private Object sname;
+
+    private BigDecimal sisvalid;
+
+    private Object screatorcode;
+
+    private Object screatorname;
+
+    private Date stimecreated;
+
+    private BigDecimal version;
+
+    public Object getSid() {
+        return sid;
+    }
+
+    public void setSid(Object sid) {
+        this.sid = sid;
+    }
+
+    public Object getStype() {
+        return stype;
+    }
+
+    public void setStype(Object stype) {
+        this.stype = stype;
+    }
+
+    public Object getScode() {
+        return scode;
+    }
+
+    public void setScode(Object scode) {
+        this.scode = scode;
+    }
+
+    public Object getSname() {
+        return sname;
+    }
+
+    public void setSname(Object sname) {
+        this.sname = sname;
+    }
+
+    public BigDecimal getSisvalid() {
+        return sisvalid;
+    }
+
+    public void setSisvalid(BigDecimal sisvalid) {
+        this.sisvalid = sisvalid;
+    }
+
+    public Object getScreatorcode() {
+        return screatorcode;
+    }
+
+    public void setScreatorcode(Object screatorcode) {
+        this.screatorcode = screatorcode;
+    }
+
+    public Object getScreatorname() {
+        return screatorname;
+    }
+
+    public void setScreatorname(Object screatorname) {
+        this.screatorname = screatorname;
+    }
+
+    public Date getStimecreated() {
+        return stimecreated;
+    }
+
+    public void setStimecreated(Date stimecreated) {
+        this.stimecreated = stimecreated;
+    }
+
+    public BigDecimal getVersion() {
+        return version;
+    }
+
+    public void setVersion(BigDecimal version) {
+        this.version = version;
+    }
+}

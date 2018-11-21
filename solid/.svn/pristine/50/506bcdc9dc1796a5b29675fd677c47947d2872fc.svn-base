@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" id="main_layout"  style="margin-top:5px;">
+		<div data-options="region:'west',split:true,iconCls:'icon-man'" style="width: 270px;">
+			<div style="overflow: hidden;" class="datagrid-toolbar toolbar">
+				<div style="margin-top: 5px">
+					<input id="inputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称或编码查询',searcher:mainActivity.openInputTextDialog"
+						style="width: 90%;"/>
+						
+				</div>
+			</div>
+			<div>
+				<ul id="orgTree" class="ztree"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center',split:true,border:false">
+		   <div id="org_layout" class="easyui-layout" data-options="fit:true">
+				<div data-options="region:'west',split:false" style="width:70px;">
+					<div class="easyui-panel" title="操作" data-options="fit:true,border:false">
+						<ul style="padding:0;margin:0;text-align: center;vertical-align: middle;position: relative;top: 25%;">
+							<li ><a href="javascript:addAll();" class="easyui-linkbutton button-info" data-options="plain:true" >全选</a></li>
+							<li style="margin-top:3px"><a href="javascript:removeSelect();" class="easyui-linkbutton button-info" data-options="plain:true">移除</a></li>
+							<li style="margin-top:3px"><a href="javascript:removeAll();" class="easyui-linkbutton button-danger" data-options="plain:true">清空</a></li>
+						</ul>
+					</div>
+				</div>
+				<div data-options="region:'center',split:false">
+			        <table id="grid_list"></table>
+		        </div>
+			</div>
+		</div>
+		
+	</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/themes/insdep/expand/jquery-easyui-datagridview/datagrid-groupview.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/select_org_dialog.js"></script>
+</html>

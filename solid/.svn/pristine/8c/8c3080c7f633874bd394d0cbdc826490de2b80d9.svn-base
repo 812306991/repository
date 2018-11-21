@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root> 
+  <item display="solid" label="系统管理" icon="icon-osmanage" open="true">
+        <item label="基础信息" url="/solid/core/system/baseCode/baseCode.html" icon="icon-database"/>
+        <item label="组织机构" url="/solid/core/system/org/org_main.html" icon="icon-org"/>
+        <item label="角色管理" url="/solid/core/system/role/role_main.html" icon="icon-role"/>
+        <item label="权限分配" url="/solid/core/system/authorize/authorize.html" icon="icon-authorize"/>
+        <item label="权限查询" url="/solid/core/system/authorityQuery/authorityQuery.html" icon="icon-authorizeQuery"/>
+        <item label="业务管理权限" url="/solid/core/system/management/management.html" icon="icon-management"/>
+		<item label="系统日志查看" url="/solid/core/system/log/log.html" icon="icon-log"/>
+		
+  </item> 
+</root>

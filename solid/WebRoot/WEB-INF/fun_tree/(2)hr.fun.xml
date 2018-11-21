@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root> 
+  <item label="hr系统" icon="icon-osmanage" open="true">
+        <item label="基础信息1" url="/solid/core/system/baseCode/baseCode4.html" icon="icon-database"/>
+        <item label="基础信息2" url="/solid/core/system/baseCode/baseCode2.html" icon="icon-database"/>
+        <item label="基础信息3" url="/solid/core/system/baseCode/baseCode3.html" icon="icon-database"/>
+  </item> 
+  
+</root>

@@ -1,0 +1,58 @@
+var dataState;
+$(function(){
+	dataState=yufei.getUrlParam("dataState");
+	var rowId=yufei.getUrlParam("rowid");
+		if (dataState == "new") {
+			var json = {
+					sid : yufei.getUuid(),
+					version : 0,
+					screatorcode : yufei.context.userCode,
+					screatorname : yufei.context.userName
+				};
+				$("#y-form").form('load', json);
+	}else if(dataState=="edit"){
+		$("#scode").textbox('disable');
+	   //修改数据	
+		if(rowId){
+			yufei.ajax("/baseCode/queryBaseCodeById.action",{"id":rowId},function(aysData,state){
+				var row=JSON.parse(aysData);
+				if(state=="SUCCESS"){
+					$("#y-form").form('load', row);
+				}
+			});
+		}
+	}else{
+		$("#y-form").hide();
+	}
+});
+
+
+function dailogEngin() {
+	var orgCode=$("#scode").textbox('getValue');
+	var orgName=$("#sname").textbox('getValue');
+	if(!orgName){
+		$.messager.alert('系统提示', '名称不能为空！', 'warning');
+		return false;
+	}
+	if(!orgCode){
+		$.messager.alert('系统提示', '编码不能为空！', 'warning');
+		return false;
+	}
+	if(dataState){
+		var json = {
+				dataFlag:dataState,
+				sid : $("#sid").val(),
+				version : $("#version").val(),
+				screatorcode : $("#screatorcode").val(),
+				screatorname : $("#screatorname").val(),
+				sname : $("#sname").textbox('getValue'),
+				scode : $("#scode").textbox('getValue'),
+				stype :$('#stype').combobox('getText'),
+				stypecode:$('#stype').combobox('getValue'),
+				sisvalid : $('input:radio:checked').val()
+			};
+		return json;
+	}else{
+		return false;
+	}
+}

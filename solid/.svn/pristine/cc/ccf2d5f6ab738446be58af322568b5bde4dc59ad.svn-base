@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div id="main_layout" class="easyui-panel">
+		<div>
+				<ul id="funTree" class="ztree"></ul>
+		</div>
+</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/funTree_dialog.js"></script>
+</html>

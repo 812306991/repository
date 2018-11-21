@@ -1,0 +1,41 @@
+package com.yufei.doc.service;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+
+
+
+import cn.yufei.ssm.system.core.data.GridData;
+
+import com.yufei.doc.po.DocTree;
+import com.yufei.doc.po.SysDocnodeWithBLOBs;
+
+
+public interface SysDocService {
+	
+	
+	//根据id判断是否是父节点
+	public boolean isParentNode(String id) throws Exception;
+	
+	//异步获取文档目录树
+	public List<SysDocnodeWithBLOBs> getDocTreeNode(String id) throws Exception;
+	
+	//新建文件夹目录保存
+	public int saveDir(HttpSession session,String jsonStr)throws Exception;
+	
+	//文件夹更新
+	public int updateDir(HttpSession session,String jsonStr) throws Exception;
+	
+	//获取文档树
+	public List<DocTree> getDocTreeNode(List<SysDocnodeWithBLOBs> node) throws Exception;
+
+	
+	//根据id查询文件夹信息
+	public SysDocnodeWithBLOBs finDocDataById(String id) throws Exception;
+	
+	//根据文件夹查询文件信息列表
+	public GridData findFileDataByDirId(String dirId,String inputText, int page,int rows) throws Exception;
+
+}

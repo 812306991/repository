@@ -1,0 +1,59 @@
+package cn.yufei.ssm.system.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOpauthorizeMapper;
+import cn.yufei.ssm.system.po.SysOpauthorizeExample;
+import cn.yufei.ssm.system.po.SysOpauthorize;
+import cn.yufei.ssm.system.service.SysOpauthorizeService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysOpauthorizeServiceImpl implements SysOpauthorizeService {
+	
+	@Autowired
+	private SysOpauthorizeMapper sysOpauthorizeMapper;
+
+	@Override
+	public int delteRoleByID(String roleId) throws Exception {
+		if(StringUtils.isEmpty(roleId)){
+			throw new CustomException("delteRoleByID()---roleId不能为空");
+		}
+		SysOpauthorizeExample authorizeExample=new SysOpauthorizeExample();
+		SysOpauthorizeExample.Criteria criteria=authorizeExample.createCriteria();
+		criteria.andSauthorizeroleidEqualTo(roleId);
+		return sysOpauthorizeMapper.deleteByExample(authorizeExample);
+	}
+
+	@Override
+	public GridData findAuthorizeDataListByInput(String orgid,String orgSfid,
+			String inputText, int page, int rows) throws Exception {
+		if(StringUtils.isEmpty(orgSfid)){
+			throw new CustomException("findAuthorizeDataListByInput()---orgSfid不能为空");
+		}
+		SysOpauthorizeExample authorizeExample=new SysOpauthorizeExample();
+		SysOpauthorizeExample.Criteria criteria=authorizeExample.createCriteria();
+		criteria.andSorgfidEqualTo(orgSfid);
+		SysOpauthorizeExample.Criteria criteria1=authorizeExample.or();
+		criteria1.andSorgfidEqualTo(orgid);
+		if(!StringUtils.isEmpty(inputText)){
+			criteria.andSdescriptionLike("%"+inputText+"%");
+			SysOpauthorizeExample.Criteria criteria3=authorizeExample.or();	
+			criteria3.andSorgfnameLike("%"+inputText+"%");
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("sorgname asc");
+		PageInfo<SysOpauthorize> pageInfo = new PageInfo<SysOpauthorize>(sysOpauthorizeMapper.selectByExample(authorizeExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+}

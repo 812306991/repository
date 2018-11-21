@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root> 
+  <item display="solid" label="系统管理" icon="icon-osmanage" open="true">
+        <item label="基础信息" url="/solid/core/system/baseCode/baseCode.html" icon="icon-database"/>
+        <item label="组织机构" url="/solid/core/system/org/org_main.html" icon="icon-org"/>
+        <item label="角色管理" url="/solid/core/system/role/role_main.html" icon="icon-role"/>
+        <item label="权限分配" url="/solid/core/system/authorize/authorize.html" icon="icon-role"/>
+		
+		
+  </item> 
+</root>

@@ -1,0 +1,29 @@
+package cn.yufei.ssm.system.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.service.SysOpauthorizeService;
+
+@Controller
+@RequestMapping("/authorize")
+public class SysOpauthorizeController {
+	
+	
+	@Autowired
+	private SysOpauthorizeService sysOpauthorizeService;
+	
+	
+	//根据输入内容模糊查询机构信息列表、
+	@RequestMapping(value = "/findTextAuthorizeListData", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody GridData findTextPermissionListData(String orgid,String orgFid,String inputText,@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,@RequestParam(value = "rows", defaultValue = "5", required = false) Integer rows) throws Exception {
+	GridData datagrid = sysOpauthorizeService.findAuthorizeDataListByInput(orgid,orgFid, inputText, page, rows);
+	 return datagrid;
+	}
+
+}

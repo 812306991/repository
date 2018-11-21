@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yufei.doc.mapper.SysDocnodeMapper" >
+  <resultMap id="BaseResultMap" type="com.yufei.doc.po.SysDocnode" >
+    <id column="SID" property="sid" jdbcType="VARCHAR" />
+    <result column="SPARENTID" property="sparentid" jdbcType="VARCHAR" />
+    <result column="SDOCNAME" property="sdocname" jdbcType="VARCHAR" />
+    <result column="SSEQUENCE" property="ssequence" jdbcType="VARCHAR" />
+    <result column="SSIZE" property="ssize" jdbcType="FLOAT" />
+    <result column="SKIND" property="skind" jdbcType="VARCHAR" />
+    <result column="SDOCPATH" property="sdocpath" jdbcType="VARCHAR" />
+    <result column="SCREATORFID" property="screatorfid" jdbcType="VARCHAR" />
+    <result column="SCREATORNAME" property="screatorname" jdbcType="VARCHAR" />
+    <result column="SCREATORDEPTNAME" property="screatordeptname" jdbcType="VARCHAR" />
+    <result column="SCREATETIME" property="screatetime" jdbcType="DATE" />
+    <result column="SEDITORFID" property="seditorfid" jdbcType="VARCHAR" />
+    <result column="SEDITORNAME" property="seditorname" jdbcType="VARCHAR" />
+    <result column="SEDITORDEPTNAME" property="seditordeptname" jdbcType="VARCHAR" />
+    <result column="SLASTWRITERFID" property="slastwriterfid" jdbcType="VARCHAR" />
+    <result column="SLASTWRITERNAME" property="slastwritername" jdbcType="VARCHAR" />
+    <result column="SLASTWRITERDEPTNAME" property="slastwriterdeptname" jdbcType="VARCHAR" />
+    <result column="SLASTWRITETIME" property="slastwritetime" jdbcType="DATE" />
+    <result column="SFILEID" property="sfileid" jdbcType="VARCHAR" />
+    <result column="SDOCLIVEVERSIONID" property="sdocliveversionid" jdbcType="DECIMAL" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+    <result column="SCLASSIFICATION" property="sclassification" jdbcType="VARCHAR" />
+    <result column="SKEYWORDS" property="skeywords" jdbcType="VARCHAR" />
+    <result column="SDOCSERIALNUMBER" property="sdocserialnumber" jdbcType="VARCHAR" />
+    <result column="SFINISHTIME" property="sfinishtime" jdbcType="DATE" />
+    <result column="SNAMESPACE" property="snamespace" jdbcType="VARCHAR" />
+    <result column="SCACHENAME" property="scachename" jdbcType="VARCHAR" />
+    <result column="SREVISIONCACHENAME" property="srevisioncachename" jdbcType="VARCHAR" />
+    <result column="SFLAG" property="sflag" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yufei.doc.po.SysDocnodeWithBLOBs" extends="BaseResultMap" >
+    <result column="SDOCDISPLAYPATH" property="sdocdisplaypath" jdbcType="CLOB" />
+    <result column="SDESCRIPTION" property="sdescription" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SID, SPARENTID, SDOCNAME, SSEQUENCE, SSIZE, SKIND, SDOCPATH, SCREATORFID, SCREATORNAME, 
+    SCREATORDEPTNAME, SCREATETIME, SEDITORFID, SEDITORNAME, SEDITORDEPTNAME, SLASTWRITERFID, 
+    SLASTWRITERNAME, SLASTWRITERDEPTNAME, SLASTWRITETIME, SFILEID, SDOCLIVEVERSIONID, 
+    VERSION, SCLASSIFICATION, SKEYWORDS, SDOCSERIALNUMBER, SFINISHTIME, SNAMESPACE, SCACHENAME, 
+    SREVISIONCACHENAME, SFLAG
+  </sql>
+  <sql id="Blob_Column_List" >
+    SDOCDISPLAYPATH, SDESCRIPTION
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.yufei.doc.po.SysDocnodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_DOCNODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yufei.doc.po.SysDocnodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_DOCNODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_DOCNODE
+    where SID = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_DOCNODE
+    where SID = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yufei.doc.po.SysDocnodeExample" >
+    delete from SYS_DOCNODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yufei.doc.po.SysDocnodeWithBLOBs" >
+    insert into SYS_DOCNODE (SID, SPARENTID, SDOCNAME, 
+      SSEQUENCE, SSIZE, SKIND, 
+      SDOCPATH, SCREATORFID, SCREATORNAME, 
+      SCREATORDEPTNAME, SCREATETIME, SEDITORFID, 
+      SEDITORNAME, SEDITORDEPTNAME, SLASTWRITERFID, 
+      SLASTWRITERNAME, SLASTWRITERDEPTNAME, SLASTWRITETIME, 
+      SFILEID, SDOCLIVEVERSIONID, VERSION, 
+      SCLASSIFICATION, SKEYWORDS, SDOCSERIALNUMBER, 
+      SFINISHTIME, SNAMESPACE, SCACHENAME, 
+      SREVISIONCACHENAME, SFLAG, SDOCDISPLAYPATH, 
+      SDESCRIPTION)
+    values (#{sid,jdbcType=VARCHAR}, #{sparentid,jdbcType=VARCHAR}, #{sdocname,jdbcType=VARCHAR}, 
+      #{ssequence,jdbcType=VARCHAR}, #{ssize,jdbcType=FLOAT}, #{skind,jdbcType=VARCHAR}, 
+      #{sdocpath,jdbcType=VARCHAR}, #{screatorfid,jdbcType=VARCHAR}, #{screatorname,jdbcType=VARCHAR}, 
+      #{screatordeptname,jdbcType=VARCHAR}, #{screatetime,jdbcType=DATE}, #{seditorfid,jdbcType=VARCHAR}, 
+      #{seditorname,jdbcType=VARCHAR}, #{seditordeptname,jdbcType=VARCHAR}, #{slastwriterfid,jdbcType=VARCHAR}, 
+      #{slastwritername,jdbcType=VARCHAR}, #{slastwriterdeptname,jdbcType=VARCHAR}, #{slastwritetime,jdbcType=DATE}, 
+      #{sfileid,jdbcType=VARCHAR}, #{sdocliveversionid,jdbcType=DECIMAL}, #{version,jdbcType=DECIMAL}, 
+      #{sclassification,jdbcType=VARCHAR}, #{skeywords,jdbcType=VARCHAR}, #{sdocserialnumber,jdbcType=VARCHAR}, 
+      #{sfinishtime,jdbcType=DATE}, #{snamespace,jdbcType=VARCHAR}, #{scachename,jdbcType=VARCHAR}, 
+      #{srevisioncachename,jdbcType=VARCHAR}, #{sflag,jdbcType=DECIMAL}, #{sdocdisplaypath,jdbcType=CLOB}, 
+      #{sdescription,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yufei.doc.po.SysDocnodeWithBLOBs" >
+    insert into SYS_DOCNODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="sparentid != null" >
+        SPARENTID,
+      </if>
+      <if test="sdocname != null" >
+        SDOCNAME,
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE,
+      </if>
+      <if test="ssize != null" >
+        SSIZE,
+      </if>
+      <if test="skind != null" >
+        SKIND,
+      </if>
+      <if test="sdocpath != null" >
+        SDOCPATH,
+      </if>
+      <if test="screatorfid != null" >
+        SCREATORFID,
+      </if>
+      <if test="screatorname != null" >
+        SCREATORNAME,
+      </if>
+      <if test="screatordeptname != null" >
+        SCREATORDEPTNAME,
+      </if>
+      <if test="screatetime != null" >
+        SCREATETIME,
+      </if>
+      <if test="seditorfid != null" >
+        SEDITORFID,
+      </if>
+      <if test="seditorname != null" >
+        SEDITORNAME,
+      </if>
+      <if test="seditordeptname != null" >
+        SEDITORDEPTNAME,
+      </if>
+      <if test="slastwriterfid != null" >
+        SLASTWRITERFID,
+      </if>
+      <if test="slastwritername != null" >
+        SLASTWRITERNAME,
+      </if>
+      <if test="slastwriterdeptname != null" >
+        SLASTWRITERDEPTNAME,
+      </if>
+      <if test="slastwritetime != null" >
+        SLASTWRITETIME,
+      </if>
+      <if test="sfileid != null" >
+        SFILEID,
+      </if>
+      <if test="sdocliveversionid != null" >
+        SDOCLIVEVERSIONID,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="sclassification != null" >
+        SCLASSIFICATION,
+      </if>
+      <if test="skeywords != null" >
+        SKEYWORDS,
+      </if>
+      <if test="sdocserialnumber != null" >
+        SDOCSERIALNUMBER,
+      </if>
+      <if test="sfinishtime != null" >
+        SFINISHTIME,
+      </if>
+      <if test="snamespace != null" >
+        SNAMESPACE,
+      </if>
+      <if test="scachename != null" >
+        SCACHENAME,
+      </if>
+      <if test="srevisioncachename != null" >
+        SREVISIONCACHENAME,
+      </if>
+      <if test="sflag != null" >
+        SFLAG,
+      </if>
+      <if test="sdocdisplaypath != null" >
+        SDOCDISPLAYPATH,
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="sparentid != null" >
+        #{sparentid,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocname != null" >
+        #{sdocname,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        #{ssequence,jdbcType=VARCHAR},
+      </if>
+      <if test="ssize != null" >
+        #{ssize,jdbcType=FLOAT},
+      </if>
+      <if test="skind != null" >
+        #{skind,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocpath != null" >
+        #{sdocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfid != null" >
+        #{screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorname != null" >
+        #{screatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatordeptname != null" >
+        #{screatordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatetime != null" >
+        #{screatetime,jdbcType=DATE},
+      </if>
+      <if test="seditorfid != null" >
+        #{seditorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="seditorname != null" >
+        #{seditorname,jdbcType=VARCHAR},
+      </if>
+      <if test="seditordeptname != null" >
+        #{seditordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwriterfid != null" >
+        #{slastwriterfid,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwritername != null" >
+        #{slastwritername,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwriterdeptname != null" >
+        #{slastwriterdeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwritetime != null" >
+        #{slastwritetime,jdbcType=DATE},
+      </if>
+      <if test="sfileid != null" >
+        #{sfileid,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocliveversionid != null" >
+        #{sdocliveversionid,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="sclassification != null" >
+        #{sclassification,jdbcType=VARCHAR},
+      </if>
+      <if test="skeywords != null" >
+        #{skeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocserialnumber != null" >
+        #{sdocserialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sfinishtime != null" >
+        #{sfinishtime,jdbcType=DATE},
+      </if>
+      <if test="snamespace != null" >
+        #{snamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="scachename != null" >
+        #{scachename,jdbcType=VARCHAR},
+      </if>
+      <if test="srevisioncachename != null" >
+        #{srevisioncachename,jdbcType=VARCHAR},
+      </if>
+      <if test="sflag != null" >
+        #{sflag,jdbcType=DECIMAL},
+      </if>
+      <if test="sdocdisplaypath != null" >
+        #{sdocdisplaypath,jdbcType=CLOB},
+      </if>
+      <if test="sdescription != null" >
+        #{sdescription,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yufei.doc.po.SysDocnodeExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_DOCNODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_DOCNODE
+    <set >
+      <if test="record.sid != null" >
+        SID = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sparentid != null" >
+        SPARENTID = #{record.sparentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdocname != null" >
+        SDOCNAME = #{record.sdocname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssequence != null" >
+        SSEQUENCE = #{record.ssequence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssize != null" >
+        SSIZE = #{record.ssize,jdbcType=FLOAT},
+      </if>
+      <if test="record.skind != null" >
+        SKIND = #{record.skind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdocpath != null" >
+        SDOCPATH = #{record.sdocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatorfid != null" >
+        SCREATORFID = #{record.screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatorname != null" >
+        SCREATORNAME = #{record.screatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatordeptname != null" >
+        SCREATORDEPTNAME = #{record.screatordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatetime != null" >
+        SCREATETIME = #{record.screatetime,jdbcType=DATE},
+      </if>
+      <if test="record.seditorfid != null" >
+        SEDITORFID = #{record.seditorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seditorname != null" >
+        SEDITORNAME = #{record.seditorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seditordeptname != null" >
+        SEDITORDEPTNAME = #{record.seditordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slastwriterfid != null" >
+        SLASTWRITERFID = #{record.slastwriterfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slastwritername != null" >
+        SLASTWRITERNAME = #{record.slastwritername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slastwriterdeptname != null" >
+        SLASTWRITERDEPTNAME = #{record.slastwriterdeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slastwritetime != null" >
+        SLASTWRITETIME = #{record.slastwritetime,jdbcType=DATE},
+      </if>
+      <if test="record.sfileid != null" >
+        SFILEID = #{record.sfileid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdocliveversionid != null" >
+        SDOCLIVEVERSIONID = #{record.sdocliveversionid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sclassification != null" >
+        SCLASSIFICATION = #{record.sclassification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skeywords != null" >
+        SKEYWORDS = #{record.skeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdocserialnumber != null" >
+        SDOCSERIALNUMBER = #{record.sdocserialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfinishtime != null" >
+        SFINISHTIME = #{record.sfinishtime,jdbcType=DATE},
+      </if>
+      <if test="record.snamespace != null" >
+        SNAMESPACE = #{record.snamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scachename != null" >
+        SCACHENAME = #{record.scachename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srevisioncachename != null" >
+        SREVISIONCACHENAME = #{record.srevisioncachename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sflag != null" >
+        SFLAG = #{record.sflag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sdocdisplaypath != null" >
+        SDOCDISPLAYPATH = #{record.sdocdisplaypath,jdbcType=CLOB},
+      </if>
+      <if test="record.sdescription != null" >
+        SDESCRIPTION = #{record.sdescription,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update SYS_DOCNODE
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SPARENTID = #{record.sparentid,jdbcType=VARCHAR},
+      SDOCNAME = #{record.sdocname,jdbcType=VARCHAR},
+      SSEQUENCE = #{record.ssequence,jdbcType=VARCHAR},
+      SSIZE = #{record.ssize,jdbcType=FLOAT},
+      SKIND = #{record.skind,jdbcType=VARCHAR},
+      SDOCPATH = #{record.sdocpath,jdbcType=VARCHAR},
+      SCREATORFID = #{record.screatorfid,jdbcType=VARCHAR},
+      SCREATORNAME = #{record.screatorname,jdbcType=VARCHAR},
+      SCREATORDEPTNAME = #{record.screatordeptname,jdbcType=VARCHAR},
+      SCREATETIME = #{record.screatetime,jdbcType=DATE},
+      SEDITORFID = #{record.seditorfid,jdbcType=VARCHAR},
+      SEDITORNAME = #{record.seditorname,jdbcType=VARCHAR},
+      SEDITORDEPTNAME = #{record.seditordeptname,jdbcType=VARCHAR},
+      SLASTWRITERFID = #{record.slastwriterfid,jdbcType=VARCHAR},
+      SLASTWRITERNAME = #{record.slastwritername,jdbcType=VARCHAR},
+      SLASTWRITERDEPTNAME = #{record.slastwriterdeptname,jdbcType=VARCHAR},
+      SLASTWRITETIME = #{record.slastwritetime,jdbcType=DATE},
+      SFILEID = #{record.sfileid,jdbcType=VARCHAR},
+      SDOCLIVEVERSIONID = #{record.sdocliveversionid,jdbcType=DECIMAL},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SCLASSIFICATION = #{record.sclassification,jdbcType=VARCHAR},
+      SKEYWORDS = #{record.skeywords,jdbcType=VARCHAR},
+      SDOCSERIALNUMBER = #{record.sdocserialnumber,jdbcType=VARCHAR},
+      SFINISHTIME = #{record.sfinishtime,jdbcType=DATE},
+      SNAMESPACE = #{record.snamespace,jdbcType=VARCHAR},
+      SCACHENAME = #{record.scachename,jdbcType=VARCHAR},
+      SREVISIONCACHENAME = #{record.srevisioncachename,jdbcType=VARCHAR},
+      SFLAG = #{record.sflag,jdbcType=DECIMAL},
+      SDOCDISPLAYPATH = #{record.sdocdisplaypath,jdbcType=CLOB},
+      SDESCRIPTION = #{record.sdescription,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_DOCNODE
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SPARENTID = #{record.sparentid,jdbcType=VARCHAR},
+      SDOCNAME = #{record.sdocname,jdbcType=VARCHAR},
+      SSEQUENCE = #{record.ssequence,jdbcType=VARCHAR},
+      SSIZE = #{record.ssize,jdbcType=FLOAT},
+      SKIND = #{record.skind,jdbcType=VARCHAR},
+      SDOCPATH = #{record.sdocpath,jdbcType=VARCHAR},
+      SCREATORFID = #{record.screatorfid,jdbcType=VARCHAR},
+      SCREATORNAME = #{record.screatorname,jdbcType=VARCHAR},
+      SCREATORDEPTNAME = #{record.screatordeptname,jdbcType=VARCHAR},
+      SCREATETIME = #{record.screatetime,jdbcType=DATE},
+      SEDITORFID = #{record.seditorfid,jdbcType=VARCHAR},
+      SEDITORNAME = #{record.seditorname,jdbcType=VARCHAR},
+      SEDITORDEPTNAME = #{record.seditordeptname,jdbcType=VARCHAR},
+      SLASTWRITERFID = #{record.slastwriterfid,jdbcType=VARCHAR},
+      SLASTWRITERNAME = #{record.slastwritername,jdbcType=VARCHAR},
+      SLASTWRITERDEPTNAME = #{record.slastwriterdeptname,jdbcType=VARCHAR},
+      SLASTWRITETIME = #{record.slastwritetime,jdbcType=DATE},
+      SFILEID = #{record.sfileid,jdbcType=VARCHAR},
+      SDOCLIVEVERSIONID = #{record.sdocliveversionid,jdbcType=DECIMAL},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SCLASSIFICATION = #{record.sclassification,jdbcType=VARCHAR},
+      SKEYWORDS = #{record.skeywords,jdbcType=VARCHAR},
+      SDOCSERIALNUMBER = #{record.sdocserialnumber,jdbcType=VARCHAR},
+      SFINISHTIME = #{record.sfinishtime,jdbcType=DATE},
+      SNAMESPACE = #{record.snamespace,jdbcType=VARCHAR},
+      SCACHENAME = #{record.scachename,jdbcType=VARCHAR},
+      SREVISIONCACHENAME = #{record.srevisioncachename,jdbcType=VARCHAR},
+      SFLAG = #{record.sflag,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yufei.doc.po.SysDocnodeWithBLOBs" >
+    update SYS_DOCNODE
+    <set >
+      <if test="sparentid != null" >
+        SPARENTID = #{sparentid,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocname != null" >
+        SDOCNAME = #{sdocname,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE = #{ssequence,jdbcType=VARCHAR},
+      </if>
+      <if test="ssize != null" >
+        SSIZE = #{ssize,jdbcType=FLOAT},
+      </if>
+      <if test="skind != null" >
+        SKIND = #{skind,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocpath != null" >
+        SDOCPATH = #{sdocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfid != null" >
+        SCREATORFID = #{screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorname != null" >
+        SCREATORNAME = #{screatorname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatordeptname != null" >
+        SCREATORDEPTNAME = #{screatordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatetime != null" >
+        SCREATETIME = #{screatetime,jdbcType=DATE},
+      </if>
+      <if test="seditorfid != null" >
+        SEDITORFID = #{seditorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="seditorname != null" >
+        SEDITORNAME = #{seditorname,jdbcType=VARCHAR},
+      </if>
+      <if test="seditordeptname != null" >
+        SEDITORDEPTNAME = #{seditordeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwriterfid != null" >
+        SLASTWRITERFID = #{slastwriterfid,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwritername != null" >
+        SLASTWRITERNAME = #{slastwritername,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwriterdeptname != null" >
+        SLASTWRITERDEPTNAME = #{slastwriterdeptname,jdbcType=VARCHAR},
+      </if>
+      <if test="slastwritetime != null" >
+        SLASTWRITETIME = #{slastwritetime,jdbcType=DATE},
+      </if>
+      <if test="sfileid != null" >
+        SFILEID = #{sfileid,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocliveversionid != null" >
+        SDOCLIVEVERSIONID = #{sdocliveversionid,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="sclassification != null" >
+        SCLASSIFICATION = #{sclassification,jdbcType=VARCHAR},
+      </if>
+      <if test="skeywords != null" >
+        SKEYWORDS = #{skeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="sdocserialnumber != null" >
+        SDOCSERIALNUMBER = #{sdocserialnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sfinishtime != null" >
+        SFINISHTIME = #{sfinishtime,jdbcType=DATE},
+      </if>
+      <if test="snamespace != null" >
+        SNAMESPACE = #{snamespace,jdbcType=VARCHAR},
+      </if>
+      <if test="scachename != null" >
+        SCACHENAME = #{scachename,jdbcType=VARCHAR},
+      </if>
+      <if test="srevisioncachename != null" >
+        SREVISIONCACHENAME = #{srevisioncachename,jdbcType=VARCHAR},
+      </if>
+      <if test="sflag != null" >
+        SFLAG = #{sflag,jdbcType=DECIMAL},
+      </if>
+      <if test="sdocdisplaypath != null" >
+        SDOCDISPLAYPATH = #{sdocdisplaypath,jdbcType=CLOB},
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION = #{sdescription,jdbcType=CLOB},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yufei.doc.po.SysDocnodeWithBLOBs" >
+    update SYS_DOCNODE
+    set SPARENTID = #{sparentid,jdbcType=VARCHAR},
+      SDOCNAME = #{sdocname,jdbcType=VARCHAR},
+      SSEQUENCE = #{ssequence,jdbcType=VARCHAR},
+      SSIZE = #{ssize,jdbcType=FLOAT},
+      SKIND = #{skind,jdbcType=VARCHAR},
+      SDOCPATH = #{sdocpath,jdbcType=VARCHAR},
+      SCREATORFID = #{screatorfid,jdbcType=VARCHAR},
+      SCREATORNAME = #{screatorname,jdbcType=VARCHAR},
+      SCREATORDEPTNAME = #{screatordeptname,jdbcType=VARCHAR},
+      SCREATETIME = #{screatetime,jdbcType=DATE},
+      SEDITORFID = #{seditorfid,jdbcType=VARCHAR},
+      SEDITORNAME = #{seditorname,jdbcType=VARCHAR},
+      SEDITORDEPTNAME = #{seditordeptname,jdbcType=VARCHAR},
+      SLASTWRITERFID = #{slastwriterfid,jdbcType=VARCHAR},
+      SLASTWRITERNAME = #{slastwritername,jdbcType=VARCHAR},
+      SLASTWRITERDEPTNAME = #{slastwriterdeptname,jdbcType=VARCHAR},
+      SLASTWRITETIME = #{slastwritetime,jdbcType=DATE},
+      SFILEID = #{sfileid,jdbcType=VARCHAR},
+      SDOCLIVEVERSIONID = #{sdocliveversionid,jdbcType=DECIMAL},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SCLASSIFICATION = #{sclassification,jdbcType=VARCHAR},
+      SKEYWORDS = #{skeywords,jdbcType=VARCHAR},
+      SDOCSERIALNUMBER = #{sdocserialnumber,jdbcType=VARCHAR},
+      SFINISHTIME = #{sfinishtime,jdbcType=DATE},
+      SNAMESPACE = #{snamespace,jdbcType=VARCHAR},
+      SCACHENAME = #{scachename,jdbcType=VARCHAR},
+      SREVISIONCACHENAME = #{srevisioncachename,jdbcType=VARCHAR},
+      SFLAG = #{sflag,jdbcType=DECIMAL},
+      SDOCDISPLAYPATH = #{sdocdisplaypath,jdbcType=CLOB},
+      SDESCRIPTION = #{sdescription,jdbcType=CLOB}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yufei.doc.po.SysDocnode" >
+    update SYS_DOCNODE
+    set SPARENTID = #{sparentid,jdbcType=VARCHAR},
+      SDOCNAME = #{sdocname,jdbcType=VARCHAR},
+      SSEQUENCE = #{ssequence,jdbcType=VARCHAR},
+      SSIZE = #{ssize,jdbcType=FLOAT},
+      SKIND = #{skind,jdbcType=VARCHAR},
+      SDOCPATH = #{sdocpath,jdbcType=VARCHAR},
+      SCREATORFID = #{screatorfid,jdbcType=VARCHAR},
+      SCREATORNAME = #{screatorname,jdbcType=VARCHAR},
+      SCREATORDEPTNAME = #{screatordeptname,jdbcType=VARCHAR},
+      SCREATETIME = #{screatetime,jdbcType=DATE},
+      SEDITORFID = #{seditorfid,jdbcType=VARCHAR},
+      SEDITORNAME = #{seditorname,jdbcType=VARCHAR},
+      SEDITORDEPTNAME = #{seditordeptname,jdbcType=VARCHAR},
+      SLASTWRITERFID = #{slastwriterfid,jdbcType=VARCHAR},
+      SLASTWRITERNAME = #{slastwritername,jdbcType=VARCHAR},
+      SLASTWRITERDEPTNAME = #{slastwriterdeptname,jdbcType=VARCHAR},
+      SLASTWRITETIME = #{slastwritetime,jdbcType=DATE},
+      SFILEID = #{sfileid,jdbcType=VARCHAR},
+      SDOCLIVEVERSIONID = #{sdocliveversionid,jdbcType=DECIMAL},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SCLASSIFICATION = #{sclassification,jdbcType=VARCHAR},
+      SKEYWORDS = #{skeywords,jdbcType=VARCHAR},
+      SDOCSERIALNUMBER = #{sdocserialnumber,jdbcType=VARCHAR},
+      SFINISHTIME = #{sfinishtime,jdbcType=DATE},
+      SNAMESPACE = #{snamespace,jdbcType=VARCHAR},
+      SCACHENAME = #{scachename,jdbcType=VARCHAR},
+      SREVISIONCACHENAME = #{srevisioncachename,jdbcType=VARCHAR},
+      SFLAG = #{sflag,jdbcType=DECIMAL}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateDocPath" parameterType="java.util.Map">
+		UPDATE SYS_DOCNODE o
+		<set>
+			<if test="newname != null">
+				SDOCDISPLAYPATH=replace(o.SDOCDISPLAYPATH,#{oldname,jdbcType=VARCHAR},#{newname,jdbcType=VARCHAR})
+				,
+			</if>
+			<if test="editorfid != null">
+				SEDITORFID=#{editorfid,jdbcType=VARCHAR},SEDITORNAME=#{editorname,jdbcType=VARCHAR},
+				SEDITORDEPTNAME=#{editordeptname,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="id!=null and id !='' and id !='undefined'">
+				<![CDATA[ and o.SDOCPATH like  '%'||#{id}||'%' ]]>
+			</if>
+		</trim>
+
+	</update>
+</mapper>

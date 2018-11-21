@@ -1,0 +1,46 @@
+package cn.yufei.ssm.system.service.impl;
+
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOppersonMapper;
+import cn.yufei.ssm.system.po.SysOpperson;
+import cn.yufei.ssm.system.service.SysOppersonService;
+import cn.yufei.ssm.system.utils.ContextUtils;
+import cn.yufei.ssm.system.utils.MD5Util;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysOppersonServiceImpl implements SysOppersonService {
+	
+	@Autowired
+	private SysOppersonMapper sysOppersonMapper;
+	
+	private static Properties properties;
+
+	@Override
+	public int updateResetPassword(String userId)
+			throws Exception {
+		if(StringUtils.isEmpty(userId)){
+			throw new CustomException("updateResetPassword()---userId不能为空");
+		}
+		properties = new Properties();
+		properties.load(ContextUtils.class.getClassLoader().getResourceAsStream("context.properties"));
+		String password = getProperty("resetPassword");
+		SysOpperson person=new SysOpperson();
+		person.setSid(userId);
+		person.setSpassword(MD5Util.encode(password));
+		int count=sysOppersonMapper.updateByPrimaryKeySelective(person);
+		return count;
+	}
+	
+	public String getProperty(String key) {
+		return (String) properties.getProperty(key);
+	}
+
+}

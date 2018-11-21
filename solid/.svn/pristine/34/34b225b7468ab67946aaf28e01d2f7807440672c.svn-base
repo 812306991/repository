@@ -1,0 +1,56 @@
+var dataState;
+$(function(){
+	dataState=yufei.getUrlParam("dataState");
+	var data=yufei.getUrlParam("data");
+	var rowId=yufei.getUrlParam("rowid");
+		if (dataState == "new") {
+			//新增数据
+		  if (data) {
+			var orgData = JSON.parse(data);
+			var json;
+			if (orgData) {
+				json = {
+					sid : yufei.getUuid(),
+					version : 0,
+					sfname : orgData.fullName,
+					sfcode : orgData.fullCode,
+					sfid : orgData.fullId,
+					sparent : orgData.id,
+					sprentName : orgData.fullName,
+					sname : "",
+					scode : "",
+					slongname : "",
+					sorgkindid : orgData.kind,
+					ssequence : 1,
+					sphone : "",
+					sfax : "",
+					saddress : "",
+					sdescription : ""
+				};
+				$("#y-form").form('load', json);
+			}
+		}
+	}else if(dataState=="edit"){
+	   //修改数据	
+		if(rowId){
+			
+		}
+	}
+	
+	
+	
+});
+
+function dailogEngin() {
+	//新增数据
+	if (dataState == "new") {
+		
+	}else if(dataState=="edit"){
+		
+	}else{
+		return false;
+	}
+	
+	
+	//修改数据
+}

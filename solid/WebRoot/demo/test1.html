@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>123</title>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/way/js/way.js"></script>
+</head>
+<body>
+<button onclick="aa()">123</button>
+  <div way-repeat="formData"  id="formData_form">
+     <input type="text" name="fid" way-data="fid">
+    <input type="text" name="fname" way-data="fname">
+    <input type="text" name="fprice" way-data="fprice">
+  </div>
+</body>
+
+<script type="text/javascript">
+$(function(){
+	 $.ajax({
+         type: "POST",
+         url: "/solid/item/queryItemPageList.action",
+         data: "",
+         success: function(data){
+        	 debugger;
+        	 way.set("formData",data.rows);
+            }
+      });
+	
+});
+function aa(){
+	var data=way.data.formData;
+	for(var i=0;i,data.length;i++){
+		alert(data[i].fprice)
+	}
+}
+</script>
+</html>

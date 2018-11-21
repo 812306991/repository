@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>基础数据管理</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+	<div id="baseCodeGrid" style="width: 100%; height: 100%;" data-options="region:'center'">
+		<div id="grd001" style="width: 100%; height: 100%;margin-top:2px;">
+			<table id="mianGrid"></table>
+		</div>
+	</div>
+
+	<!-- toobar -->
+	<div id="toobar">
+		<div>
+			<a id="addOrgMenu" href="javascript:void(0)"
+				class="easyui-linkbutton button-info" onclick="mainActivity.addBaseData()"
+				data-options="iconCls:'icon-add'">新增</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-edit'"
+				onclick="mainActivity.editBaseData()">编辑</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton button-danger"
+				data-options="plain:true,iconCls:'icon-remove'"
+				onclick="mainActivity.moveBaseData()">删除</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton button-default"
+				data-options="plain:true,iconCls:'icon-reload'"
+				onclick="mainActivity.refreshData()">刷新</a> <input
+				id="gridInputText" class="easyui-searchbox  theme-textbox-radius"
+				data-options="prompt:'请输入名称或编码查询',searcher:mainActivity.queryGridListData"
+				style="width: 240px;" />
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/baseCode.js"></script>
+</html>

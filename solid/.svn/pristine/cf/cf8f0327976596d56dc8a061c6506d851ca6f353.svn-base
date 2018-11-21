@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>角色管理</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+    	<div class="easyui-layout" id="main_layout"  style="margin-top:5px;">
+		<div data-options="region:'west',split:true,title:'角色',iconCls:'icon-man'" style="width: 320px;">
+			<div style="overflow: hidden;" class="datagrid-toolbar toolbar">
+				<div style="margin-top: 5px">
+				<a  id="addRoleBtn" href="javascript:void(0)" class="easyui-linkbutton button-info" onclick="mainActivity.addRoleData()"
+				data-options="iconCls:'sicon-neworgs'">添加</a> 
+				<a id="editRoleBtn" href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-edit'" style="display:none;"
+				onclick="mainActivity.editRoleData()">编辑</a>
+				<a id="deleteRoleBtn" href="javascript:void(0)" class="easyui-linkbutton button-danger"
+				data-options="plain:true,iconCls:'icon-remove'"
+				onclick="mainActivity.moveBaseData()">删除</a> 
+					<input id="inputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称或编码查询',searcher:mainActivity.searcherRoleTree"
+						style="width: 55%;"/>
+						
+				</div>
+			</div>
+			<div>
+				<ul id="roleTree" class="ztree"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center',split:true,title:'功能列表'">
+			<table id="role_grid_list"></table>
+		</div>
+	</div>
+	
+	
+	<!-- toobar -->
+	<div id="toobar">
+		<div>
+				<a id="allocationBtn" href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'icon-ok'"
+				onclick="mainActivity.editOrgData()">分配功能</a>
+				<a id="removeallBtn" href="javascript:void(0)" class="easyui-linkbutton button-danger"
+				data-options="plain:true,iconCls:'icon-remove'"
+				onclick="mainActivity.moveOrgData()">删除</a>
+				<input id="gridInputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称查询',searcher:mainActivity.queryGridListData"
+						style="width: 20%"/>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/role_main.js"></script>
+</html>

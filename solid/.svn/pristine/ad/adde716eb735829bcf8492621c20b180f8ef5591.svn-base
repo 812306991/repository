@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div id="taskGrid" style="width: 100%; height: 100%;" data-options="region:'center'">
+		<div id="grd001" style="width: 100%; height: 100%;">
+			<table id="mianGrid"></table>
+		</div>
+</div>
+	
+	<!-- toobar -->
+	<div id="toobar">
+		<div>
+			<input id="gridInputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称或编码查询',searcher:queryGridListData"
+						style="width: 200px;"/>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/query_managerType_dialog.js"></script>
+</html>

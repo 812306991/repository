@@ -1,0 +1,50 @@
+package cn.yufei.ssm.system.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.yufei.ssm.system.core.ApplicationCode;
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.core.data.MessageData;
+import cn.yufei.ssm.system.po.SysBasecode;
+import cn.yufei.ssm.system.service.SysBaseCodeService;
+
+@Controller
+@RequestMapping("/baseCode")
+public class SysBaseCodeController {
+
+	@Autowired
+	private SysBaseCodeService sysBaseCodeService;
+	
+	//根据输入内容模糊查询机构信息列表、
+	@RequestMapping(value = "/findBaseCodeListData", method = {RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody GridData findBaseCodeListData( String inputText,@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,@RequestParam(value = "rows", defaultValue = "5", required = false) Integer rows) throws Exception {
+		GridData datagrid = sysBaseCodeService.findBaseCodeListData(inputText,page, rows);
+		return datagrid;
+	}
+	
+	//根据id查询
+	@RequestMapping(value = "/queryBaseCodeById", method = { RequestMethod.GET,RequestMethod.POST })
+    public @ResponseBody SysBasecode queryBaseCodeById(String id) throws Exception{
+	  SysBasecode baseCode=sysBaseCodeService.findSysBaseCodeByID(id);
+			return baseCode;
+	}
+	
+	//保存组织机构
+	@RequestMapping(value = "/savebase", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody MessageData saveOrgData(String jsonData) throws Exception{
+			int count=sysBaseCodeService.save(jsonData);
+			MessageData message=null;
+			if(count>0){
+				message=new MessageData(ApplicationCode.SUCCESS.getCode(),ApplicationCode.SUCCESS.getMessage());
+			}else{
+				message=new MessageData(ApplicationCode.ERROR.getCode(),ApplicationCode.ERROR.getMessage());
+			}
+			return message;
+	}
+	
+}

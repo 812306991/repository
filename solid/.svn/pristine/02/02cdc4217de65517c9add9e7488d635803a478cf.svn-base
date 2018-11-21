@@ -1,0 +1,49 @@
+package cn.yufei.ssm.system.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.yufei.ssm.system.core.data.SimpleData;
+import cn.yufei.ssm.system.po.Vo.ItemsQueryVo;
+import cn.yufei.ssm.system.service.CommonService;
+
+@Controller
+@RequestMapping("/common")
+public class CommonController {
+	
+	// 注入service
+		@Autowired
+		private CommonService commonService;
+		
+		//获取系统日期
+		@RequestMapping(value = "/getSysDate", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getDate() throws Exception {
+			SimpleData simpleData = commonService.getCurrentDate("true");
+			return simpleData;
+		}
+		
+		//获取系统时间
+		@RequestMapping(value = "/getSysDateTime", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getDateTime() throws Exception {
+			SimpleData simpleData = commonService.getCurrentDateTime("");
+			return simpleData;
+		}
+		
+		//获取guid
+		@RequestMapping(value = "/getSysUuid", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getUuid() throws Exception {
+			SimpleData simpleData = commonService.getUuid();
+			return simpleData;
+		}
+		
+		//获取随机数
+		@RequestMapping(value = "/getRandomNumber", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getRandomNumber() throws Exception {
+			SimpleData simpleData = commonService.getRandomNumber();
+			return simpleData;
+		}
+
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>123</title>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/way/js/way.js"></script>
+<script type="text/javascript">
+
+var user;
+$(function(){
+	 $.ajax({
+         type: "POST",
+         url: "/solid/item/queryItemById.action",
+         data: "",
+         success: function(data){
+        	 alert(data.row)
+        	 way.set("formData",data.row);
+        	// way.dom("#formDatas").set(data);
+            }
+      });
+});
+function aa(){
+	var data=way.get("formData");
+	alert(data.fid)
+	
+	//http://www.bubuko.com/infodetail-1694355.html
+}
+</script>
+</head>
+
+<body>
+<button onclick="aa()">132</button>
+  <form way-scope="formData"  id="formDatas">
+     <input type="text" name="fid" way-data="fid">
+    <input type="text" name="fname" way-data="fname">
+    <input type="text" name="fprice" way-data="fprice">
+  </form>
+</body>
+</html>

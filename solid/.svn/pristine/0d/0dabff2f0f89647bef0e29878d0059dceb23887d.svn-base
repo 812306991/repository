@@ -1,0 +1,372 @@
+var topparent = function(){ 
+	var nowwdw = window;
+	var parentwdw = window.parent;
+	while (nowwdw != parentwdw) {
+		nowwdw = parentwdw;
+		parentwdw = nowwdw.parent;
+	}
+	return nowwdw;
+}();
+var yufei={};
+if(topparent.yufei){   
+	yufei.portal=topparent.yufei.portal||{};
+	yufei.context=topparent.yufei.context||{};
+	yufei.portal.contextRoot=(yufei.portal.contextRoot)?yufei.portal.contextRoot:"/solid";
+}else{// /初始化
+	if(!yufei.portal){
+		yufei.portal={};
+	}
+	if(!yufei.portal.contextRoot){
+		yufei.portal.contextRoot="/solid";
+	} 
+}
+/**
+ * 异步提交
+ */
+yufei.ajax=function(action,data,callBack){
+	if(!action){
+		alert("请指定访问的action");
+	}  
+	$.ajax({
+		  url: yufei.portal.contextRoot+action, 
+		  data:data,
+		  async: true, 
+		  type:"POST",
+		  dataType:"text",
+		  error:function(XMLHttpRequest, textStatus, errorThrown){  
+			  if(XMLHttpRequest.status==550){
+				  window.location.href="/public/errorAction?erroCode="+2000;
+			  }else{
+				  if(callBack) callBack(errorThrown,"FAILURE","服务器无法连接"); 
+			  } 
+		  },
+		  success:function(data,textStatus){  
+					  if(callBack) callBack(data,"SUCCESS");
+			  } 
+		  });
+};  
+
+/**
+ * 获取系统日期時間
+ * quthor:lb  yyyy-mm-dd hh24:mi:ss
+ * day:2017-09-05
+ */
+yufei.getCurrentDateTime=function(){
+	 var re = $.ajax({
+		  type : "POST",
+		  url: yufei.portal.contextRoot+"/common/getSysDateTime.action", 
+		  dataType:"json", 
+		  async: false
+		 }).responseText;
+	var data=eval("("+re+")");   
+	return data.row.dateTime;
+}
+//日期格式化
+yufei.DateFormatter = function(value) {
+	if (value) {
+		var unixTimestamp = new Date(value);
+		var year = unixTimestamp.getFullYear();
+		var mouth = unixTimestamp.getMonth() + 1;
+		var date = unixTimestamp.getDate();
+		var hour = unixTimestamp.getHours();
+		var minutes = unixTimestamp.getMinutes();
+		var seconds = unixTimestamp.getSeconds();
+		if (mouth <= 9) {
+			mouth = "0" + mouth;
+		}
+		if (date <= 9) {
+			date = "0" + date;
+		}
+		return year + '-' + mouth + '-' + date;
+	}
+};
+//日期时间格式化
+yufei.DateTimeFormatter = function(value) {
+	if (value) {
+		var date = new Date(value);
+	    var year = date.getFullYear().toString();
+	    var month = (date.getMonth() + 1);
+	    var day = date.getDate().toString();
+	    var hour = date.getHours().toString();
+	    var minutes = date.getMinutes().toString();
+	    var seconds = date.getSeconds().toString();
+	    if (month < 10) {
+	        month = "0" + month;
+	    }
+	    if (day < 10) {
+	        day = "0" + day;
+	    }
+	    if (hour < 10) {
+	        hour = "0" + hour;
+	    }
+	    if (minutes < 10) {
+	        minutes = "0" + minutes;
+	    }
+	    if (seconds < 10) {
+	        seconds = "0" + seconds;
+	    }
+	    return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+	}
+};
+/**
+ * 获取系统日期
+ * quthor:lb  yyyy-mm-dd
+ * day:2017-09-05
+ */
+yufei.getCurrentDate=function(){
+	var re=$.ajax({
+		type : "POST",
+		url : yufei.portal.contextRoot+"/common/getSysDate.action", 
+		dataType:"json", 
+		async: false
+	}).responseText;
+	var data=eval("("+re+")");   
+	return data.row.date;
+};
+/**
+ * 获取系统uuid
+ * quthor:lb  
+ * day:2017-09-05
+ */
+yufei.getUuid=function(){
+	var re=$.ajax({
+		type : "POST",
+		url : yufei.portal.contextRoot+"/common/getSysUuid.action", 
+		dataType:"json", 
+		async: false
+	}).responseText;
+	var data=eval("("+re+")");   
+	return data.row.uuid;
+};
+/**
+ * 获取系统随机数
+ * quthor:lb  
+ * day:2017-09-05
+ */
+yufei.getRandomNumber=function(){
+	var re=$.ajax({
+		type : "POST",
+		url : yufei.portal.contextRoot+"/common/getRandomNumber.action", 
+		dataType:"json", 
+		async: false
+	}).responseText;
+	var data=eval("("+re+")");   
+	return data.row.randomNumber;
+};
+yufei.getUrlParam = function(param) {
+	return yufei.getUrlParamAll()[param];
+}; 
+/**
+ * 获取全部URL参数 列：var reqData=as.getUrlParamAl(); reqData.id
+ */
+yufei.getUrlParamAll=function(){
+	var url = decodeURIComponent(location.href); 
+    var paraString = url.substring(url.indexOf("?")+1,url.length).split("&"); 
+    var paraObj = {};
+    for (var i=0; j=paraString[i]; i++){
+    	paraObj[j.substring(0,j.indexOf("="))] = j.substring(j.indexOf("=")+1,j.length); 
+    } 
+   return paraObj;
+};
+
+
+yufei.dialog=function(param){
+	if(!param) param={};
+	var _id=param.id||"d"+new Date().getTime()+"_"+Math.floor(Math.random()*100);
+	var _width=param.width||"400";
+	var _height=param.height||"300";
+	var _title=param.title||"对话框"; 
+	var _heightBottom=50;  
+	var _whenOpenReCreat=param.isReCreatWhenOpen||true;// 是否重新生成加载窗口页面,在isFrame时候有效
+	var _isFrame=param.isFrame||true;
+	var _url;
+	var _onOpenFun=param.onOpen;//
+	var _onBeforeColseFun=param.beforeColse;// 在isFrame！==true时候有效
+	var _onSureCallBack=param.onSureCallBack;
+	var _onCancealCallBack=param.onCancealCallBack;
+	var _dialogLocalCallBack;
+	delete param;
+	var _this=this;
+	var _template= param.template;
+	var _param;
+	this.cancel=function(){
+		$('#'+_id).dialog("close"); 
+		if(_onCancealCallBack) _onCancealCallBack();
+	}; 
+	this._insure=function(param){ 
+		$('#'+_id).dialog("close");  
+		if(_dialogLocalCallBack){
+			_dialogLocalCallBack(param);
+		} 
+	};
+	this.insure=function(){  
+		if(_isFrame===true){
+			 var w = document.getElementById(_id+"_mainFrame").contentWindow;
+			 if(w){
+				var reFun = w.dialogInsure;
+				var re;
+				if(reFun){
+					re = reFun();
+					if(re===false) return;
+				}
+				 $('#'+_id).dialog("close");
+				 if(_onSureCallBack) _onSureCallBack(); 
+				 if(_dialogLocalCallBack){
+					 _dialogLocalCallBack(re);
+				 } 
+		  } 
+		}else{
+			if(_onBeforeColseFun){
+				var re = _onBeforeColseFun()
+				if(re===false){
+					
+				}else{
+					 $('#'+_id).dialog("close"); 
+					 if(_dialogLocalCallBack){
+						 _dialogLocalCallBack(re);
+					 } 
+				}
+			}else{
+				 $('#'+_id).dialog("close");
+				 if(_onSureCallBack) _onSureCallBack(); 
+				 if(_dialogLocalCallBack){
+					 _dialogLocalCallBack(re);
+				 } 
+			}
+		} 
+	};
+	/**
+	 * 预留
+	 */
+	this.setParam=function(param){
+		
+	};
+	/**
+	 * 以url的方式打开
+	 */
+	this.open=function(url,fun,param,title,width,height){  
+		_dialogLocalCallBack=fun;
+		_param=param;
+		var p={};
+		if(title) p["title"]=title||_title;
+		if(width) p["width"]=parseInt(width||_width,10);
+		if(height) p["height"]=parseInt(height||_height,10);
+		if(typeof(url)!="string"){
+			_assert("执行对话框["+_id+"]的'open'需设置url<string>!"); 
+		}
+		if(url.indexOf(yufei.portal.contextRoot)==-1){
+			url=as.portal.contextRoot+url;
+		} 
+		if(_isFrame===true){ 
+			if(_whenOpenReCreat===true){
+				if(_onOpenFun)_onOpenFun();
+				$('#'+_id).dialog(p).dialog("open");
+				$('#'+_id).window('center');
+				var h=$("#"+_id+"content").height();
+				$("#"+_id+"_mainFrame").height(h-_heightBottom-2).attr("src","");
+				$("#"+_id+"_mainFrame").attr("src",url);// src=url;
+			}else{
+				if(url!=_url){  
+					if(_onOpenFun)_onOpenFun();
+					$('#'+_id).dialog(p).dialog("open");
+					$('#'+_id).window('center');
+					var h=$("#"+_id+"content").height();
+					$("#"+_id+"_mainFrame").height(h-_heightBottom-2).attr("src","");
+					$("#"+_id+"_mainFrame").attr("src",url);// src=url;
+					_url=url;
+				}else{
+					if(_onOpenFun)_onOpenFun();
+					$('#'+_id).dialog(p).dialog("open");
+					var cw = document.getElementById(_id+"_mainFrame").contentWindow; 
+					if(cw){
+						var dLoad=cw["dailoagLoad"];
+						if(dLoad){
+							dLoad(_param);
+						} 
+					}
+				}
+			}
+		}else{
+			if(_onOpenFun)_onOpenFun(); 
+			$('#'+_id).dialog(p).dialog("open");
+			$('#'+_id).window('center');
+		}
+		
+	};
+	this.openHTML=function(html,title,width,height,fun,param){  
+		_dialogLocalCallBack=fun;
+		_param=param;
+		var p={};
+		if(title) p["title"]=title||_title;
+		if(width) p["width"]=parseInt(width||_width,10);
+		if(height) p["height"]=parseInt(height||_height,10);
+		$("#"+_id+"_mainFrame").hide(); 
+		$("#"+_id+"sourcehtml").height(height-_heightBottom-2).html(html).show();
+		if(_onOpenFun)_onOpenFun(); 
+		$('#'+_id).dialog(p).dialog("open");
+		
+	}; 
+	this.close=function(){
+		$('#'+_id).dialog("close");
+		if(_onColseFun) _onColseFun();
+	};  
+	var _assert=function(msg){
+		alert(msg);
+		throw msg;
+	};
+	var _$Dialog;
+	var _initial=function(){  
+		if(_isFrame===false&&!param.template){
+			_assert("请设置对话框["+_id+"]的模版html元素"); 
+		} 
+		
+		var html='<div id="'+_id+'"><div id="'+_id+'content" style="height: 100%;overflow: hidden;">';
+		if(_isFrame===true){
+			html+='<div id="'+_id+'sourcehtml" style="display:hide;"></div><iframe id="'+_id+'_mainFrame" frameborder="0" style="width: 100%;border: 0px;">'+
+			'</iframe>'; 
+		}else{
+			html+=param.template;
+		}
+		html+='<div align="right" style="vertical-align: middle;width:100%;height:'+_heightBottom+'px;line-height:'+_heightBottom+'px;"><span><button class="btnInsure"  style="width: 60px;height: 28px;font-weight: bold;line-height: 21px;font-size: 14px;cursor: pointer;border: solid #48b1e7 1px;background: #0c80d7 !important;border-radius: 5px 0 0 5px;color: #fff;margin-left: 1px;margin-bottom: 1px;background-image: -moz-linear-gradient(top, #1a9de0, #1b8eca);background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1a9de0),color-stop(1, #1b8eca));endColorstr=#1b8eca, GradientType=0);" onmouseover="this.style.borderColor=#baceeb" ;onmouseout="this.style.backgroundColor=";'+
+			'>确定</button></span>&nbsp;<span><button class="btnCancel"  style="width: 60px;height: 28px;font-weight: bold;line-height: 21px;font-size: 14px;cursor: pointer;border: solid #48b1e7 1px;background: #00b5ad !important;border-radius: 0px 5px 5px 0px;color: #fff;margin-right: 3px;margin-bottom: 1px;background-image: -moz-linear-gradient(top, #5eb514, #5eb514);background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #5eb514),color-stop(1, #5eb514));endColorstr=#5eb514, GradientType=0);">取消</button></span></div></div></div>'; 
+		_$Dialog=$(html);
+		_$Dialog.appendTo("body");
+		$(".btnInsure",_$Dialog).data("_dialogThis_",_this).click(function(){
+			$(this).data("_dialogThis_").insure();
+		});
+		$(".btnCancel",_$Dialog).data("_dialogThis_",_this).click(function(){
+			$(this).data("_dialogThis_").cancel();
+		});
+		// $("body").append(html);
+		if(_isFrame===true){
+			$("#"+_id+"_mainFrame").bind({"load":function(){ 
+				var w = document.getElementById(_id+"_mainFrame").contentWindow; 
+				if(w){  
+					if(typeof(w["dialogInsure"])!="function"&&typeof(w["dailogEngin"])=="function"){
+						w["dialogInsure"]=w["dailogEngin"];
+					}
+					w["dialog"]={
+						cancel:	_this.cancel,
+						insure:_this._insure
+					};
+					var dLoad=w["dailoagLoad"];
+					if(dLoad){
+						dLoad(_param);
+					} 
+				} 
+			}});
+		}else{
+			
+		} 
+		$('#'+_id).dialog({   
+			iconCls:'icon-lock',
+		    title:_title,   
+		    width: _width,   
+		    height: _height,   
+		    closed: true,   
+		    cache: false,    
+		    modal: true
+		});    
+	};
+	_initial();
+};

@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yufei.ssm.system.mapper.SysOppersonMapper" >
+  <resultMap id="BaseResultMap" type="cn.yufei.ssm.system.po.SysOpperson" >
+    <id column="SID" property="sid" jdbcType="VARCHAR" />
+    <result column="SNAME" property="sname" jdbcType="VARCHAR" />
+    <result column="SCODE" property="scode" jdbcType="VARCHAR" />
+    <result column="SIDCARD" property="sidcard" jdbcType="VARCHAR" />
+    <result column="SNUMB" property="snumb" jdbcType="DECIMAL" />
+    <result column="SLOGINNAME" property="sloginname" jdbcType="VARCHAR" />
+    <result column="SPASSWORD" property="spassword" jdbcType="VARCHAR" />
+    <result column="SPASSWORDTIMELIMIT" property="spasswordtimelimit" jdbcType="DECIMAL" />
+    <result column="SPASSWORDMODIFYTIME" property="spasswordmodifytime" jdbcType="DATE" />
+    <result column="SMAINORGID" property="smainorgid" jdbcType="VARCHAR" />
+    <result column="SSAFELEVELID" property="ssafelevelid" jdbcType="VARCHAR" />
+    <result column="SSEQUENCE" property="ssequence" jdbcType="DECIMAL" />
+    <result column="SVALIDSTATE" property="svalidstate" jdbcType="DECIMAL" />
+    <result column="SDESCRIPTION" property="sdescription" jdbcType="VARCHAR" />
+    <result column="SSEX" property="ssex" jdbcType="VARCHAR" />
+    <result column="SBIRTHDAY" property="sbirthday" jdbcType="DATE" />
+    <result column="SJOINDATE" property="sjoindate" jdbcType="DATE" />
+    <result column="SHOMEPLACE" property="shomeplace" jdbcType="VARCHAR" />
+    <result column="SDEGREE" property="sdegree" jdbcType="VARCHAR" />
+    <result column="SGRADUATESCHOOL" property="sgraduateschool" jdbcType="VARCHAR" />
+    <result column="SSPECIALITY" property="sspeciality" jdbcType="VARCHAR" />
+    <result column="SSCHOOLLENGTH" property="sschoollength" jdbcType="VARCHAR" />
+    <result column="STITLE" property="stitle" jdbcType="VARCHAR" />
+    <result column="SMARRIAGE" property="smarriage" jdbcType="VARCHAR" />
+    <result column="SCARDNO" property="scardno" jdbcType="VARCHAR" />
+    <result column="SCARDKIND" property="scardkind" jdbcType="VARCHAR" />
+    <result column="SFAMILYADDRESS" property="sfamilyaddress" jdbcType="VARCHAR" />
+    <result column="SZIP" property="szip" jdbcType="VARCHAR" />
+    <result column="SMSN" property="smsn" jdbcType="VARCHAR" />
+    <result column="SQQ" property="sqq" jdbcType="VARCHAR" />
+    <result column="SMAIL" property="smail" jdbcType="VARCHAR" />
+    <result column="SMOBILEPHONE" property="smobilephone" jdbcType="VARCHAR" />
+    <result column="SFAMILYPHONE" property="sfamilyphone" jdbcType="VARCHAR" />
+    <result column="SOFFICEPHONE" property="sofficephone" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+    <result column="SCOUNTRY" property="scountry" jdbcType="VARCHAR" />
+    <result column="SPROVINCE" property="sprovince" jdbcType="VARCHAR" />
+    <result column="SCITY" property="scity" jdbcType="VARCHAR" />
+    <result column="SPOSITIONS" property="spositions" jdbcType="VARCHAR" />
+    <result column="SSCHOOL" property="sschool" jdbcType="VARCHAR" />
+    <result column="SSTUDY" property="sstudy" jdbcType="VARCHAR" />
+    <result column="SENGLISHNAME" property="senglishname" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.yufei.ssm.system.po.SysOpperson" extends="BaseResultMap" >
+    <result column="SPHOTO" property="sphoto" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SID, SNAME, SCODE, SIDCARD, SNUMB, SLOGINNAME, SPASSWORD, SPASSWORDTIMELIMIT, SPASSWORDMODIFYTIME, 
+    SMAINORGID, SSAFELEVELID, SSEQUENCE, SVALIDSTATE, SDESCRIPTION, SSEX, SBIRTHDAY, 
+    SJOINDATE, SHOMEPLACE, SDEGREE, SGRADUATESCHOOL, SSPECIALITY, SSCHOOLLENGTH, STITLE, 
+    SMARRIAGE, SCARDNO, SCARDKIND, SFAMILYADDRESS, SZIP, SMSN, SQQ, SMAIL, SMOBILEPHONE, 
+    SFAMILYPHONE, SOFFICEPHONE, VERSION, SCOUNTRY, SPROVINCE, SCITY, SPOSITIONS, SSCHOOL, 
+    SSTUDY, SENGLISHNAME
+  </sql>
+  <sql id="Blob_Column_List" >
+    SPHOTO
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.yufei.ssm.system.po.SysOppersonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_OPPERSON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.yufei.ssm.system.po.SysOppersonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_OPPERSON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from SYS_OPPERSON
+    where SID = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_OPPERSON
+    where SID = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.yufei.ssm.system.po.SysOppersonExample" >
+    delete from SYS_OPPERSON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.yufei.ssm.system.po.SysOpperson" >
+    insert into SYS_OPPERSON (SID, SNAME, SCODE, 
+      SIDCARD, SNUMB, SLOGINNAME, 
+      SPASSWORD, SPASSWORDTIMELIMIT, SPASSWORDMODIFYTIME, 
+      SMAINORGID, SSAFELEVELID, SSEQUENCE, 
+      SVALIDSTATE, SDESCRIPTION, SSEX, 
+      SBIRTHDAY, SJOINDATE, SHOMEPLACE, 
+      SDEGREE, SGRADUATESCHOOL, SSPECIALITY, 
+      SSCHOOLLENGTH, STITLE, SMARRIAGE, 
+      SCARDNO, SCARDKIND, SFAMILYADDRESS, 
+      SZIP, SMSN, SQQ, SMAIL, 
+      SMOBILEPHONE, SFAMILYPHONE, SOFFICEPHONE, 
+      VERSION, SCOUNTRY, SPROVINCE, 
+      SCITY, SPOSITIONS, SSCHOOL, 
+      SSTUDY, SENGLISHNAME, SPHOTO
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{scode,jdbcType=VARCHAR}, 
+      #{sidcard,jdbcType=VARCHAR}, #{snumb,jdbcType=DECIMAL}, #{sloginname,jdbcType=VARCHAR}, 
+      #{spassword,jdbcType=VARCHAR}, #{spasswordtimelimit,jdbcType=DECIMAL}, #{spasswordmodifytime,jdbcType=DATE}, 
+      #{smainorgid,jdbcType=VARCHAR}, #{ssafelevelid,jdbcType=VARCHAR}, #{ssequence,jdbcType=DECIMAL}, 
+      #{svalidstate,jdbcType=DECIMAL}, #{sdescription,jdbcType=VARCHAR}, #{ssex,jdbcType=VARCHAR}, 
+      #{sbirthday,jdbcType=DATE}, #{sjoindate,jdbcType=DATE}, #{shomeplace,jdbcType=VARCHAR}, 
+      #{sdegree,jdbcType=VARCHAR}, #{sgraduateschool,jdbcType=VARCHAR}, #{sspeciality,jdbcType=VARCHAR}, 
+      #{sschoollength,jdbcType=VARCHAR}, #{stitle,jdbcType=VARCHAR}, #{smarriage,jdbcType=VARCHAR}, 
+      #{scardno,jdbcType=VARCHAR}, #{scardkind,jdbcType=VARCHAR}, #{sfamilyaddress,jdbcType=VARCHAR}, 
+      #{szip,jdbcType=VARCHAR}, #{smsn,jdbcType=VARCHAR}, #{sqq,jdbcType=VARCHAR}, #{smail,jdbcType=VARCHAR}, 
+      #{smobilephone,jdbcType=VARCHAR}, #{sfamilyphone,jdbcType=VARCHAR}, #{sofficephone,jdbcType=VARCHAR}, 
+      #{version,jdbcType=DECIMAL}, #{scountry,jdbcType=VARCHAR}, #{sprovince,jdbcType=VARCHAR}, 
+      #{scity,jdbcType=VARCHAR}, #{spositions,jdbcType=VARCHAR}, #{sschool,jdbcType=VARCHAR}, 
+      #{sstudy,jdbcType=VARCHAR}, #{senglishname,jdbcType=VARCHAR}, #{sphoto,jdbcType=BLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yufei.ssm.system.po.SysOpperson" >
+    insert into SYS_OPPERSON
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="sname != null" >
+        SNAME,
+      </if>
+      <if test="scode != null" >
+        SCODE,
+      </if>
+      <if test="sidcard != null" >
+        SIDCARD,
+      </if>
+      <if test="snumb != null" >
+        SNUMB,
+      </if>
+      <if test="sloginname != null" >
+        SLOGINNAME,
+      </if>
+      <if test="spassword != null" >
+        SPASSWORD,
+      </if>
+      <if test="spasswordtimelimit != null" >
+        SPASSWORDTIMELIMIT,
+      </if>
+      <if test="spasswordmodifytime != null" >
+        SPASSWORDMODIFYTIME,
+      </if>
+      <if test="smainorgid != null" >
+        SMAINORGID,
+      </if>
+      <if test="ssafelevelid != null" >
+        SSAFELEVELID,
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE,
+      </if>
+      <if test="svalidstate != null" >
+        SVALIDSTATE,
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION,
+      </if>
+      <if test="ssex != null" >
+        SSEX,
+      </if>
+      <if test="sbirthday != null" >
+        SBIRTHDAY,
+      </if>
+      <if test="sjoindate != null" >
+        SJOINDATE,
+      </if>
+      <if test="shomeplace != null" >
+        SHOMEPLACE,
+      </if>
+      <if test="sdegree != null" >
+        SDEGREE,
+      </if>
+      <if test="sgraduateschool != null" >
+        SGRADUATESCHOOL,
+      </if>
+      <if test="sspeciality != null" >
+        SSPECIALITY,
+      </if>
+      <if test="sschoollength != null" >
+        SSCHOOLLENGTH,
+      </if>
+      <if test="stitle != null" >
+        STITLE,
+      </if>
+      <if test="smarriage != null" >
+        SMARRIAGE,
+      </if>
+      <if test="scardno != null" >
+        SCARDNO,
+      </if>
+      <if test="scardkind != null" >
+        SCARDKIND,
+      </if>
+      <if test="sfamilyaddress != null" >
+        SFAMILYADDRESS,
+      </if>
+      <if test="szip != null" >
+        SZIP,
+      </if>
+      <if test="smsn != null" >
+        SMSN,
+      </if>
+      <if test="sqq != null" >
+        SQQ,
+      </if>
+      <if test="smail != null" >
+        SMAIL,
+      </if>
+      <if test="smobilephone != null" >
+        SMOBILEPHONE,
+      </if>
+      <if test="sfamilyphone != null" >
+        SFAMILYPHONE,
+      </if>
+      <if test="sofficephone != null" >
+        SOFFICEPHONE,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="scountry != null" >
+        SCOUNTRY,
+      </if>
+      <if test="sprovince != null" >
+        SPROVINCE,
+      </if>
+      <if test="scity != null" >
+        SCITY,
+      </if>
+      <if test="spositions != null" >
+        SPOSITIONS,
+      </if>
+      <if test="sschool != null" >
+        SSCHOOL,
+      </if>
+      <if test="sstudy != null" >
+        SSTUDY,
+      </if>
+      <if test="senglishname != null" >
+        SENGLISHNAME,
+      </if>
+      <if test="sphoto != null" >
+        SPHOTO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="scode != null" >
+        #{scode,jdbcType=VARCHAR},
+      </if>
+      <if test="sidcard != null" >
+        #{sidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="snumb != null" >
+        #{snumb,jdbcType=DECIMAL},
+      </if>
+      <if test="sloginname != null" >
+        #{sloginname,jdbcType=VARCHAR},
+      </if>
+      <if test="spassword != null" >
+        #{spassword,jdbcType=VARCHAR},
+      </if>
+      <if test="spasswordtimelimit != null" >
+        #{spasswordtimelimit,jdbcType=DECIMAL},
+      </if>
+      <if test="spasswordmodifytime != null" >
+        #{spasswordmodifytime,jdbcType=DATE},
+      </if>
+      <if test="smainorgid != null" >
+        #{smainorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="ssafelevelid != null" >
+        #{ssafelevelid,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        #{ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="svalidstate != null" >
+        #{svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="sdescription != null" >
+        #{sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ssex != null" >
+        #{ssex,jdbcType=VARCHAR},
+      </if>
+      <if test="sbirthday != null" >
+        #{sbirthday,jdbcType=DATE},
+      </if>
+      <if test="sjoindate != null" >
+        #{sjoindate,jdbcType=DATE},
+      </if>
+      <if test="shomeplace != null" >
+        #{shomeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="sdegree != null" >
+        #{sdegree,jdbcType=VARCHAR},
+      </if>
+      <if test="sgraduateschool != null" >
+        #{sgraduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="sspeciality != null" >
+        #{sspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="sschoollength != null" >
+        #{sschoollength,jdbcType=VARCHAR},
+      </if>
+      <if test="stitle != null" >
+        #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="smarriage != null" >
+        #{smarriage,jdbcType=VARCHAR},
+      </if>
+      <if test="scardno != null" >
+        #{scardno,jdbcType=VARCHAR},
+      </if>
+      <if test="scardkind != null" >
+        #{scardkind,jdbcType=VARCHAR},
+      </if>
+      <if test="sfamilyaddress != null" >
+        #{sfamilyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="szip != null" >
+        #{szip,jdbcType=VARCHAR},
+      </if>
+      <if test="smsn != null" >
+        #{smsn,jdbcType=VARCHAR},
+      </if>
+      <if test="sqq != null" >
+        #{sqq,jdbcType=VARCHAR},
+      </if>
+      <if test="smail != null" >
+        #{smail,jdbcType=VARCHAR},
+      </if>
+      <if test="smobilephone != null" >
+        #{smobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="sfamilyphone != null" >
+        #{sfamilyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sofficephone != null" >
+        #{sofficephone,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="scountry != null" >
+        #{scountry,jdbcType=VARCHAR},
+      </if>
+      <if test="sprovince != null" >
+        #{sprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="scity != null" >
+        #{scity,jdbcType=VARCHAR},
+      </if>
+      <if test="spositions != null" >
+        #{spositions,jdbcType=VARCHAR},
+      </if>
+      <if test="sschool != null" >
+        #{sschool,jdbcType=VARCHAR},
+      </if>
+      <if test="sstudy != null" >
+        #{sstudy,jdbcType=VARCHAR},
+      </if>
+      <if test="senglishname != null" >
+        #{senglishname,jdbcType=VARCHAR},
+      </if>
+      <if test="sphoto != null" >
+        #{sphoto,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.yufei.ssm.system.po.SysOppersonExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_OPPERSON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_OPPERSON
+    <set >
+      <if test="record.sid != null" >
+        SID = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sname != null" >
+        SNAME = #{record.sname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scode != null" >
+        SCODE = #{record.scode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sidcard != null" >
+        SIDCARD = #{record.sidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snumb != null" >
+        SNUMB = #{record.snumb,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sloginname != null" >
+        SLOGINNAME = #{record.sloginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spassword != null" >
+        SPASSWORD = #{record.spassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spasswordtimelimit != null" >
+        SPASSWORDTIMELIMIT = #{record.spasswordtimelimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.spasswordmodifytime != null" >
+        SPASSWORDMODIFYTIME = #{record.spasswordmodifytime,jdbcType=DATE},
+      </if>
+      <if test="record.smainorgid != null" >
+        SMAINORGID = #{record.smainorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssafelevelid != null" >
+        SSAFELEVELID = #{record.ssafelevelid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssequence != null" >
+        SSEQUENCE = #{record.ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="record.svalidstate != null" >
+        SVALIDSTATE = #{record.svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sdescription != null" >
+        SDESCRIPTION = #{record.sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ssex != null" >
+        SSEX = #{record.ssex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sbirthday != null" >
+        SBIRTHDAY = #{record.sbirthday,jdbcType=DATE},
+      </if>
+      <if test="record.sjoindate != null" >
+        SJOINDATE = #{record.sjoindate,jdbcType=DATE},
+      </if>
+      <if test="record.shomeplace != null" >
+        SHOMEPLACE = #{record.shomeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdegree != null" >
+        SDEGREE = #{record.sdegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sgraduateschool != null" >
+        SGRADUATESCHOOL = #{record.sgraduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sspeciality != null" >
+        SSPECIALITY = #{record.sspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sschoollength != null" >
+        SSCHOOLLENGTH = #{record.sschoollength,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stitle != null" >
+        STITLE = #{record.stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smarriage != null" >
+        SMARRIAGE = #{record.smarriage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scardno != null" >
+        SCARDNO = #{record.scardno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scardkind != null" >
+        SCARDKIND = #{record.scardkind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfamilyaddress != null" >
+        SFAMILYADDRESS = #{record.sfamilyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szip != null" >
+        SZIP = #{record.szip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsn != null" >
+        SMSN = #{record.smsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sqq != null" >
+        SQQ = #{record.sqq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smail != null" >
+        SMAIL = #{record.smail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smobilephone != null" >
+        SMOBILEPHONE = #{record.smobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfamilyphone != null" >
+        SFAMILYPHONE = #{record.sfamilyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sofficephone != null" >
+        SOFFICEPHONE = #{record.sofficephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scountry != null" >
+        SCOUNTRY = #{record.scountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sprovince != null" >
+        SPROVINCE = #{record.sprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scity != null" >
+        SCITY = #{record.scity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spositions != null" >
+        SPOSITIONS = #{record.spositions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sschool != null" >
+        SSCHOOL = #{record.sschool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sstudy != null" >
+        SSTUDY = #{record.sstudy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.senglishname != null" >
+        SENGLISHNAME = #{record.senglishname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sphoto != null" >
+        SPHOTO = #{record.sphoto,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update SYS_OPPERSON
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SNAME = #{record.sname,jdbcType=VARCHAR},
+      SCODE = #{record.scode,jdbcType=VARCHAR},
+      SIDCARD = #{record.sidcard,jdbcType=VARCHAR},
+      SNUMB = #{record.snumb,jdbcType=DECIMAL},
+      SLOGINNAME = #{record.sloginname,jdbcType=VARCHAR},
+      SPASSWORD = #{record.spassword,jdbcType=VARCHAR},
+      SPASSWORDTIMELIMIT = #{record.spasswordtimelimit,jdbcType=DECIMAL},
+      SPASSWORDMODIFYTIME = #{record.spasswordmodifytime,jdbcType=DATE},
+      SMAINORGID = #{record.smainorgid,jdbcType=VARCHAR},
+      SSAFELEVELID = #{record.ssafelevelid,jdbcType=VARCHAR},
+      SSEQUENCE = #{record.ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{record.svalidstate,jdbcType=DECIMAL},
+      SDESCRIPTION = #{record.sdescription,jdbcType=VARCHAR},
+      SSEX = #{record.ssex,jdbcType=VARCHAR},
+      SBIRTHDAY = #{record.sbirthday,jdbcType=DATE},
+      SJOINDATE = #{record.sjoindate,jdbcType=DATE},
+      SHOMEPLACE = #{record.shomeplace,jdbcType=VARCHAR},
+      SDEGREE = #{record.sdegree,jdbcType=VARCHAR},
+      SGRADUATESCHOOL = #{record.sgraduateschool,jdbcType=VARCHAR},
+      SSPECIALITY = #{record.sspeciality,jdbcType=VARCHAR},
+      SSCHOOLLENGTH = #{record.sschoollength,jdbcType=VARCHAR},
+      STITLE = #{record.stitle,jdbcType=VARCHAR},
+      SMARRIAGE = #{record.smarriage,jdbcType=VARCHAR},
+      SCARDNO = #{record.scardno,jdbcType=VARCHAR},
+      SCARDKIND = #{record.scardkind,jdbcType=VARCHAR},
+      SFAMILYADDRESS = #{record.sfamilyaddress,jdbcType=VARCHAR},
+      SZIP = #{record.szip,jdbcType=VARCHAR},
+      SMSN = #{record.smsn,jdbcType=VARCHAR},
+      SQQ = #{record.sqq,jdbcType=VARCHAR},
+      SMAIL = #{record.smail,jdbcType=VARCHAR},
+      SMOBILEPHONE = #{record.smobilephone,jdbcType=VARCHAR},
+      SFAMILYPHONE = #{record.sfamilyphone,jdbcType=VARCHAR},
+      SOFFICEPHONE = #{record.sofficephone,jdbcType=VARCHAR},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SCOUNTRY = #{record.scountry,jdbcType=VARCHAR},
+      SPROVINCE = #{record.sprovince,jdbcType=VARCHAR},
+      SCITY = #{record.scity,jdbcType=VARCHAR},
+      SPOSITIONS = #{record.spositions,jdbcType=VARCHAR},
+      SSCHOOL = #{record.sschool,jdbcType=VARCHAR},
+      SSTUDY = #{record.sstudy,jdbcType=VARCHAR},
+      SENGLISHNAME = #{record.senglishname,jdbcType=VARCHAR},
+      SPHOTO = #{record.sphoto,jdbcType=BLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_OPPERSON
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SNAME = #{record.sname,jdbcType=VARCHAR},
+      SCODE = #{record.scode,jdbcType=VARCHAR},
+      SIDCARD = #{record.sidcard,jdbcType=VARCHAR},
+      SNUMB = #{record.snumb,jdbcType=DECIMAL},
+      SLOGINNAME = #{record.sloginname,jdbcType=VARCHAR},
+      SPASSWORD = #{record.spassword,jdbcType=VARCHAR},
+      SPASSWORDTIMELIMIT = #{record.spasswordtimelimit,jdbcType=DECIMAL},
+      SPASSWORDMODIFYTIME = #{record.spasswordmodifytime,jdbcType=DATE},
+      SMAINORGID = #{record.smainorgid,jdbcType=VARCHAR},
+      SSAFELEVELID = #{record.ssafelevelid,jdbcType=VARCHAR},
+      SSEQUENCE = #{record.ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{record.svalidstate,jdbcType=DECIMAL},
+      SDESCRIPTION = #{record.sdescription,jdbcType=VARCHAR},
+      SSEX = #{record.ssex,jdbcType=VARCHAR},
+      SBIRTHDAY = #{record.sbirthday,jdbcType=DATE},
+      SJOINDATE = #{record.sjoindate,jdbcType=DATE},
+      SHOMEPLACE = #{record.shomeplace,jdbcType=VARCHAR},
+      SDEGREE = #{record.sdegree,jdbcType=VARCHAR},
+      SGRADUATESCHOOL = #{record.sgraduateschool,jdbcType=VARCHAR},
+      SSPECIALITY = #{record.sspeciality,jdbcType=VARCHAR},
+      SSCHOOLLENGTH = #{record.sschoollength,jdbcType=VARCHAR},
+      STITLE = #{record.stitle,jdbcType=VARCHAR},
+      SMARRIAGE = #{record.smarriage,jdbcType=VARCHAR},
+      SCARDNO = #{record.scardno,jdbcType=VARCHAR},
+      SCARDKIND = #{record.scardkind,jdbcType=VARCHAR},
+      SFAMILYADDRESS = #{record.sfamilyaddress,jdbcType=VARCHAR},
+      SZIP = #{record.szip,jdbcType=VARCHAR},
+      SMSN = #{record.smsn,jdbcType=VARCHAR},
+      SQQ = #{record.sqq,jdbcType=VARCHAR},
+      SMAIL = #{record.smail,jdbcType=VARCHAR},
+      SMOBILEPHONE = #{record.smobilephone,jdbcType=VARCHAR},
+      SFAMILYPHONE = #{record.sfamilyphone,jdbcType=VARCHAR},
+      SOFFICEPHONE = #{record.sofficephone,jdbcType=VARCHAR},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SCOUNTRY = #{record.scountry,jdbcType=VARCHAR},
+      SPROVINCE = #{record.sprovince,jdbcType=VARCHAR},
+      SCITY = #{record.scity,jdbcType=VARCHAR},
+      SPOSITIONS = #{record.spositions,jdbcType=VARCHAR},
+      SSCHOOL = #{record.sschool,jdbcType=VARCHAR},
+      SSTUDY = #{record.sstudy,jdbcType=VARCHAR},
+      SENGLISHNAME = #{record.senglishname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yufei.ssm.system.po.SysOpperson" >
+    update SYS_OPPERSON
+    <set >
+      <if test="sname != null" >
+        SNAME = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="scode != null" >
+        SCODE = #{scode,jdbcType=VARCHAR},
+      </if>
+      <if test="sidcard != null" >
+        SIDCARD = #{sidcard,jdbcType=VARCHAR},
+      </if>
+      <if test="snumb != null" >
+        SNUMB = #{snumb,jdbcType=DECIMAL},
+      </if>
+      <if test="sloginname != null" >
+        SLOGINNAME = #{sloginname,jdbcType=VARCHAR},
+      </if>
+      <if test="spassword != null" >
+        SPASSWORD = #{spassword,jdbcType=VARCHAR},
+      </if>
+      <if test="spasswordtimelimit != null" >
+        SPASSWORDTIMELIMIT = #{spasswordtimelimit,jdbcType=DECIMAL},
+      </if>
+      <if test="spasswordmodifytime != null" >
+        SPASSWORDMODIFYTIME = #{spasswordmodifytime,jdbcType=DATE},
+      </if>
+      <if test="smainorgid != null" >
+        SMAINORGID = #{smainorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="ssafelevelid != null" >
+        SSAFELEVELID = #{ssafelevelid,jdbcType=VARCHAR},
+      </if>
+      <if test="ssequence != null" >
+        SSEQUENCE = #{ssequence,jdbcType=DECIMAL},
+      </if>
+      <if test="svalidstate != null" >
+        SVALIDSTATE = #{svalidstate,jdbcType=DECIMAL},
+      </if>
+      <if test="sdescription != null" >
+        SDESCRIPTION = #{sdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ssex != null" >
+        SSEX = #{ssex,jdbcType=VARCHAR},
+      </if>
+      <if test="sbirthday != null" >
+        SBIRTHDAY = #{sbirthday,jdbcType=DATE},
+      </if>
+      <if test="sjoindate != null" >
+        SJOINDATE = #{sjoindate,jdbcType=DATE},
+      </if>
+      <if test="shomeplace != null" >
+        SHOMEPLACE = #{shomeplace,jdbcType=VARCHAR},
+      </if>
+      <if test="sdegree != null" >
+        SDEGREE = #{sdegree,jdbcType=VARCHAR},
+      </if>
+      <if test="sgraduateschool != null" >
+        SGRADUATESCHOOL = #{sgraduateschool,jdbcType=VARCHAR},
+      </if>
+      <if test="sspeciality != null" >
+        SSPECIALITY = #{sspeciality,jdbcType=VARCHAR},
+      </if>
+      <if test="sschoollength != null" >
+        SSCHOOLLENGTH = #{sschoollength,jdbcType=VARCHAR},
+      </if>
+      <if test="stitle != null" >
+        STITLE = #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="smarriage != null" >
+        SMARRIAGE = #{smarriage,jdbcType=VARCHAR},
+      </if>
+      <if test="scardno != null" >
+        SCARDNO = #{scardno,jdbcType=VARCHAR},
+      </if>
+      <if test="scardkind != null" >
+        SCARDKIND = #{scardkind,jdbcType=VARCHAR},
+      </if>
+      <if test="sfamilyaddress != null" >
+        SFAMILYADDRESS = #{sfamilyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="szip != null" >
+        SZIP = #{szip,jdbcType=VARCHAR},
+      </if>
+      <if test="smsn != null" >
+        SMSN = #{smsn,jdbcType=VARCHAR},
+      </if>
+      <if test="sqq != null" >
+        SQQ = #{sqq,jdbcType=VARCHAR},
+      </if>
+      <if test="smail != null" >
+        SMAIL = #{smail,jdbcType=VARCHAR},
+      </if>
+      <if test="smobilephone != null" >
+        SMOBILEPHONE = #{smobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="sfamilyphone != null" >
+        SFAMILYPHONE = #{sfamilyphone,jdbcType=VARCHAR},
+      </if>
+      <if test="sofficephone != null" >
+        SOFFICEPHONE = #{sofficephone,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="scountry != null" >
+        SCOUNTRY = #{scountry,jdbcType=VARCHAR},
+      </if>
+      <if test="sprovince != null" >
+        SPROVINCE = #{sprovince,jdbcType=VARCHAR},
+      </if>
+      <if test="scity != null" >
+        SCITY = #{scity,jdbcType=VARCHAR},
+      </if>
+      <if test="spositions != null" >
+        SPOSITIONS = #{spositions,jdbcType=VARCHAR},
+      </if>
+      <if test="sschool != null" >
+        SSCHOOL = #{sschool,jdbcType=VARCHAR},
+      </if>
+      <if test="sstudy != null" >
+        SSTUDY = #{sstudy,jdbcType=VARCHAR},
+      </if>
+      <if test="senglishname != null" >
+        SENGLISHNAME = #{senglishname,jdbcType=VARCHAR},
+      </if>
+      <if test="sphoto != null" >
+        SPHOTO = #{sphoto,jdbcType=BLOB},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.yufei.ssm.system.po.SysOpperson" >
+    update SYS_OPPERSON
+    set SNAME = #{sname,jdbcType=VARCHAR},
+      SCODE = #{scode,jdbcType=VARCHAR},
+      SIDCARD = #{sidcard,jdbcType=VARCHAR},
+      SNUMB = #{snumb,jdbcType=DECIMAL},
+      SLOGINNAME = #{sloginname,jdbcType=VARCHAR},
+      SPASSWORD = #{spassword,jdbcType=VARCHAR},
+      SPASSWORDTIMELIMIT = #{spasswordtimelimit,jdbcType=DECIMAL},
+      SPASSWORDMODIFYTIME = #{spasswordmodifytime,jdbcType=DATE},
+      SMAINORGID = #{smainorgid,jdbcType=VARCHAR},
+      SSAFELEVELID = #{ssafelevelid,jdbcType=VARCHAR},
+      SSEQUENCE = #{ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{svalidstate,jdbcType=DECIMAL},
+      SDESCRIPTION = #{sdescription,jdbcType=VARCHAR},
+      SSEX = #{ssex,jdbcType=VARCHAR},
+      SBIRTHDAY = #{sbirthday,jdbcType=DATE},
+      SJOINDATE = #{sjoindate,jdbcType=DATE},
+      SHOMEPLACE = #{shomeplace,jdbcType=VARCHAR},
+      SDEGREE = #{sdegree,jdbcType=VARCHAR},
+      SGRADUATESCHOOL = #{sgraduateschool,jdbcType=VARCHAR},
+      SSPECIALITY = #{sspeciality,jdbcType=VARCHAR},
+      SSCHOOLLENGTH = #{sschoollength,jdbcType=VARCHAR},
+      STITLE = #{stitle,jdbcType=VARCHAR},
+      SMARRIAGE = #{smarriage,jdbcType=VARCHAR},
+      SCARDNO = #{scardno,jdbcType=VARCHAR},
+      SCARDKIND = #{scardkind,jdbcType=VARCHAR},
+      SFAMILYADDRESS = #{sfamilyaddress,jdbcType=VARCHAR},
+      SZIP = #{szip,jdbcType=VARCHAR},
+      SMSN = #{smsn,jdbcType=VARCHAR},
+      SQQ = #{sqq,jdbcType=VARCHAR},
+      SMAIL = #{smail,jdbcType=VARCHAR},
+      SMOBILEPHONE = #{smobilephone,jdbcType=VARCHAR},
+      SFAMILYPHONE = #{sfamilyphone,jdbcType=VARCHAR},
+      SOFFICEPHONE = #{sofficephone,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SCOUNTRY = #{scountry,jdbcType=VARCHAR},
+      SPROVINCE = #{sprovince,jdbcType=VARCHAR},
+      SCITY = #{scity,jdbcType=VARCHAR},
+      SPOSITIONS = #{spositions,jdbcType=VARCHAR},
+      SSCHOOL = #{sschool,jdbcType=VARCHAR},
+      SSTUDY = #{sstudy,jdbcType=VARCHAR},
+      SENGLISHNAME = #{senglishname,jdbcType=VARCHAR},
+      SPHOTO = #{sphoto,jdbcType=BLOB}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yufei.ssm.system.po.SysOpperson" >
+    update SYS_OPPERSON
+    set SNAME = #{sname,jdbcType=VARCHAR},
+      SCODE = #{scode,jdbcType=VARCHAR},
+      SIDCARD = #{sidcard,jdbcType=VARCHAR},
+      SNUMB = #{snumb,jdbcType=DECIMAL},
+      SLOGINNAME = #{sloginname,jdbcType=VARCHAR},
+      SPASSWORD = #{spassword,jdbcType=VARCHAR},
+      SPASSWORDTIMELIMIT = #{spasswordtimelimit,jdbcType=DECIMAL},
+      SPASSWORDMODIFYTIME = #{spasswordmodifytime,jdbcType=DATE},
+      SMAINORGID = #{smainorgid,jdbcType=VARCHAR},
+      SSAFELEVELID = #{ssafelevelid,jdbcType=VARCHAR},
+      SSEQUENCE = #{ssequence,jdbcType=DECIMAL},
+      SVALIDSTATE = #{svalidstate,jdbcType=DECIMAL},
+      SDESCRIPTION = #{sdescription,jdbcType=VARCHAR},
+      SSEX = #{ssex,jdbcType=VARCHAR},
+      SBIRTHDAY = #{sbirthday,jdbcType=DATE},
+      SJOINDATE = #{sjoindate,jdbcType=DATE},
+      SHOMEPLACE = #{shomeplace,jdbcType=VARCHAR},
+      SDEGREE = #{sdegree,jdbcType=VARCHAR},
+      SGRADUATESCHOOL = #{sgraduateschool,jdbcType=VARCHAR},
+      SSPECIALITY = #{sspeciality,jdbcType=VARCHAR},
+      SSCHOOLLENGTH = #{sschoollength,jdbcType=VARCHAR},
+      STITLE = #{stitle,jdbcType=VARCHAR},
+      SMARRIAGE = #{smarriage,jdbcType=VARCHAR},
+      SCARDNO = #{scardno,jdbcType=VARCHAR},
+      SCARDKIND = #{scardkind,jdbcType=VARCHAR},
+      SFAMILYADDRESS = #{sfamilyaddress,jdbcType=VARCHAR},
+      SZIP = #{szip,jdbcType=VARCHAR},
+      SMSN = #{smsn,jdbcType=VARCHAR},
+      SQQ = #{sqq,jdbcType=VARCHAR},
+      SMAIL = #{smail,jdbcType=VARCHAR},
+      SMOBILEPHONE = #{smobilephone,jdbcType=VARCHAR},
+      SFAMILYPHONE = #{sfamilyphone,jdbcType=VARCHAR},
+      SOFFICEPHONE = #{sofficephone,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SCOUNTRY = #{scountry,jdbcType=VARCHAR},
+      SPROVINCE = #{sprovince,jdbcType=VARCHAR},
+      SCITY = #{scity,jdbcType=VARCHAR},
+      SPOSITIONS = #{spositions,jdbcType=VARCHAR},
+      SSCHOOL = #{sschool,jdbcType=VARCHAR},
+      SSTUDY = #{sstudy,jdbcType=VARCHAR},
+      SENGLISHNAME = #{senglishname,jdbcType=VARCHAR}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+</mapper>

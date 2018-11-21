@@ -1,0 +1,42 @@
+package com.yufei.doc.mapper;
+
+import com.yufei.doc.po.SysDocnode;
+import com.yufei.doc.po.SysDocnodeExample;
+import com.yufei.doc.po.SysDocnodeWithBLOBs;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+public interface SysDocnodeMapper {
+    int countByExample(SysDocnodeExample example);
+
+    int deleteByExample(SysDocnodeExample example);
+
+    int deleteByPrimaryKey(String sid);
+
+    int insert(SysDocnodeWithBLOBs record);
+
+    int insertSelective(SysDocnodeWithBLOBs record);
+
+    List<SysDocnodeWithBLOBs> selectByExampleWithBLOBs(SysDocnodeExample example);
+
+    List<SysDocnode> selectByExample(SysDocnodeExample example);
+
+    SysDocnodeWithBLOBs selectByPrimaryKey(String sid);
+
+    int updateByExampleSelective(@Param("record") SysDocnodeWithBLOBs record, @Param("example") SysDocnodeExample example);
+
+    int updateByExampleWithBLOBs(@Param("record") SysDocnodeWithBLOBs record, @Param("example") SysDocnodeExample example);
+
+    int updateByExample(@Param("record") SysDocnode record, @Param("example") SysDocnodeExample example);
+
+    int updateByPrimaryKeySelective(SysDocnodeWithBLOBs record);
+
+    int updateByPrimaryKeyWithBLOBs(SysDocnodeWithBLOBs record);
+
+    int updateByPrimaryKey(SysDocnode record);
+    
+    int updateDocPath(Map map);
+}

@@ -1,0 +1,8 @@
+package cn.yufei.ssm.system.service;
+
+public interface SysOpauthorizeService {
+	
+	//根据角色id删除权限信息
+	public int delteRoleByID(String roleId) throws Exception;
+
+}

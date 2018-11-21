@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>文档中心</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" id="main_layout"  style="margin-top:5px;">
+		<div data-options="region:'west',split:true,title:'文档目录'" style="width: 280px;">
+			<div style="overflow: hidden;" class="datagrid-toolbar toolbar">
+				<div style="margin-top: 5px">
+				<a  id="addOrgMenu" href="javascript:mainActivity.createDir()" class="easyui-linkbutton  button-primary"
+				data-options="iconCls:'icon-add'">新建文件夹</a> 
+				<a id="editDocMenu" href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-edit'"
+				onclick="mainActivity.editDocData()">编辑文件夹</a>
+				</div>
+			</div>
+			<div>
+				<ul id="docTree" class="ztree"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center',split:true,title:'文件列表'">
+			<table id="doc_grid_list"></table>
+		</div>
+	</div>
+	
+	
+<!-- toobar -->
+	<div id="toobar">
+		<div>
+				<a href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-edit'"
+				onclick="mainActivity.editOrgData()">编辑</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-move'"
+				onclick="mainActivity.moveOrgData()">移动</a>
+				<input id="gridInputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称查询',searcher:mainActivity.queryGridListData"
+						style="width: 200px;"/>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/doc_main.js"></script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" style="width: 100%; padding:20px 30px" id="y-form">
+	  <div style="display:none;">
+	  <input type="text" name="sid" id="sid"/>
+	  <input type="text" name="version" id="version" value="0"/>
+	  </div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">名&nbsp;&nbsp;称</label> <input
+				class="easyui-textbox theme-textbox-radius" prompt="请输入名称" name="sname" id="sname"
+				iconWidth="28" style="width: 38%;"
+				data-options="required:true"> <label class="label-left">&nbsp;编&nbsp;&nbsp;码</label>
+			<input class="easyui-textbox theme-textbox-radius" prompt="请输入编码" name="scode" id="scode"
+				 iconWidth="28" style="width: 39%;"
+				data-options="required:true">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">类&nbsp;&nbsp;型</label>
+			<select class="easyui-combobox" name="stype" id="stype" panelHeight="100" labelPosition="top" style="width:38%;" data-options="required:true">
+                <option value="role">角色类型</option>
+                <option value="nation">民族</option>
+                <option value="other">其他</option>
+            </select>
+			<label class="label-left">&nbsp;排&nbsp;&nbsp;序</label> <input name="ssequence" id="ssequence"
+				class="easyui-numberspinner theme-textbox-radius" style="width: 39%;" data-options="min:1,max:100,editable:false">
+            </span>
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">备&nbsp;&nbsp;注</label> 
+			<input class="easyui-textbox theme-textbox-radius" name="sdescription" id="sdescription" style="width:84%; height:80px;" data-options="multiline:true">
+		</div>
+</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/add_permission_dialog.js"></script>
+</html>

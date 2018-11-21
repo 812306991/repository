@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>权限查询</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" id="main_layout"  style="margin-top:5px;">
+		<div data-options="region:'west',split:true,title:'组织机构树',iconCls:'icon-man'" style="width: 280px;">
+			<div style="overflow: hidden;" class="datagrid-toolbar toolbar">
+				<div style="margin-top: 5px">
+					<input id="inputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称或编码查询',searcher:mainActivity.openInputTextDialog"
+						style="width: 90%;"/>
+						
+				</div>
+			</div>
+			<div>
+				<ul id="orgTree" class="ztree"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center',split:true,title:'功能列表'">
+			<table id="authorize_grid_list"></table>
+		</div>
+	</div>
+	
+	<!-- toobar -->
+	<div id="toobar">
+		<div>
+				<input id="gridInputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称查询',searcher:mainActivity.queryGridListData"
+						style="width: 200px;"/>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/themes/insdep/expand/jquery-easyui-datagridview/datagrid-groupview.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/authorityQuery.js"></script>
+</html>

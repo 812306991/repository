@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yufei.ssm.system.mapper.SysOpmanagementMapper" >
+  <resultMap id="BaseResultMap" type="cn.yufei.ssm.system.po.SysOpmanagement" >
+    <id column="SID" property="sid" jdbcType="VARCHAR" />
+    <result column="SORGID" property="sorgid" jdbcType="VARCHAR" />
+    <result column="SORGNAME" property="sorgname" jdbcType="VARCHAR" />
+    <result column="SORGFID" property="sorgfid" jdbcType="VARCHAR" />
+    <result column="SORGFNAME" property="sorgfname" jdbcType="VARCHAR" />
+    <result column="SMANAGEORGID" property="smanageorgid" jdbcType="VARCHAR" />
+    <result column="SMANAGEORGNAME" property="smanageorgname" jdbcType="VARCHAR" />
+    <result column="SMANAGEORGFID" property="smanageorgfid" jdbcType="VARCHAR" />
+    <result column="SMANAGEORGFNAME" property="smanageorgfname" jdbcType="VARCHAR" />
+    <result column="SMANAGETYPEID" property="smanagetypeid" jdbcType="VARCHAR" />
+    <result column="SCREATORFID" property="screatorfid" jdbcType="VARCHAR" />
+    <result column="SCREATORFNAME" property="screatorfname" jdbcType="VARCHAR" />
+    <result column="SCREATETIME" property="screatetime" jdbcType="DATE" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+    <result column="SMANAGETYPENAME" property="smanagetypename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SID, SORGID, SORGNAME, SORGFID, SORGFNAME, SMANAGEORGID, SMANAGEORGNAME, SMANAGEORGFID, 
+    SMANAGEORGFNAME, SMANAGETYPEID, SCREATORFID, SCREATORFNAME, SCREATETIME, VERSION, 
+    SMANAGETYPENAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.yufei.ssm.system.po.SysOpmanagementExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_OPMANAGEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_OPMANAGEMENT
+    where SID = #{sid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_OPMANAGEMENT
+    where SID = #{sid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.yufei.ssm.system.po.SysOpmanagementExample" >
+    delete from SYS_OPMANAGEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.yufei.ssm.system.po.SysOpmanagement" >
+    insert into SYS_OPMANAGEMENT (SID, SORGID, SORGNAME, 
+      SORGFID, SORGFNAME, SMANAGEORGID, 
+      SMANAGEORGNAME, SMANAGEORGFID, SMANAGEORGFNAME, 
+      SMANAGETYPEID, SCREATORFID, SCREATORFNAME, 
+      SCREATETIME, VERSION, SMANAGETYPENAME
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{sorgid,jdbcType=VARCHAR}, #{sorgname,jdbcType=VARCHAR}, 
+      #{sorgfid,jdbcType=VARCHAR}, #{sorgfname,jdbcType=VARCHAR}, #{smanageorgid,jdbcType=VARCHAR}, 
+      #{smanageorgname,jdbcType=VARCHAR}, #{smanageorgfid,jdbcType=VARCHAR}, #{smanageorgfname,jdbcType=VARCHAR}, 
+      #{smanagetypeid,jdbcType=VARCHAR}, #{screatorfid,jdbcType=VARCHAR}, #{screatorfname,jdbcType=VARCHAR}, 
+      #{screatetime,jdbcType=DATE}, #{version,jdbcType=DECIMAL}, #{smanagetypename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yufei.ssm.system.po.SysOpmanagement" >
+    insert into SYS_OPMANAGEMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        SID,
+      </if>
+      <if test="sorgid != null" >
+        SORGID,
+      </if>
+      <if test="sorgname != null" >
+        SORGNAME,
+      </if>
+      <if test="sorgfid != null" >
+        SORGFID,
+      </if>
+      <if test="sorgfname != null" >
+        SORGFNAME,
+      </if>
+      <if test="smanageorgid != null" >
+        SMANAGEORGID,
+      </if>
+      <if test="smanageorgname != null" >
+        SMANAGEORGNAME,
+      </if>
+      <if test="smanageorgfid != null" >
+        SMANAGEORGFID,
+      </if>
+      <if test="smanageorgfname != null" >
+        SMANAGEORGFNAME,
+      </if>
+      <if test="smanagetypeid != null" >
+        SMANAGETYPEID,
+      </if>
+      <if test="screatorfid != null" >
+        SCREATORFID,
+      </if>
+      <if test="screatorfname != null" >
+        SCREATORFNAME,
+      </if>
+      <if test="screatetime != null" >
+        SCREATETIME,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="smanagetypename != null" >
+        SMANAGETYPENAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgid != null" >
+        #{sorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgname != null" >
+        #{sorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgfid != null" >
+        #{sorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgfname != null" >
+        #{sorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgid != null" >
+        #{smanageorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgname != null" >
+        #{smanageorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgfid != null" >
+        #{smanageorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgfname != null" >
+        #{smanageorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanagetypeid != null" >
+        #{smanagetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfid != null" >
+        #{screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfname != null" >
+        #{screatorfname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatetime != null" >
+        #{screatetime,jdbcType=DATE},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="smanagetypename != null" >
+        #{smanagetypename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.yufei.ssm.system.po.SysOpmanagementExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_OPMANAGEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_OPMANAGEMENT
+    <set >
+      <if test="record.sid != null" >
+        SID = #{record.sid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorgid != null" >
+        SORGID = #{record.sorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorgname != null" >
+        SORGNAME = #{record.sorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorgfid != null" >
+        SORGFID = #{record.sorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorgfname != null" >
+        SORGFNAME = #{record.sorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smanageorgid != null" >
+        SMANAGEORGID = #{record.smanageorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smanageorgname != null" >
+        SMANAGEORGNAME = #{record.smanageorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smanageorgfid != null" >
+        SMANAGEORGFID = #{record.smanageorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smanageorgfname != null" >
+        SMANAGEORGFNAME = #{record.smanageorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smanagetypeid != null" >
+        SMANAGETYPEID = #{record.smanagetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatorfid != null" >
+        SCREATORFID = #{record.screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatorfname != null" >
+        SCREATORFNAME = #{record.screatorfname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.screatetime != null" >
+        SCREATETIME = #{record.screatetime,jdbcType=DATE},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=DECIMAL},
+      </if>
+      <if test="record.smanagetypename != null" >
+        SMANAGETYPENAME = #{record.smanagetypename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_OPMANAGEMENT
+    set SID = #{record.sid,jdbcType=VARCHAR},
+      SORGID = #{record.sorgid,jdbcType=VARCHAR},
+      SORGNAME = #{record.sorgname,jdbcType=VARCHAR},
+      SORGFID = #{record.sorgfid,jdbcType=VARCHAR},
+      SORGFNAME = #{record.sorgfname,jdbcType=VARCHAR},
+      SMANAGEORGID = #{record.smanageorgid,jdbcType=VARCHAR},
+      SMANAGEORGNAME = #{record.smanageorgname,jdbcType=VARCHAR},
+      SMANAGEORGFID = #{record.smanageorgfid,jdbcType=VARCHAR},
+      SMANAGEORGFNAME = #{record.smanageorgfname,jdbcType=VARCHAR},
+      SMANAGETYPEID = #{record.smanagetypeid,jdbcType=VARCHAR},
+      SCREATORFID = #{record.screatorfid,jdbcType=VARCHAR},
+      SCREATORFNAME = #{record.screatorfname,jdbcType=VARCHAR},
+      SCREATETIME = #{record.screatetime,jdbcType=DATE},
+      VERSION = #{record.version,jdbcType=DECIMAL},
+      SMANAGETYPENAME = #{record.smanagetypename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yufei.ssm.system.po.SysOpmanagement" >
+    update SYS_OPMANAGEMENT
+    <set >
+      <if test="sorgid != null" >
+        SORGID = #{sorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgname != null" >
+        SORGNAME = #{sorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgfid != null" >
+        SORGFID = #{sorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="sorgfname != null" >
+        SORGFNAME = #{sorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgid != null" >
+        SMANAGEORGID = #{smanageorgid,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgname != null" >
+        SMANAGEORGNAME = #{smanageorgname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgfid != null" >
+        SMANAGEORGFID = #{smanageorgfid,jdbcType=VARCHAR},
+      </if>
+      <if test="smanageorgfname != null" >
+        SMANAGEORGFNAME = #{smanageorgfname,jdbcType=VARCHAR},
+      </if>
+      <if test="smanagetypeid != null" >
+        SMANAGETYPEID = #{smanagetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfid != null" >
+        SCREATORFID = #{screatorfid,jdbcType=VARCHAR},
+      </if>
+      <if test="screatorfname != null" >
+        SCREATORFNAME = #{screatorfname,jdbcType=VARCHAR},
+      </if>
+      <if test="screatetime != null" >
+        SCREATETIME = #{screatetime,jdbcType=DATE},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="smanagetypename != null" >
+        SMANAGETYPENAME = #{smanagetypename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yufei.ssm.system.po.SysOpmanagement" >
+    update SYS_OPMANAGEMENT
+    set SORGID = #{sorgid,jdbcType=VARCHAR},
+      SORGNAME = #{sorgname,jdbcType=VARCHAR},
+      SORGFID = #{sorgfid,jdbcType=VARCHAR},
+      SORGFNAME = #{sorgfname,jdbcType=VARCHAR},
+      SMANAGEORGID = #{smanageorgid,jdbcType=VARCHAR},
+      SMANAGEORGNAME = #{smanageorgname,jdbcType=VARCHAR},
+      SMANAGEORGFID = #{smanageorgfid,jdbcType=VARCHAR},
+      SMANAGEORGFNAME = #{smanageorgfname,jdbcType=VARCHAR},
+      SMANAGETYPEID = #{smanagetypeid,jdbcType=VARCHAR},
+      SCREATORFID = #{screatorfid,jdbcType=VARCHAR},
+      SCREATORFNAME = #{screatorfname,jdbcType=VARCHAR},
+      SCREATETIME = #{screatetime,jdbcType=DATE},
+      VERSION = #{version,jdbcType=DECIMAL},
+      SMANAGETYPENAME = #{smanagetypename,jdbcType=VARCHAR}
+    where SID = #{sid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" style="width: 99%;margin:auto; padding:20px 30px;border: 1px solid #ccc;" id="y-form" border="false">
+		<div style="margin-bottom: 15px">
+			<label class="label-left">名&nbsp;&nbsp;称:</label> <input
+				class="easyui-textbox theme-textbox-radius" prompt="请输入名称" name="sdocname" id="sdocname"
+				iconWidth="28" style="width: 70%;"
+				data-options="required:true">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">类&nbsp;&nbsp;型:</label> <input type="text"
+				 name="skind" id="skind" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">路&nbsp;&nbsp;径:</label> <input type="text"
+				 name="sdocdisplaypath" id="sdocdisplaypath" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div class="menu-sep" ></div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">创建人:</label> <input type="text"
+				 name="screatorname" id="screatorname" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">创建时间:</label> <input type="text"
+				 name="screatetime" id="screatetime" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div class="menu-sep" ></div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">修改人:</label> <input type="text"
+				 name="slastwritername" id="slastwritername" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">修改时间:</label> <input type="text"
+				 name="slastwritetime" id="slastwritetime" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+		<div class="menu-sep" ></div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">描&nbsp;&nbsp;述:</label> 
+			<input type="text"  name="sdescription" id="sdescription" readonly="readonly" style="width: 70%;border:0;">
+		</div>
+</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/edit_dir_dialog.js"></script>
+</html>

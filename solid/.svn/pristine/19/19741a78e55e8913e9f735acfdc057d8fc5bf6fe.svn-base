@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>组织机构管理</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/ztree-v3/css/metroStyle/metroStyle.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+	<div class="easyui-layout" id="main_layout"  style="margin-top:5px;">
+		<div data-options="region:'west',split:true,title:'组织机构树',iconCls:'icon-man'" style="width: 280px;">
+			<div style="overflow: hidden;" class="datagrid-toolbar toolbar">
+				<div style="margin-top: 5px">
+				<a  id="addOrgMenu" href="javascript:void(0)" class="easyui-menubutton button-info"
+				data-options="menu:'#menu1',iconCls:'sicon-neworgs'">新增</a> 
+					<input id="inputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称或编码查询',searcher:mainActivity.openInputTextDialog"
+						style="width: 65%;"/>
+						
+				</div>
+			</div>
+			<div>
+				<ul id="orgTree" class="ztree"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center',split:true,title:'组织机构列表'">
+			<table id="org_grid_list"></table>
+		</div>
+	</div>
+	
+	
+<!-- toobar -->
+	<div id="toobar">
+		<div>
+				<a href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-edit'"
+				onclick="mainActivity.editOrgData()">编辑</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton button-info"
+				data-options="plain:true,iconCls:'sicon-move'"
+				onclick="mainActivity.moveOrgData()">移动</a>
+				<a href="javascript:void(0)" class="easyui-menubutton button-default"
+				data-options="menu:'#menu2',iconCls:'sicon-more'">更多操作</a>
+				<input id="gridInputText" class="easyui-searchbox  theme-textbox-radius" 
+					     data-options="prompt:'请输入名称查询',searcher:mainActivity.queryGridListData"
+						style="width: 200px;"/>
+		</div>
+		<div id="menu1" style="width: 120px;">
+			<div id="add-org" data-options="iconCls:'sicon-addorg'"
+				onclick="mainActivity.openNewAddOrgDialog('机构','newData','org')">新增机构</div>
+			<div class="menu-sep"></div>
+			<div id="add-dept" data-options="iconCls:'sicon-adddept'"
+				onclick="mainActivity.openNewAddOrgDialog('部门','newData','dept')">新增部门</div>
+			<div class="menu-sep"></div>
+			<div id="add-pos" data-options="iconCls:'sicon-addpos'"
+				onclick="mainActivity.openNewAddOrgDialog('岗位','newData','pos')">新增岗位</div>
+			<div class="menu-sep"></div>
+			<div id="add-psn" data-options="iconCls:'sicon-addperson'"
+				onclick="mainActivity.openNewAddOrgDialog('人员','newData','psm')">新增人员</div>
+		</div>
+		<div id="menu2" style="width: 100px;">
+			<div id="resetPassword"
+				data-options="iconCls:'sicon-reset'"
+				onclick="mainActivity.resetPassword()">密码重置</div>
+			<div class="menu-sep"></div>
+			<div id="delete-org"
+				data-options="iconCls:'sicon-delete',disable:true"
+				onclick="mainActivity.deleteOrg()">删除</div>
+			<div class="menu-sep"></div>
+			<div data-options="iconCls:'sicon-ban',disable:true"
+				onclick="mainActivity.banOrg()">禁用</div>
+			<div class="menu-sep"></div>
+			<div data-options="iconCls:'sicon-allow',disable:true"
+				onclick="mainActivity.allowOrg()">启用</div>
+		</div>
+	</div>	
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/plug/ztree-v3/js/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/$main.js"></script>
+</html>

@@ -1,0 +1,57 @@
+package cn.yufei.ssm.system.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOppermissionMapper;
+import cn.yufei.ssm.system.po.SysOppermission;
+import cn.yufei.ssm.system.po.SysOppermissionExample;
+import cn.yufei.ssm.system.service.SysOppermissionService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysOppermissionServiceImpl implements SysOppermissionService {
+	
+
+	@Autowired
+	private SysOppermissionMapper sysOppermissionMapper;
+
+	@Override
+	public GridData findByTextOppermissionData(String roleID,String inputText, int page,
+			int rows) throws Exception {
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		if(StringUtils.isEmpty(roleID)){
+			throw new CustomException("findByTextOppermissionData()---roleID不能为空");
+		}else{
+			SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+			criteria.andSpermissionroleidEqualTo(roleID);
+			if(!StringUtils.isEmpty(inputText)){
+				criteria.andSnameLike("%"+inputText+"%");
+			}
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("ssequence asc");
+		PageInfo<SysOppermission> pageInfo = new PageInfo<SysOppermission>(sysOppermissionMapper.selectByExample(ppermisExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+	@Override
+	public int deleteByRoleID(String roleId) throws Exception {
+		if(StringUtils.isEmpty(roleId)){
+			throw new CustomException("permission deleteByRoleID()---roleID不能为空");
+		}
+		SysOppermissionExample ppermisExample=new SysOppermissionExample();
+		SysOppermissionExample.Criteria criteria=ppermisExample.createCriteria();
+		criteria.andSpermissionroleidEqualTo(roleId);
+		return sysOppermissionMapper.deleteByExample(ppermisExample);
+	}
+
+}

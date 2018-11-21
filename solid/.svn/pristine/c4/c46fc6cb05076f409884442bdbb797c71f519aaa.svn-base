@@ -1,0 +1,26 @@
+package cn.yufei.ssm.system.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import cn.yufei.ssm.system.mapper.SysLogMapper;
+import cn.yufei.ssm.system.po.SysLog;
+import cn.yufei.ssm.system.service.SysLogService;
+
+
+@Service
+@Scope("singleton")
+public class SysLogServiceImpl implements SysLogService {
+	
+	@Autowired
+	private SysLogMapper sysLogMapper;
+
+	@Override
+	public int addLog(SysLog log) throws Exception {
+		if(log!=null)
+			return sysLogMapper.insertSelective(log);
+		return 0;
+	}
+
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root> 
+  <item display="solid" label="系统管理" icon="icon-osmanage">
+        <item label="基础信息" url="/solid/core/system/baseCode/baseCode.html" icon="icon-database"/>
+        <item label="组织机构" url="/solid/core/system/org/org_main.html" icon="icon-org"/>
+		<item label="系统函数调用" url="/demo/systest1.html"  />
+		<item label="图形验证码生成" url="/demo/systest2.html" />
+		<item label="生日查询" url="/solid/hr/employee/report/birthday_report.html" icon="icon-set"/>
+		<item label="请假申请" url="/solid/hr/leave/leave_apply.html" />
+		
+  </item> 
+  <item display="solid" label="其他案例" icon="icon-sys">
+        <item label="考勤日统计" url="/hr/attendance/report/attendance_day.html" />
+		<item label="考勤列表" url="/hr/attendance/attendance_list.html" />
+		<item label="机构管理" url="/system/opm/organization/oporg/mainActivity.html" />
+  </item>
+</root>

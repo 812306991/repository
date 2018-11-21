@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>人员信息</title>
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/insdep/easyui.css" />
+<link rel="stylesheet" type="text/css" href="/solid/common/plug/jquery-easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="/solid/core/system/org/css/style.css" />
+</head>
+<body>
+<div class="easyui-layout" style="width: 100%; padding:20px 30px" id="y-form">
+	  <div style="display:none;">
+	  <input type="text" name="sid" id="sid"/>
+	  <input type="text" name="version" id="version" value="0"/>
+	  <input type="text" name="sfname" id="sfname"/>
+	  <input type="text" name="sfcode" id="sfcode"/>
+	  <input type="text" name="sfid" id="sfid"/>
+	   <input type="text" name="smainorgid" id="smainorgid"/>
+	  </div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">上&nbsp;&nbsp;级</label> <input name="sprentName" id="sprentName" 
+				class="easyui-textbox theme-textbox-radius" style="width: 84%;" data-options="disabled:true">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">姓&nbsp;&nbsp;名</label> <input
+				class="easyui-textbox theme-textbox-radius" prompt="请输入姓名" name="sname" id="sname"
+				iconWidth="28" style="width: 38%;"
+				data-options="required:true"> <label class="label-left">&nbsp;账&nbsp;&nbsp;号</label>
+			<input class="easyui-textbox theme-textbox-radius" prompt="请输入账号" name="scode" id="scode"
+				 iconWidth="28" style="width: 39%;"
+				data-options="required:true">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">身份证号</label> <input
+				class="easyui-textbox theme-textbox-radius" name="sidcard" id="sidcard"
+				iconWidth="28" style="width: 30%;"> 
+			<label class="label-left">登陆名称</label>
+			<input class="easyui-textbox theme-textbox-radius"  name="sloginname" id="sloginname"
+				 iconWidth="28" style="width: 30%;">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">地&nbsp;&nbsp;址</label> <input name="sfamilyaddress" id="sfamilyaddress" 
+				class="easyui-textbox theme-textbox-radius" style="width: 84%;">
+		</div>
+		<div style="margin-bottom: 15px">
+			<label class="label-left">备&nbsp;&nbsp;注</label> 
+			<input class="easyui-textbox theme-textbox-radius" name="sdescription" id="sdescription" style="width:84%; height:80px;" data-options="multiline:true">
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/solid/common/plug/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/solid/common/core/js/main.js"></script>
+<script type="text/javascript" src="js/add_person_dialog.js"></script>
+</html>

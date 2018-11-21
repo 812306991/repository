@@ -1,0 +1,107 @@
+var mainActivity = {};
+var baseDialog;
+//页面初始化
+$(document).ready(function() {
+	mainActivity.gridLoad();
+});
+
+mainActivity.gridLoad=function(){
+	var text=$("#gridInputText").val();
+	$('#mianGrid').datagrid({  
+		width: '100%',  
+        toolbar:"#toobar",
+        height:$(window).height()-5,  
+            striped: true,  
+            singleSelect : true,  
+            url:yufei.portal.contextRoot + "/baseCode/findBaseCodeListData.action",  
+            queryParams:{inputText:text},  
+            loadMsg:'数据加载中请稍后……',  
+            rownumbers: true,  //是否显示列数     
+            pageSize: 20,      
+            pageList: [20,30,40],      
+            pagination: true, //是否启用分页
+            columns:[[  
+                {field:'scode',title: '编码',align: 'center',width:100},  
+                {field:'sname',title: '名称',align: 'center',width:150},  
+                {field:'sisvalid',title: '状态',align: 'center',width:70,formatter:function(value,row){
+                	var text;
+                	if(value=="1"){
+                		text="<font color='green'>启用<font>";
+                	}else if(value=="0"){
+                		text="<font color='red'>禁用<font>";
+                	}
+                	return text;
+                }},
+                {field:'stype',title: '类型',align: 'left',width:100}
+            ]],
+            onLoadSuccess:function(data){
+            	$(this).datagrid("selectRow", 0);  
+            }
+        });
+};
+//新增
+mainActivity.addBaseData=function(){
+	if(!baseDialog){
+		baseDialog=new yufei.dialog({});
+	}
+	var url=yufei.portal.contextRoot +"/core/system/baseCode/dialog/add_base_dialog.html?dataState=new";
+	baseDialog.open(url, function(data){
+		if(data){
+			var jsondata=JSON.stringify(data);
+			yufei.ajax("/baseCode/savebase.action",{"jsonData":jsondata},function(aysData,state){
+				var row=JSON.parse(aysData);
+				if(state=="SUCCESS"){
+					$.messager.alert('系统提示', row.message, 'warning');
+					mainActivity.refreshData();
+				}
+			});
+		}
+	}, null, "添加", 620, 300);
+	
+};
+//编辑
+mainActivity.editBaseData=function(){
+	if(!baseDialog){
+		baseDialog=new yufei.dialog({});
+	}
+	var row = $('#mianGrid').datagrid('getSelected');
+	var url=yufei.portal.contextRoot +"/core/system/baseCode/dialog/add_base_dialog.html?dataState=edit"+"&rowid="+row.sid;
+	baseDialog.open(url, function(data){
+		if(data){
+			var jsondata=JSON.stringify(data);
+			yufei.ajax("/baseCode/savebase.action",{"jsonData":jsondata},function(aysData,state){
+				var row=JSON.parse(aysData);
+				if(state=="SUCCESS"){
+					$.messager.alert('系统提示', row.message, 'warning');
+					mainActivity.refreshData();
+				}
+			});
+		}
+	}, null, "编辑", 620, 300);
+};
+//刷新
+mainActivity.refreshData=function(){
+	$('#mianGrid').datagrid('load',{inputText: $("#gridInputText").val()});  
+};
+mainActivity.queryGridListData=function(value,name){
+	$('#mianGrid').datagrid('load',{inputText:value});  
+};
+//删除
+mainActivity.moveBaseData=function(){
+	var row = $('#mianGrid').datagrid('getSelected');
+	if(row.sisvalid==1){
+		$.messager.alert('系统提示',"状态为启用的数据不能删除", 'warning');
+	}else{
+		$.messager.confirm('提示', '您确定要删除该条记录吗?', function(r){
+			if (r){
+				yufei.ajax("/baseCode/deletebase.action",{"id":row.sid},function(aysData,state){
+					var row=JSON.parse(aysData);
+					if(state=="SUCCESS"){
+						$.messager.alert('系统提示', row.message, 'warning');
+						mainActivity.refreshData();
+					}
+				});
+			}
+		});
+	}
+};

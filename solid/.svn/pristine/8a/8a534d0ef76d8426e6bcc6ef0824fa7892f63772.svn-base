@@ -1,0 +1,117 @@
+package cn.yufei.ssm.system.po;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import cn.yufei.ssm.system.dal.object.Entity;
+
+public class SysOpauthorize implements Entity{
+    private String sid;
+
+    private String sorgid;
+
+    private String sorgname;
+
+    private String sorgfid;
+
+    private String sorgfname;
+
+    private String sauthorizeroleid;
+
+    private String sdescription;
+
+    private String screatorfid;
+
+    private String screatorfname;
+
+    private Date screatetime;
+
+    private BigDecimal version;
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid == null ? null : sid.trim();
+    }
+
+    public String getSorgid() {
+        return sorgid;
+    }
+
+    public void setSorgid(String sorgid) {
+        this.sorgid = sorgid == null ? null : sorgid.trim();
+    }
+
+    public String getSorgname() {
+        return sorgname;
+    }
+
+    public void setSorgname(String sorgname) {
+        this.sorgname = sorgname == null ? null : sorgname.trim();
+    }
+
+    public String getSorgfid() {
+        return sorgfid;
+    }
+
+    public void setSorgfid(String sorgfid) {
+        this.sorgfid = sorgfid == null ? null : sorgfid.trim();
+    }
+
+    public String getSorgfname() {
+        return sorgfname;
+    }
+
+    public void setSorgfname(String sorgfname) {
+        this.sorgfname = sorgfname == null ? null : sorgfname.trim();
+    }
+
+    public String getSauthorizeroleid() {
+        return sauthorizeroleid;
+    }
+
+    public void setSauthorizeroleid(String sauthorizeroleid) {
+        this.sauthorizeroleid = sauthorizeroleid == null ? null : sauthorizeroleid.trim();
+    }
+
+    public String getSdescription() {
+        return sdescription;
+    }
+
+    public void setSdescription(String sdescription) {
+        this.sdescription = sdescription == null ? null : sdescription.trim();
+    }
+
+    public String getScreatorfid() {
+        return screatorfid;
+    }
+
+    public void setScreatorfid(String screatorfid) {
+        this.screatorfid = screatorfid == null ? null : screatorfid.trim();
+    }
+
+    public String getScreatorfname() {
+        return screatorfname;
+    }
+
+    public void setScreatorfname(String screatorfname) {
+        this.screatorfname = screatorfname == null ? null : screatorfname.trim();
+    }
+
+    public Date getScreatetime() {
+        return screatetime;
+    }
+
+    public void setScreatetime(Date screatetime) {
+        this.screatetime = screatetime;
+    }
+
+    public BigDecimal getVersion() {
+        return version;
+    }
+
+    public void setVersion(BigDecimal version) {
+        this.version = version;
+    }
+}

@@ -1,0 +1,22 @@
+package cn.yufei.ssm.system.service;
+
+import java.util.List;
+
+
+import cn.yufei.ssm.system.po.Role;
+import cn.yufei.ssm.system.po.RoleTree;
+
+public interface SysroleService {
+	
+	//根据用户id查询用户是否是管理员角色
+	public boolean getManagerRoleByUserID(String userID) throws Exception;
+	//根据用户id查询用户角色信息
+	public List<Role> findRoleListByUserId(String userID) throws Exception;
+	
+	//构建角色树
+	public List<RoleTree> findRoleTree() throws Exception;
+	
+	//根据输入内容查询树节点
+	public List<RoleTree> findRoleByText(String inputText) throws Exception;
+
+}

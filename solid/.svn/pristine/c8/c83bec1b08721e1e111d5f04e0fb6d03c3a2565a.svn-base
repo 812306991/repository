@@ -1,0 +1,9 @@
+package cn.yufei.ssm.system.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+public interface SysOpmanagementService {
+	
+	public int save(HttpServletRequest request,String orgId,String manageTypeId,String orgData)throws Exception;
+
+}

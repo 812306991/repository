@@ -1,0 +1,46 @@
+* {
+	font-size: 12px;
+	font-family: Tahoma, Verdana, 微软雅黑, 新宋体
+}
+
+body {
+	background: #FFFFFF;
+}
+.sicon-neworgs{
+	background:url('/solid/core/system/org/image/addorg.png') no-repeat center center;
+}
+.sicon-edit{
+	background:url('/solid/core/system/org/image/pencil.png') no-repeat center center;
+}
+.sicon-move{
+	background:url('/solid/core/system/org/image/moveOrg.gif') no-repeat center center;
+}
+.sicon-more{
+	background:url('/solid/core/system/org/image/more.png') no-repeat center center;
+}
+
+.sicon-addorg{
+	background:url('/solid/core/system/org/image/org.png') no-repeat center center;
+}
+.sicon-adddept{
+	background:url('/solid/core/system/org/image/dept.png') no-repeat center center;
+}
+.sicon-addpos{
+	background:url('/solid/core/system/org/image/post.png') no-repeat center center;
+}
+.sicon-addperson{
+	background:url('/solid/core/system/org/image/person.png') no-repeat center center;
+}
+
+.sicon-reset{
+	background:url('/solid/core/system/org/image/reset.png') no-repeat center center;
+}
+.sicon-delete{
+	background:url('/solid/core/system/org/image/delete.png') no-repeat center center;
+}
+.sicon-ban{
+	background:url('/solid/core/system/org/image/ban.png') no-repeat center center;
+}
+.sicon-allow{
+	background:url('/solid/core/system/org/image/allow.png') no-repeat center center;
+}

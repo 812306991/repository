@@ -1,0 +1,21 @@
+package cn.yufei.ssm.system.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+import cn.yufei.ssm.system.core.data.GridData;
+
+public interface SysOpauthorizeService {
+	
+	//根据角色id删除权限信息
+	public int delteRoleByID(String roleId) throws Exception;
+	
+	//根据组织路径和输入内容查询授权信息列表
+	public GridData findAuthorizeDataListByInput(String orgid,String orgSfid,String inputText,int page,int rows) throws Exception;
+	
+	//新增权限数据
+	public int save(HttpServletRequest request,String orgJson,String dataJson) throws Exception;
+	
+	//根据id删除角色信息，功能信息，权限信息
+    public int deleteById(String id) throws Exception;
+
+}

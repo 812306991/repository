@@ -1,0 +1,319 @@
+package cn.yufei.ssm.system.service.impl;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import cn.yufei.ssm.system.core.data.CollectingData;
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.mapper.SysOporgMapper;
+import cn.yufei.ssm.system.mapper.SysOppersonMapper;
+import cn.yufei.ssm.system.po.OrgTree;
+import cn.yufei.ssm.system.po.SysOporg;
+import cn.yufei.ssm.system.po.SysOporgExample;
+import cn.yufei.ssm.system.po.SysOporgExample.Criteria;
+import cn.yufei.ssm.system.po.SysOpperson;
+import cn.yufei.ssm.system.po.Vo.SysOporgVo;
+import cn.yufei.ssm.system.service.SysOrgService;
+import cn.yufei.ssm.system.utils.OrgUtils;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Service
+@Scope("singleton")
+public class SysOrgServiceImpl implements SysOrgService{
+	
+	@Autowired
+	private SysOporgMapper sysOporgMapper;
+	
+	
+	@Autowired
+	private SysOppersonMapper sysOppersonMapper;
+	
+	
+
+
+	@Override
+	public List<SysOporg> getChildOrgListByID(String id) throws Exception {
+		List<SysOporg> list=null;
+		SysOporgExample orgExample=new SysOporgExample();
+		SysOporgExample.Criteria criteria=orgExample.createCriteria();
+		if(StringUtils.isEmpty(id)){
+			criteria.andSparentIsNull();
+		}else{
+			criteria.andSparentEqualTo(id);
+		}
+		list=sysOporgMapper.selectByExample(orgExample);
+		return list;
+	}
+
+
+	@Override
+	public List<SysOporg> getParentOrgListByID(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("getParentOrgListByID()---id不能为空");
+		}
+		List<SysOporg> listOrg=getParent(id);
+		return listOrg;
+	}
+	//根据id查询父级信息
+	private List<SysOporg> getParent(String id) throws Exception{
+		List<SysOporg> listOrg=new ArrayList<SysOporg>();
+		SysOporgExample orgExample=new SysOporgExample();
+		SysOporgExample.Criteria criteria=orgExample.createCriteria();
+		criteria.andSparentEqualTo(id);
+		List<SysOporg> list=sysOporgMapper.selectByExample(orgExample);
+		if(list!=null){
+	    	for(SysOporg orgs:list){
+	    		SysOporg org=orgs;
+	    		listOrg.add((SysOporg) getParent(org.getSparent()));
+	    	}
+	    }
+		return listOrg;
+	}
+
+
+	@Override
+	public boolean isParentNode(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("isParentNode()---id不能为空");
+		}
+		boolean isParent=false;
+		SysOporgExample orgExample=new SysOporgExample();
+		SysOporgExample.Criteria criteria=orgExample.createCriteria();
+		criteria.andSparentEqualTo(id);
+		List<SysOporg> list=sysOporgMapper.selectByExample(orgExample);
+		if(list.size()>0){
+			isParent=true;
+		}
+		return isParent;
+	}
+	//展开机构节点
+	@Override
+	public boolean isOpen(String parentId){
+		if(StringUtils.isEmpty(parentId)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
+	@Override
+	public List<OrgTree> getOrgTreeNode(List<SysOporg> orgNode) throws Exception {
+		List<OrgTree> tree=new ArrayList<OrgTree>();
+		for(SysOporg org:orgNode){
+			OrgTree orgTree=new OrgTree();
+			orgTree.setId(org.getSid());
+			orgTree.setCode(org.getScode());
+			orgTree.setName(org.getSname());
+			orgTree.setShortName(org.getSlongname());
+			orgTree.setFullName(org.getSfname());
+			orgTree.setFullCode(org.getSfcode());
+			orgTree.setFullId(org.getSfid());
+			orgTree.setParent(org.getSparent());
+			orgTree.setSequence(org.getSsequence());
+			orgTree.setValidstate(org.getSvalidstate());
+			orgTree.setLevel(org.getSlevel());
+			orgTree.setPhone(org.getSphone());
+			orgTree.setFax(org.getSfax());
+			orgTree.setAddress(org.getSaddress());
+			orgTree.setZip(org.getSzip());
+			orgTree.setDescription(org.getSdescription());
+			orgTree.setPersonId(org.getSpersonid());
+			orgTree.setKind(org.getSorgkindid());
+			orgTree.setNodeKind(org.getSnodekind());
+			orgTree.setIsParent(this.isParentNode(org.getSid()));
+			orgTree.setOpen(this.isOpen(org.getSparent()));
+			//设置节点图标
+			orgTree.setIcon(OrgUtils.getIcon(org.getSorgkindid()));
+			tree.add(orgTree);
+		}
+		return tree;
+	}
+
+
+	@Override
+	public GridData findByTextOrgData(String inputText,int page,int rows) throws Exception {
+		if(StringUtils.isEmpty(inputText)){
+			throw new CustomException("findByTextOrgData()---输入的内容不能为空");
+		}
+		SysOporgExample orgExample=new SysOporgExample();
+		Criteria criteria=orgExample.or();
+		criteria.andSnameLike("%" +inputText+"%");
+		Criteria criteria1=orgExample.or();
+		criteria1.andScodeLike("%"+inputText+"%");
+		Criteria criteria2=orgExample.or();
+		criteria2.andSlongnameLike("%"+inputText+"%");
+		Criteria criteria3=orgExample.or();
+		criteria3.andSfnameLike("%"+inputText+"%");
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("ssequence desc");
+		PageInfo<SysOporg> pageInfo = new PageInfo<SysOporg>(sysOporgMapper.selectByExample(orgExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+
+	@Override
+	public GridData findByOrgListOnTreeClick(String orgTreeId,String inputText,int page,int rows) throws Exception {
+		SysOporgExample orgExample=new SysOporgExample();
+		if(StringUtils.isEmpty(orgTreeId)){
+			Criteria criteria=orgExample.or();
+			criteria.andSparentIsNull();
+			Criteria criteria1=orgExample.or();
+			criteria1.andSidIsNull();
+			if(!StringUtils.isEmpty(inputText)){
+				SysOporgExample.Criteria criteria3=orgExample.createCriteria();
+				criteria3.andSnameLike("%"+inputText+"%");
+			}
+		}else{
+			SysOporgExample.Criteria criteria=orgExample.createCriteria();
+			criteria.andSparentEqualTo(orgTreeId);
+			Criteria criteria1=orgExample.or();
+			criteria1.andSidEqualTo(orgTreeId);
+			if(!StringUtils.isEmpty(inputText)){
+				criteria.andSnameLike("%"+inputText+"%");
+			}
+		}
+		PageHelper.startPage(page, rows);
+		PageHelper.orderBy("ssequence asc");
+		PageInfo<SysOporg> pageInfo = new PageInfo<SysOporg>(sysOporgMapper.selectByExample(orgExample));
+		GridData datagrid = new GridData(pageInfo.getTotal(),pageInfo.getList());
+		return datagrid;
+	}
+
+
+	//新增组织机构
+	@Override
+	public int save(String orgJson) throws Exception {
+		if(StringUtils.isEmpty(orgJson)){
+			throw new CustomException("org  save()---内容为空");
+		}
+		int count=0;
+		CollectingData collecting = CollectingData.getInstance();
+		SysOporgVo vo = collecting.readValue(orgJson, SysOporgVo.class);
+		String flag=vo.getDataFlag();
+		//新增数据
+		if("new".equals(flag)){
+			SysOporg org=new SysOporg();
+			org.setSid(vo.getSid());
+			org.setVersion(vo.getVersion());
+			if(StringUtils.isEmpty(vo.getSparent())){
+				org.setSfname("/"+vo.getSname());
+				org.setSfcode("/"+vo.getScode());
+				org.setSfid("/"+vo.getSid()+"."+vo.getSorgkindid());
+			}else{
+				org.setSfname(vo.getSfname()+"/"+vo.getSname());
+				org.setSfcode(vo.getSfcode()+"/"+vo.getScode());
+				org.setSfid(vo.getSfid()+"/"+vo.getSid()+"."+vo.getSorgkindid());
+			}
+			org.setSparent(vo.getSparent());
+			org.setSname(vo.getSname());
+			org.setScode(vo.getScode());
+			org.setSlongname(vo.getSlongname());
+			org.setSorgkindid(vo.getSorgkindid());
+			org.setSsequence(vo.getSsequence());
+			org.setSphone(vo.getSphone());
+			org.setSfax(vo.getSfax());
+			org.setSaddress(vo.getSaddress());
+			org.setSdescription(vo.getSdescription());
+			org.setSvalidstate(vo.getSvalidstate());
+			count=sysOporgMapper.insertSelective(org);
+		}
+		//更新数据
+		if("edit".equals(flag)){
+			SysOporg orgOld=sysOporgMapper.selectByPrimaryKey(vo.getSid());
+			String oldName=orgOld.getSname();
+			String oldCode=orgOld.getScode();
+			String newName=vo.getSname();
+			String newCode=vo.getScode();
+			//先根据id查询出需要修改的记录原值
+			SysOporg org=new SysOporg();
+			org.setSid(vo.getSid());
+			org.setVersion(vo.getVersion());
+			org.setSname(vo.getSname());
+			org.setScode(vo.getScode());
+			org.setSlongname(vo.getSlongname());
+			org.setSorgkindid(vo.getSorgkindid());
+			org.setSsequence(vo.getSsequence());
+			org.setSphone(vo.getSphone());
+			org.setSfax(vo.getSfax());
+			org.setSaddress(vo.getSaddress());
+			org.setSdescription(vo.getSdescription());
+			count=sysOporgMapper.updateByPrimaryKeySelective(org);
+			//再更新相关子节点
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("oldname", oldName);
+			map.put("oldcode", oldCode);
+			map.put("newname", newName);
+			map.put("newcode", newCode);
+			map.put("id", vo.getSid());
+			count=sysOporgMapper.updateOrgPathnodes(map);
+		}
+		return count;
+	}
+
+	//根据id查询组织机构信息
+	@Override
+	public SysOporg findOrgByID(String id) throws Exception {
+		if(StringUtils.isEmpty(id)){
+			throw new CustomException("findOrgByID()---id为空");
+		}
+		SysOporgExample orgExample=new SysOporgExample();
+		SysOporgExample.Criteria criteria=orgExample.createCriteria();
+		criteria.andSidEqualTo(id);
+		List<SysOporg> list=sysOporgMapper.selectByExample(orgExample);
+		SysOporg org=null;
+		if(list.size()>0){
+			org=list.get(0);
+		}
+		return org;
+	}
+
+     //组织机构禁用，启用
+	@Override
+	public int updateBanOrg(String orgId, BigDecimal svalidstate) throws Exception {
+		if(StringUtils.isEmpty(orgId)){
+			throw new CustomException("updateBanOrg()---orgId为空");
+		}
+		SysOporg org=sysOporgMapper.selectByPrimaryKey(orgId);
+		int count=0;
+		if(org.getSorgkindid().equals("psm")){
+			org.setSvalidstate(svalidstate);
+			SysOpperson person=sysOppersonMapper.selectByPrimaryKey(org.getSpersonid());
+			person.setSvalidstate(svalidstate);
+			sysOporgMapper.updateByPrimaryKeySelective(org);
+			count=sysOppersonMapper.updateByPrimaryKeySelective(person);
+			
+		}else{
+			if(this.isParentNode(orgId)){
+				org.setSvalidstate(svalidstate);
+				sysOporgMapper.updateByPrimaryKeySelective(org);
+				SysOporgExample orgExample=new SysOporgExample();
+				SysOporgExample.Criteria criteria=orgExample.createCriteria();
+				criteria.andSparentEqualTo(orgId);
+				List<SysOporg> list=sysOporgMapper.selectByExample(orgExample);
+				for(int i=0;i<list.size();i++){
+					SysOporg cOrg=list.get(i);
+					updateBanOrg(cOrg.getSid(),svalidstate);
+				}
+			}else{
+				org.setSvalidstate(svalidstate);
+				sysOporgMapper.updateByPrimaryKeySelective(org);
+			}
+			count=1;
+		}
+		return count;
+	}
+	
+}

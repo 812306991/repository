@@ -1,0 +1,112 @@
+package cn.yufei.ssm.system.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.yufei.ssm.system.annotation.SystemControllerLog;
+import cn.yufei.ssm.system.core.ApplicationCode;
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.core.data.MessageData;
+import cn.yufei.ssm.system.exception.CustomException;
+import cn.yufei.ssm.system.po.RoleTree;
+import cn.yufei.ssm.system.po.SysOprole;
+import cn.yufei.ssm.system.service.SysroleService;
+import cn.yufei.ssm.system.utils.StringUtils;
+
+@Controller
+@RequestMapping("/role")
+public class SysRoleController {
+
+	@Autowired
+	private SysroleService sysroleService;
+
+	@RequestMapping(value = "/getRoleTree", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody
+	List<RoleTree> getRoleTreeNode(HttpSession session) throws Exception {
+		String userID = (String) session.getAttribute("userID");
+
+		if (StringUtils.isEmpty(userID)) {
+			throw new CustomException("getRoleTreeNode()---userID为空");
+		}
+		List<RoleTree> tree = sysroleService.findRoleTree();
+		return tree;
+	}
+
+	@RequestMapping(value = "/searcherRoleTree", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody
+	RoleTree getRoleNodeByText(String inputText) throws Exception {
+		List<RoleTree> tree = sysroleService.findRoleByText(inputText);
+		RoleTree role = null;
+		if (tree.size() > 0) {
+			role = tree.get(0);
+		}
+		return role;
+	}
+	
+	//根据id查询角色
+	@RequestMapping(value = "/queryRoleById", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody
+	SysOprole queryRoleById(String id) throws Exception {
+		SysOprole role = sysroleService.findRoleByID(id);
+		return role;
+	}
+	
+	//根据id删除角色等信息
+	@SystemControllerLog(operationType="角色信息操作:",operationName="删除角色信息") 
+	@RequestMapping(value="/deleteRoleById",method={RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody MessageData deleteRoleByIdAll(String id) throws Exception{
+		int count=sysroleService.deleteByIdAll(id);
+		MessageData message = null;
+		if (count==1) {
+			message = new MessageData(ApplicationCode.SUCCESS.getCode(),
+					ApplicationCode.SUCCESS.getMessage());
+		} else {
+			message = new MessageData(ApplicationCode.ERROR.getCode(),
+					ApplicationCode.ERROR.getMessage());
+		}
+		return message;
+	}
+	
+	//根据编码查询角色
+	@RequestMapping(value = "/queryRoleByCode", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody
+	SysOprole queryRoleByCode(String code) throws Exception {
+			SysOprole role = sysroleService.findRoleByCode(code);
+			return role;
+	}
+	
+
+	// 保存
+	@SystemControllerLog(operationType="角色信息操作:",operationName="添加角色信息") 
+	@RequestMapping(value = "/saveRole", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody
+	MessageData saveRoleData(String jsonData) throws Exception {
+		int count = sysroleService.save(jsonData);
+		MessageData message = null;
+		if (count > 0) {
+			message = new MessageData(ApplicationCode.SUCCESS.getCode(),
+					ApplicationCode.SUCCESS.getMessage());
+		} else {
+			message = new MessageData(ApplicationCode.FAIL.getCode(),
+					ApplicationCode.FAIL.getMessage());
+		}
+		return message;
+	}
+	
+	
+	//根据输入内容模糊查询机构信息列表、
+	@RequestMapping(value = "/findNotAuthorizeListData", method = { RequestMethod.GET,RequestMethod.POST })
+	public @ResponseBody GridData findNotAuthorizeListData(String orgId,@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,@RequestParam(value = "rows", defaultValue = "5", required = false) Integer rows) throws Exception {
+		  GridData datagrid = sysroleService.findNotAuthorizeRole(orgId, page, rows);
+		return datagrid;
+	}
+
+}

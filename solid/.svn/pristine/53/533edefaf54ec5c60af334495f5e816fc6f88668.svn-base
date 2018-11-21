@@ -1,0 +1,115 @@
+package cn.yufei.ssm.system.controller;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.yufei.ssm.system.annotation.SystemControllerLog;
+import cn.yufei.ssm.system.core.ApplicationCode;
+import cn.yufei.ssm.system.core.data.GridData;
+import cn.yufei.ssm.system.core.data.MessageData;
+import cn.yufei.ssm.system.core.data.SimpleData;
+import cn.yufei.ssm.system.service.CommonService;
+import cn.yufei.ssm.system.service.SysDatabackupsService;
+import cn.yufei.ssm.system.utils.Tools;
+
+@Controller
+@RequestMapping("/common")
+public class CommonController {
+	
+	// 注入service
+		@Autowired
+		private CommonService commonService;
+		
+		@Autowired
+		private SysDatabackupsService sysDatabackupsService;
+		
+		//获取系统日期
+		@RequestMapping(value = "/getSysDate", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getDate() throws Exception {
+			SimpleData simpleData = commonService.getCurrentDate("true");
+			return simpleData;
+		}
+		
+		//获取系统时间
+		@RequestMapping(value = "/getSysDateTime", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getDateTime() throws Exception {
+			SimpleData simpleData = commonService.getCurrentDateTime("");
+			return simpleData;
+		}
+		
+		//获取guid
+		@RequestMapping(value = "/getSysUuid", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getUuid() throws Exception {
+			SimpleData simpleData = commonService.getUuid();
+			return simpleData;
+		}
+		
+		//获取随机数
+		@RequestMapping(value = "/getRandomNumber", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody SimpleData getRandomNumber() throws Exception {
+			SimpleData simpleData = commonService.getRandomNumber();
+			return simpleData;
+		}
+		
+		//获取功能树
+		@RequestMapping(value = "/getFunTreeNode", method = { RequestMethod.GET,RequestMethod.POST },produces = "application/json; charset=utf-8")
+		public @ResponseBody String getFunTreeNode() throws Exception {
+			String funTree= commonService.getFunTreeStr();
+			return funTree;
+		}
+		
+		//获取系统流水号
+		@RequestMapping(value = "/getNextSequence", method = { RequestMethod.GET,RequestMethod.POST },produces = "application/json; charset=utf-8")
+		public @ResponseBody String getNextSequence(String key,String format) throws Exception {
+			String str=Tools.nextSequence(key, format);
+			return str;
+		}
+		
+		//数据库备份
+		@SystemControllerLog(operationType="数据库操作:",operationName="数据库备份") 
+		@RequestMapping(value = "/backData", method = { RequestMethod.GET,RequestMethod.POST },produces = "application/json; charset=utf-8")
+		public @ResponseBody MessageData backData(HttpSession session) throws Exception{
+			int count = sysDatabackupsService.beginInBack(session);
+			MessageData message = null;
+			if (count > 0) {
+				message = new MessageData(ApplicationCode.SUCCESS.getCode(),
+						ApplicationCode.SUCCESS.getMessage());
+			} else {
+				message = new MessageData(ApplicationCode.ERROR.getCode(),
+						ApplicationCode.ERROR.getMessage());
+			}
+			return message;
+		}
+		
+
+		//数据库还原
+		@SystemControllerLog(operationType="数据库操作:",operationName="数据库还原") 
+		@RequestMapping(value = "/regainBack", method = { RequestMethod.GET,RequestMethod.POST },produces = "application/json; charset=utf-8")
+		public @ResponseBody MessageData regainBack(String id) throws Exception{
+			int count = sysDatabackupsService.regainBack(id);
+			MessageData message = null;
+			if (count > 0) {
+				message = new MessageData(ApplicationCode.SUCCESS.getCode(),
+						ApplicationCode.SUCCESS.getMessage());
+			} else {
+				message = new MessageData(ApplicationCode.ERROR.getCode(),
+						ApplicationCode.ERROR.getMessage());
+			}
+			return message;
+		}
+		
+		//数据备份日志列表
+		//根据文档id,文件名称查询文件列表
+		@RequestMapping(value = "/findBackDataList", method = { RequestMethod.GET,RequestMethod.POST })
+		public @ResponseBody GridData findBackDataList(String inputText,@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,@RequestParam(value = "rows", defaultValue = "5", required = false) Integer rows)throws Exception{
+			GridData grid=sysDatabackupsService.findBackDataList(inputText, page, rows);
+			return grid;
+		}
+
+}
