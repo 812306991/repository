@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Logger;
 
 import com.jgkj.liao.photo.Photo;
+import com.jgkj.liao.property.util.PropertyUtil;
 import com.jgkj.liao.service.PhotoService;
 
 public class PhotoServiceImpl implements PhotoService{
@@ -33,7 +34,33 @@ public class PhotoServiceImpl implements PhotoService{
 	
 	
 	public String getSql() {
+		String tableName = PropertyUtil.getProperty("tableName");
+		String fileName = PropertyUtil.getProperty("fileName");
+		String getColumn = PropertyUtil.getProperty("getColumn");
+		String taskName = PropertyUtil.getProperty("taskName");
+		String settingDate = PropertyUtil.getProperty("settingDate");
+		String settingTime = PropertyUtil.getProperty("settingTime");
 		String sql = "select ";
+		if(fileName.length() > 0) {
+			sql += fileName + ",";
+		}else {
+			sql = "";
+			logger.error("配置文件中没有指定要生成的文件名字段设置！");
+		}
+		if(getColumn.length() > 0) {
+			sql += getColumn + ",";
+		}else {
+			sql = "";
+			logger.error("配置文件中没有指定要生成的文件字段设置！");
+		}
+		if(tableName.length() > 0) {
+			sql += "from" + tableName;
+		}else {
+			sql = "";
+			logger.error("配置文件中没有指定要生成的文件表名称设置！");
+		}
+		if(settingDate.length() > 0 && settingTime.length() > 0) {
+			sql += " where " + settingDate + " >= to_date('"+settingTime+"'"
 		return sql;
 	}
 

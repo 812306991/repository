@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yufei.ssm.system.mapper.AuthorizeCustomMapper" >
+  
+  <select id="findAllAuthorizeData" parameterType="java.util.Map" resultType="cn.yufei.ssm.system.po.Vo.SysOpauthorizeVo">
+    
+   <if test="inputText != null and inputText!='' and inputText !='undefined'">
+      select * from (
+   </if>
+	select r.sid,
+               r.sname,
+               r.scode,
+               r.scatalog || '/' || r.sname as rolepath,
+               p.sname as funName,
+               p.surl as funurl,
+               p.spath || '/' || p.sname as funpath
+          from sys_oprole r
+          left join sys_oppermission p
+            on r.sid = p.spermissionroleid
+          left join sys_opauthorize a
+            on r.sid = a.sauthorizeroleid
+         where a.sorgid ='${orgId}' or a.sorgfid='${orgFid}'
+  <if test="inputText != null and inputText!='' and inputText !='undefined'">
+      ) s where ( s.sname like '${inputText}' or s.rolepath like '${inputText}' or s.funName like '${inputText}' or s.funurl like '${inputText}' or 
+      s.funpath like '${inputText}'  )
+   </if>      
+         
+</select>
+</mapper>

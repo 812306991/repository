@@ -12,7 +12,7 @@ public class PropertyUtil {
 	static {
 		loadProps();
 	}
-	private static void loadProps() {
+	synchronized static void loadProps() {
 		InputStream is = null;
 		prop = new Properties();
 		is = PropertyUtil.class.getResourceAsStream("config.properties");
@@ -31,14 +31,14 @@ public class PropertyUtil {
 			}
 		}
 	}
-	public String getProperty(String keyName) {
+	public static String getProperty(String keyName) {
 		if(prop != null) {
 			loadProps();
 		}
 		return prop.getProperty(keyName);
 	}
 	
-	public String getProperty(String keyName,String value) {
+	public static String getProperty(String keyName,String value) {
 		if(prop != null) {
 			loadProps();
 		}
